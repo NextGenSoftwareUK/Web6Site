@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Holonic Braid Whitepaper — OASIS WEB6</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #030714;
+    --bg-card:  rgba(255,255,255,.03);
+    --heading:  #e8f0ff;
+    --cyan:     #00e5ff;
+    --violet:   #a78bfa;
+    --purple:   #e040fb;
+    --gold:     #fdd835;
+    --teal:     #00c8a8;
+    --rose:     #ff5fa0;
+    --body:     #a8bfd8;
+  }
+  *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body {
+    background:var(--bg);
+    color:var(--body);
+    font-family:'Rajdhani',sans-serif;
+    font-size:16px;
+    line-height:1.7;
+  }
+  a { color:var(--cyan); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+
+  /* ── CANVAS ── */
+  #star-canvas {
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position:sticky;top:0;z-index:100;
+    background:rgba(3,7,20,.88);backdrop-filter:blur(16px);
+    border-bottom:1px solid rgba(255,255,255,.06);
+    padding:16px 40px;
+    display:flex;align-items:center;gap:32px;flex-wrap:wrap;
+  }
+  .nav-brand {
+    font-family:'Orbitron',sans-serif;font-size:14px;font-weight:900;
+    letter-spacing:.25em;color:var(--heading);white-space:nowrap;
+  }
+  .nav-brand span { color:var(--purple); }
+  .nav-links { display:flex;gap:24px;list-style:none;flex-wrap:wrap;margin-left:auto; }
+  .nav-links a {
+    font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.18em;
+    color:var(--body);transition:color .2s;
+  }
+  .nav-links a:hover { color:var(--heading);text-decoration:none; }
+
+  /* ── LAYOUT ── */
+  .wrap { position:relative;z-index:1;max-width:900px;margin:0 auto;padding:80px 40px; }
+  .wrap-wide { position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:80px 40px; }
+
+  /* ── COVER ── */
+  .cover {
+    position:relative;z-index:1;
+    padding:120px 40px 80px;
+    text-align:center;
+    max-width:860px;margin:0 auto;
+  }
+  .cover-kicker {
+    font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.3em;
+    color:var(--purple);margin-bottom:20px;
+  }
+  .cover-title {
+    font-family:'Orbitron',sans-serif;font-weight:900;
+    font-size:clamp(32px,6vw,58px);letter-spacing:.06em;
+    color:var(--heading);line-height:1.1;margin-bottom:20px;
+  }
+  .cover-title span { color:var(--purple); }
+  .cover-sub {
+    font-size:18px;color:var(--body);max-width:640px;margin:0 auto 32px;line-height:1.7;
+  }
+  .cover-meta {
+    font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.15em;
+    color:rgba(168,191,216,.5);
+  }
+  .cover-line {
+    display:block;width:80px;height:2px;
+    background:linear-gradient(90deg,transparent,var(--purple),transparent);
+    margin:32px auto;
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section-label {
+    font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.3em;
+    color:var(--purple);margin-bottom:12px;
+  }
+  h2 {
+    font-family:'Orbitron',sans-serif;font-weight:900;
+    font-size:clamp(20px,3vw,30px);letter-spacing:.06em;
+    color:var(--heading);margin-bottom:20px;line-height:1.2;
+  }
+  h2 span { color:var(--purple); }
+  h3 {
+    font-family:'Orbitron',sans-serif;font-weight:700;
+    font-size:clamp(14px,2vw,18px);letter-spacing:.08em;
+    color:var(--heading);margin:36px 0 14px;
+  }
+  h3 span { color:var(--cyan); }
+  h4 {
+    font-family:'Orbitron',sans-serif;font-weight:700;
+    font-size:13px;letter-spacing:.1em;color:var(--gold);
+    margin:28px 0 10px;text-transform:uppercase;
+  }
+  p { margin-bottom:16px; }
+  strong { color:var(--heading); }
+
+  /* ── DIVIDERS ── */
+  .rule {
+    border:none;border-top:1px solid rgba(255,255,255,.06);
+    margin:60px 0;
+  }
+
+  /* ── HIERARCHY DIAGRAM ── */
+  .holon-stack {
+    display:flex;flex-direction:column;align-items:center;gap:0;
+    margin:40px auto 48px;max-width:680px;
+  }
+  .holon-node {
+    width:100%;padding:14px 24px;border-radius:10px;text-align:center;
+  }
+  .holon-arrow {
+    width:2px;height:24px;
+    background:linear-gradient(180deg,rgba(224,64,251,.4),rgba(167,139,250,.3));
+    position:relative;
+  }
+  .holon-arrow::after {
+    content:'↓';position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);
+    font-size:14px;color:rgba(224,64,251,.5);
+  }
+
+  /* ── MODE CARDS ── */
+  .mode-grid {
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:20px;margin:32px 0;
+  }
+  .mode-card {
+    background:var(--bg-card);border-radius:14px;padding:28px;
+  }
+  .mode-title {
+    font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.12em;
+    margin-bottom:6px;
+  }
+  .mode-badge {
+    font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.18em;
+    opacity:.55;margin-bottom:14px;display:block;
+  }
+  .check-list { list-style:none;margin-top:14px; }
+  .check-list li { font-size:13px;padding:5px 0;display:flex;gap:8px; }
+
+  /* ── FEATURE GRID ── */
+  .feat-grid {
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:20px;margin:32px 0;
+  }
+  .feat-card {
+    background:var(--bg-card);border:1px solid rgba(255,255,255,.05);
+    border-radius:12px;padding:24px;
+  }
+  .feat-icon { font-size:1.6rem;display:block;margin-bottom:10px; }
+  .feat-title {
+    font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.1em;
+    color:var(--heading);margin-bottom:8px;
+  }
+  .feat-desc { font-size:14px;color:var(--body);line-height:1.65; }
+
+  /* ── AGENT PANEL ── */
+  .agent-grid {
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:16px;margin:28px 0;
+  }
+  .agent-card {
+    background:var(--bg-card);border-radius:12px;padding:20px;text-align:center;
+  }
+  .agent-name {
+    font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.1em;
+    margin:10px 0 6px;
+  }
+  .agent-scores { font-size:12px;color:var(--body);line-height:1.8; }
+
+  /* ── CALLOUT ── */
+  .callout {
+    border-left:3px solid var(--purple);background:rgba(224,64,251,.04);
+    border-radius:0 10px 10px 0;padding:20px 24px;margin:28px 0;font-size:15px;
+  }
+  .callout.cyan { border-color:var(--cyan);background:rgba(0,229,255,.04); }
+  .callout.gold  { border-color:var(--gold);background:rgba(253,216,53,.04); }
+  .callout.teal  { border-color:var(--teal);background:rgba(0,200,168,.04); }
+
+  /* ── CTA ── */
+  .cta-row { display:flex;gap:16px;flex-wrap:wrap;margin-top:40px; }
+  .btn-primary {
+    display:inline-block;padding:14px 28px;
+    background:linear-gradient(135deg,rgba(224,64,251,.18),rgba(167,139,250,.12));
+    border:1px solid rgba(224,64,251,.4);border-radius:8px;
+    font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:.15em;
+    color:var(--heading);transition:all .25s;
+  }
+  .btn-primary:hover { background:rgba(224,64,251,.28);text-decoration:none; }
+  .btn-secondary {
+    display:inline-block;padding:14px 28px;
+    border:1px solid rgba(255,255,255,.1);border-radius:8px;
+    font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:.15em;
+    color:var(--body);transition:all .25s;
+  }
+  .btn-secondary:hover { border-color:rgba(255,255,255,.25);color:var(--heading);text-decoration:none; }
+
+  /* ── TOC ── */
+  .toc {
+    background:var(--bg-card);border:1px solid rgba(255,255,255,.06);
+    border-radius:14px;padding:32px;margin:48px 0;
+  }
+  .toc-title {
+    font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.15em;
+    color:var(--body);margin-bottom:20px;
+  }
+  .toc ol { padding-left:20px; }
+  .toc li { padding:5px 0;font-size:14px; }
+  .toc a { color:var(--body); }
+  .toc a:hover { color:var(--purple); }
+  .toc ol ol { margin-top:4px; }
+
+  /* ── FOOTER ── */
+  footer {
+    position:relative;z-index:1;
+    border-top:1px solid rgba(255,255,255,.05);
+    padding:48px 40px;text-align:center;
+  }
+  .footer-brand {
+    font-family:'Orbitron',sans-serif;font-size:16px;font-weight:900;
+    letter-spacing:.2em;color:var(--heading);margin-bottom:8px;
+  }
+  .footer-brand span { color:var(--purple); }
+  .footer-copy { font-size:13px;color:rgba(168,191,216,.4);margin-top:8px; }
+  .footer-links { display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin:16px 0; }
+  .footer-links a { font-size:12px;color:rgba(168,191,216,.5); }
+
+  @media(max-width:640px) {
+    .wrap,.wrap-wide,.cover { padding:60px 20px; }
+    nav { padding:14px 20px; }
+    .cta-row { flex-direction:column; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="star-canvas"></canvas>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="https://web6.oasisomniverse.one" class="nav-brand">OASIS <span>WEB6</span></a>
+  <ul class="nav-links">
+    <li><a href="#abstract">ABSTRACT</a></li>
+    <li><a href="#braid-framework">BRAID</a></li>
+    <li><a href="#ppd">PPD &amp; COST</a></li>
+    <li><a href="#benchmarks">BENCHMARKS</a></li>
+    <li><a href="#holonic-braid">HOLONIC BRAID</a></li>
+    <li><a href="#reasoning-network">REASONING NETWORK</a></li>
+    <li><a href="#learning">LEARNING</a></li>
+    <li><a href="#antifragile">ANTI-FRAGILITY</a></li>
+    <li><a href="#integration">INTEGRATION</a></li>
+    <li><a href="#agi">PATH TO AGI</a></li>
+    <li><a href="#references">REFERENCES</a></li>
+    <li><a href="https://web6.oasisomniverse.one">WEB6 →</a></li>
+  </ul>
+</nav>
+
+<!-- ── COVER ── -->
+<div class="cover">
+  <div class="cover-kicker">OASIS WEB6 · WHITEPAPER</div>
+  <h1 class="cover-title">HOLONIC BRAID &amp;<br><span>REASONING NETWORK</span></h1>
+  <span class="cover-line"></span>
+  <p class="cover-sub">Fractal holonic shared memory, collective intelligence and the Meta-Orchestration Intelligence Layer — a principled path to AGI modelled after nature, unity consciousness and the infinite intelligence of the universe.</p>
+  <div class="cover-meta">VERSION 3.0 &nbsp;·&nbsp; JUNE 2026 &nbsp;·&nbsp; NEXTGEN SOFTWARE UK LTD &nbsp;·&nbsp; OASIS WEB6</div>
+</div>
+
+<!-- ── TOC ── -->
+<div class="wrap">
+  <div class="toc">
+    <div class="toc-title">TABLE OF CONTENTS</div>
+    <ol>
+      <li><a href="#abstract">Abstract</a></li>
+      <li><a href="#braid-framework">The BRAID Framework (OpenSERV)</a>
+        <ol>
+          <li><a href="#two-stage">Two-Stage Protocol: Generator + Solver</a></li>
+          <li><a href="#ppd">Performance Per Dollar (PPD) &amp; Cost Equations</a></li>
+          <li><a href="#benchmarks">Benchmark Results</a></li>
+          <li><a href="#scale-problem">The Scale Problem: Why Sharing Matters</a></li>
+        </ol>
+      </li>
+      <li><a href="#holonic-braid">Holonic BRAID — The OASIS Extension</a>
+        <ol>
+          <li><a href="#shared-graph-library">The Shared Graph Library as a Holon</a></li>
+          <li><a href="#cross-chain">Cross-Chain Persistence</a></li>
+          <li><a href="#what-is-a-holon">What Is a Holon?</a></li>
+          <li><a href="#session-holon">The Session Holon</a></li>
+          <li><a href="#hierarchy">The Full Holonic Hierarchy</a></li>
+          <li><a href="#membrane">Membrane Rules &amp; Privacy</a></li>
+          <li><a href="#collective-intelligence">Collective Intelligence Formation</a></li>
+        </ol>
+      </li>
+      <li><a href="#reasoning-network">The Reasoning Network — Meta-Orchestration Intelligence Layer</a>
+        <ol>
+          <li><a href="#controller">4.1 The Controller Agent</a></li>
+          <li><a href="#agent-scoring">4.2 Agent Scoring, Metadata &amp; Composite Score</a></li>
+          <li><a href="#modes">4.3 Three Dispatch Modes</a></li>
+          <li><a href="#mermaid">4.4 Mermaid Execution Plans</a></li>
+          <li><a href="#fallback">4.5 Timeout, Loop Detection &amp; Fallback Logic</a></li>
+          <li><a href="#learning">4.6 Continuous Learning &amp; Score Evolution</a></li>
+          <li><a href="#antifragile">4.7 Anti-Fragility &amp; Conceptual Stack</a></li>
+        </ol>
+      </li>
+      <li><a href="#integration">Integration: Holonic Braid + Reasoning Network</a></li>
+      <li><a href="#web6">Position Within OASIS WEB6</a></li>
+      <li><a href="#agi">A Path to AGI Through Unity Consciousness</a></li>
+      <li><a href="#conclusion">Conclusion</a></li>
+      <li><a href="#references">References</a></li>
+    </ol>
+  </div>
+</div>
+
+<!-- ── ABSTRACT ── -->
+<div class="wrap" id="abstract">
+  <div class="section-label">01 · ABSTRACT</div>
+  <h2>Abstract</h2>
+
+  <p>This whitepaper introduces two interconnected architectures that together form the intelligence foundation of <strong>OASIS WEB6</strong>, built upon the BRAID framework (Amçalar &amp; Cinar, <a href="https://arxiv.org/abs/2512.15959" target="_blank" rel="noopener">arXiv:2512.15959</a>) developed within the OpenSERV platform:</p>
+
+  <p><strong>Holonic BRAID</strong> extends the OpenSERV BRAID (Bounded Reasoning for Autonomous Inference and Decisions) framework with a fractal, hierarchical shared memory system modelled after the holonic structures found in nature. Every AI session produces a memory holon. That holon belongs to a parent agent holon, which belongs to a user holon, which belongs to groups, which belongs to geographic communities, all the way up to the Earth holon. At each boundary, user-configurable membrane rules govern exactly what memory propagates upward. The result is genuine collective intelligence — built bottom-up from billions of individual interactions — rather than the fragmented, siloed AI memory that exists today.</p>
+
+  <p><strong>The Reasoning Network</strong> is a Meta-Orchestration Intelligence Layer built on top of Holonic Braid. A controller agent manages a network of specialised AI reasoning agents (GPT-5, Claude, Grok, Gemini and others), each carrying live performance metadata scored by problem category and speed. The controller dispatches problems in one of three modes — serial (cost-optimised), parallel (accuracy-optimised) or decomposed (complex problems) — and assembles the best execution plan from the results. All outcomes feed back into the Holonic Braid memory hierarchy, continuously improving future routing decisions.</p>
+
+  <p>Together these systems represent a fundamentally different approach to machine intelligence: one modelled after the infinite intelligence of nature and the universe, built through <em>unity consciousness</em> rather than the fragmented separation consciousness that currently defines AI, society and human civilisation.</p>
+
+  <div class="callout">
+    <strong>Core thesis:</strong> Collective intelligence cannot be engineered top-down. It must emerge bottom-up, exactly as it does in nature — through billions of individual interactions propagating upward through a fractal holonic hierarchy, unified by shared memory and governed by self-chosen membrane rules at every boundary.
+  </div>
+</div>
+
+<hr class="rule">
+
+<!-- ── BRAID FRAMEWORK ── -->
+<div class="wrap" id="braid-framework">
+  <div class="section-label">02 · THE BRAID FRAMEWORK</div>
+  <h2>The BRAID Framework — <span>OpenSERV Foundation</span></h2>
+
+  <p><strong>BRAID</strong> — Bounded Reasoning for Autonomous Inference and Decisions — is a multi-agent reasoning framework introduced by Amçalar &amp; Cinar (<a href="https://arxiv.org/abs/2512.15959" target="_blank" rel="noopener">arXiv:2512.15959</a>) and implemented within the OpenSERV platform. It is the technical foundation upon which the OASIS Holonic BRAID architecture is built.</p>
+
+  <p>The core observation driving BRAID is that generating a reasoning graph for a task type is expensive but reusable — while executing that graph against a specific task instance is cheap. By separating these two concerns into a two-stage protocol, BRAID achieves dramatic Performance Per Dollar (PPD) gains over conventional single-model approaches.</p>
+
+  <div class="callout">
+    <strong>Key result:</strong> BRAID delivers a <strong>74× PPD gain</strong> on GSM-Hard mathematical reasoning benchmarks (gpt-4.1 Generator → gpt-5-nano-minimal Solver) and a <strong>30× gain</strong> on procedural tasks, compared to a GPT-5-medium full-reasoning baseline. Accuracy simultaneously improves: GSM-Hard goes from <strong>94% → 98%</strong>.
+  </div>
+
+  <h3 id="two-stage">2.1 — Two-Stage Protocol: Generator + Solver</h3>
+
+  <p>BRAID separates reasoning into two distinct roles:</p>
+
+  <div class="feat-grid">
+    <div class="feat-card" style="border-color:rgba(0,229,255,.2)">
+      <span class="feat-icon">🧠</span>
+      <div class="feat-title" style="color:#00e5ff">GENERATOR STAGE</div>
+      <div class="feat-desc">A <strong>high-tier model</strong> (e.g. gpt-4.1) analyses a task type τ and constructs a structured <strong>Mermaid reasoning graph</strong> — a step-by-step execution blueprint that captures the optimal reasoning strategy for that class of problem. This graph is generated <em>once per task type</em>, not once per task.</div>
+    </div>
+    <div class="feat-card" style="border-color:rgba(167,139,250,.2)">
+      <span class="feat-icon">⚙️</span>
+      <div class="feat-title" style="color:#a78bfa">SOLVER STAGE</div>
+      <div class="feat-desc">A <strong>low-tier model</strong> (e.g. gpt-5-nano-minimal) receives the pre-generated Mermaid graph and executes it against the specific task instance. Because the reasoning strategy is already encoded in the graph, the solver needs far less compute — and produces results competitive with or superior to the high-tier model running alone.</div>
+    </div>
+  </div>
+
+  <div class="callout cyan" style="font-family:'Share Tech Mono',monospace;font-size:13px;line-height:1.9">
+<strong>Two-stage flow:</strong><br><br>
+Task τ instance arrives<br>
+&nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+[LOOKUP] Does graph library contain a reasoning graph for task type τ?<br>
+&nbsp;&nbsp;&nbsp;&nbsp;├── YES → retrieve graph from library holon (zero generation cost)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;└── NO  → GENERATOR (gpt-4.1) creates Mermaid graph for τ<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; → store new graph in library holon<br>
+&nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+SOLVER (gpt-5-nano-minimal) executes graph against τ instance<br>
+&nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+Result + performance data → Session Holon → Holonic Braid hierarchy
+  </div>
+
+  <h3 id="ppd">2.2 — Performance Per Dollar (PPD) &amp; Cost Equations</h3>
+
+  <p>PPD is the primary metric used to evaluate BRAID efficiency. It measures the accuracy gain achieved per unit of inference cost, relative to a single-model baseline.</p>
+
+  <h4>Cost Model — Holonic BRAID at Scale</h4>
+
+  <p>Let:</p>
+  <ul style="padding-left:24px;margin-bottom:16px;font-family:'Share Tech Mono',monospace;font-size:14px;line-height:2.1">
+    <li style="padding:2px 0"><strong>Q</strong> = number of unique task types in the library</li>
+    <li style="padding:2px 0"><strong>T</strong> = total number of task instances to solve</li>
+    <li style="padding:2px 0"><strong>C<sub>gen</sub></strong> = cost of one Generator call (high-tier model, e.g. gpt-4.1)</li>
+    <li style="padding:2px 0"><strong>C<sub>solve</sub></strong> = cost of one Solver call (low-tier model, e.g. gpt-5-nano-minimal)</li>
+    <li style="padding:2px 0"><strong>C<sub>GPT5</sub></strong> = cost of one full GPT-5-medium call (baseline comparator)</li>
+  </ul>
+
+  <div class="callout gold">
+    <strong>Total cost — Holonic BRAID:</strong><br>
+    <span style="font-family:'Share Tech Mono',monospace;font-size:15px">Cost = Q · C<sub>gen</sub> + T · C<sub>solve</sub></span><br><br>
+    <strong>Performance Per Dollar (PPD):</strong><br>
+    <span style="font-family:'Share Tech Mono',monospace;font-size:15px">PPD = (C<sub>GPT5</sub> · T) / (Q · C<sub>gen</sub> + T · C<sub>solve</sub>)</span><br><br>
+    As T grows large relative to Q (many tasks, few unique task types), the Q·C<sub>gen</sub> term becomes negligible and PPD approaches its maximum: <strong>C<sub>GPT5</sub> / C<sub>solve</sub></strong>.
+  </div>
+
+  <p>At T = 10,000 tasks and Q = 50 unique task types: the 50 generator calls are a one-time cost shared across 10,000 solver calls. The generator cost is 0.5% of the total. The PPD on GSM-Hard reaches <strong>74×</strong> the baseline.</p>
+
+  <h4>Why BRAID Without Sharing Collapses at Scale</h4>
+
+  <p>Standard BRAID (without the Holonic shared library) requires each agent instance to generate its own reasoning graph for each task type it encounters. When many agents independently process similar tasks, the generator cost is paid repeatedly — once per agent per task type rather than once globally.</p>
+
+  <div class="callout" style="border-color:var(--rose);background:rgba(255,95,160,.04)">
+    <strong>BRAID no-share PPD at scale:</strong><br>
+    <span style="font-family:'Share Tech Mono',monospace;font-size:14px">Cost<sub>no-share</sub> = T · C<sub>gen</sub> + T · C<sub>solve</sub> = T · (C<sub>gen</sub> + C<sub>solve</sub>)</span><br><br>
+    As T → ∞, PPD<sub>no-share</sub> → C<sub>GPT5</sub> / (C<sub>gen</sub> + C<sub>solve</sub>) ≈ <strong>1.5×</strong><br><br>
+    The savings collapse because the expensive generator is called for every task rather than once per task type. This is the core problem that Holonic BRAID solves.
+  </div>
+
+  <h3 id="benchmarks">2.3 — Benchmark Results</h3>
+
+  <p>BRAID was evaluated against three standard reasoning benchmarks. Holonic BRAID extends these gains — maintaining them at scale where standard BRAID degrades.</p>
+
+  <div style="overflow-x:auto;margin:32px 0">
+    <table style="width:100%;border-collapse:collapse;font-size:14px;font-family:'Rajdhani',sans-serif">
+      <thead>
+        <tr style="border-bottom:1px solid rgba(255,255,255,.1)">
+          <th style="text-align:left;padding:12px 16px;font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.15em;color:var(--body)">BENCHMARK</th>
+          <th style="text-align:center;padding:12px 16px;font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.15em;color:var(--body)">BASELINE (GPT-5-MEDIUM)</th>
+          <th style="text-align:center;padding:12px 16px;font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.15em;color:var(--cyan)">BRAID / HOLONIC BRAID</th>
+          <th style="text-align:center;padding:12px 16px;font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.15em;color:var(--gold)">PPD GAIN</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid rgba(255,255,255,.04)">
+          <td style="padding:14px 16px;color:var(--heading)">GSM-Hard (math reasoning)</td>
+          <td style="padding:14px 16px;text-align:center;color:var(--body)">94% accuracy</td>
+          <td style="padding:14px 16px;text-align:center;color:#00e5ff">98% accuracy</td>
+          <td style="padding:14px 16px;text-align:center;color:#fdd835;font-family:'Share Tech Mono',monospace">74×</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(255,255,255,.04)">
+          <td style="padding:14px 16px;color:var(--heading)">SCALE MultiChallenge</td>
+          <td style="padding:14px 16px;text-align:center;color:var(--body)">23.9%</td>
+          <td style="padding:14px 16px;text-align:center;color:#00e5ff">45.2%</td>
+          <td style="padding:14px 16px;text-align:center;color:#fdd835;font-family:'Share Tech Mono',monospace">significant</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(255,255,255,.04)">
+          <td style="padding:14px 16px;color:var(--heading)">AdvancedIF (instruction following)</td>
+          <td style="padding:14px 16px;text-align:center;color:var(--body)">baseline</td>
+          <td style="padding:14px 16px;text-align:center;color:#00e5ff">substantial gain</td>
+          <td style="padding:14px 16px;text-align:center;color:#fdd835;font-family:'Share Tech Mono',monospace">measured</td>
+        </tr>
+        <tr>
+          <td style="padding:14px 16px;color:var(--heading)">Procedural tasks</td>
+          <td style="padding:14px 16px;text-align:center;color:var(--body)">1× (baseline)</td>
+          <td style="padding:14px 16px;text-align:center;color:#00e5ff">equivalent accuracy</td>
+          <td style="padding:14px 16px;text-align:center;color:#fdd835;font-family:'Share Tech Mono',monospace">30×</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h4>BRAID No-Share vs. Holonic BRAID — Comparison</h4>
+
+  <div style="overflow-x:auto;margin:24px 0 32px">
+    <table style="width:100%;border-collapse:collapse;font-size:14px">
+      <thead>
+        <tr style="border-bottom:1px solid rgba(255,255,255,.1)">
+          <th style="text-align:left;padding:12px 16px;font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.15em;color:var(--body)">APPROACH</th>
+          <th style="text-align:center;padding:12px 16px;font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.15em;color:var(--body)">PPD (LOW T)</th>
+          <th style="text-align:center;padding:12px 16px;font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.15em;color:var(--body)">PPD (HIGH T)</th>
+          <th style="text-align:left;padding:12px 16px;font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.15em;color:var(--body)">SCALE BEHAVIOUR</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid rgba(255,255,255,.04)">
+          <td style="padding:14px 16px;color:var(--heading)">GPT-5-medium (baseline)</td>
+          <td style="padding:14px 16px;text-align:center;color:var(--body)">1.0×</td>
+          <td style="padding:14px 16px;text-align:center;color:var(--body)">1.0×</td>
+          <td style="padding:14px 16px;color:var(--body)">Stable, expensive</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(255,255,255,.04)">
+          <td style="padding:14px 16px;color:var(--heading)">BRAID (no sharing)</td>
+          <td style="padding:14px 16px;text-align:center;color:#fdd835">74× / 30×</td>
+          <td style="padding:14px 16px;text-align:center;color:#ff5fa0">~1.5×</td>
+          <td style="padding:14px 16px;color:#ff5fa0">Collapses as T grows</td>
+        </tr>
+        <tr>
+          <td style="padding:14px 16px;color:var(--heading)">Holonic BRAID</td>
+          <td style="padding:14px 16px;text-align:center;color:#00e5ff">74× / 30×</td>
+          <td style="padding:14px 16px;text-align:center;color:#00e5ff">74×+ sustained</td>
+          <td style="padding:14px 16px;color:#00e5ff">Improves with scale</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 id="scale-problem">2.4 — The Scale Problem: Why Sharing Matters</h3>
+
+  <p>The BRAID paper demonstrates impressive PPD gains in single-agent settings. However, real-world deployment involves many agents handling similar tasks independently. Without a shared graph library, each agent regenerates reasoning graphs for task types already solved by thousands of other agents. The generator cost, amortised across an entire platform, is astronomical — and the PPD gains evaporate.</p>
+
+  <p>This is the problem that Holonic BRAID was designed to solve. By storing reasoning graphs as holons in a shared, replicated library — accessible to all agents with appropriate permissions — every task type that any agent has ever reasoned about is available to all future agents at zero generation cost. The generator is called once globally; the solver is called once per task instance. This is the only way to sustain BRAID's PPD gains at platform scale.</p>
+
+  <div class="callout teal">
+    <strong>The OASIS insight:</strong> BRAID solves the per-agent reasoning cost problem. Holonic BRAID solves the cross-agent, cross-session, cross-scale sharing problem. Together they form a system where PPD <em>improves</em> with scale rather than collapsing — because every new task type solved anywhere enriches the shared library for everyone.
+  </div>
+</div>
+
+<hr class="rule">
+
+<!-- ── HOLONIC BRAID ── -->
+<div class="wrap" id="holonic-braid">
+  <div class="section-label">03 · HOLONIC BRAID — OASIS EXTENSION</div>
+  <h2>Holonic BRAID — <span>The OASIS Extension</span></h2>
+
+  <p>Holonic BRAID extends the OpenSERV BRAID framework with two foundational additions: a <strong>shared reasoning graph library</strong> stored as a holonic data structure, and <strong>cross-chain persistence</strong> across multiple storage backends via the OASIS COSMIC ORM. These additions transform BRAID from a per-agent optimisation into a platform-scale collective intelligence system.</p>
+
+  <h3 id="shared-graph-library">3.1 — The Shared Graph Library as a Holon</h3>
+
+  <p>In Holonic BRAID, the reasoning graph library is not a flat database — it is itself a <strong>holon</strong>. The library holon is a parent holon whose children are individual graph holons, one per task type τ.</p>
+
+  <div class="callout cyan" style="font-family:'Share Tech Mono',monospace;font-size:13px;line-height:2">
+<strong>Library holon structure:</strong><br><br>
+LIBRARY_HOLON {<br>
+&nbsp;&nbsp;Id: globally-unique GUID<br>
+&nbsp;&nbsp;Children: [ GRAPH_HOLON(τ₁), GRAPH_HOLON(τ₂), … GRAPH_HOLON(τₙ) ]<br>
+&nbsp;&nbsp;ProviderUniqueStorageKey: { MongoDB: "…", Solana: "…", IPFS: "…" }<br>
+}<br><br>
+GRAPH_HOLON(τ) {<br>
+&nbsp;&nbsp;Id: globally-unique GUID<br>
+&nbsp;&nbsp;Parent: LIBRARY_HOLON.Id<br>
+&nbsp;&nbsp;Metadata: { task_type: τ, created_by: agent_id, created_at: timestamp,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;usage_count: N, avg_solver_accuracy: 0.97 }<br>
+&nbsp;&nbsp;MermaidGraph: "graph TD; A[Parse input]→B[Classify]→…"<br>
+&nbsp;&nbsp;ProviderUniqueStorageKey: { MongoDB: "…", Solana: "…", IPFS: "…" }<br>
+}
+  </div>
+
+  <p>The <strong>lookup-or-create</strong> pattern governs every task: when an agent encounters task type τ, it queries the library holon first. If a graph exists, it is retrieved and passed directly to the Solver. If no graph exists, the Generator is invoked and the resulting graph is stored as a new child holon of the library — immediately available to all other agents.</p>
+
+  <div class="feat-grid">
+    <div class="feat-card">
+      <span class="feat-icon">🔍</span>
+      <div class="feat-title">LOOKUP-OR-CREATE</div>
+      <div class="feat-desc">Every agent checks the shared library before invoking the Generator. As the library grows, Generator calls become increasingly rare — amortised across the full agent population.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">📈</span>
+      <div class="feat-title">IMPROVING ACCURACY</div>
+      <div class="feat-desc">Graph holons accumulate quality metadata over time: usage count, average solver accuracy, user satisfaction. The Reasoning Network preferentially selects higher-quality graphs, and graphs can be regenerated when accuracy degrades below threshold.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🌐</span>
+      <div class="feat-title">GLOBALLY SHARED</div>
+      <div class="feat-desc">Any agent with read access to the library holon benefits from graphs created by any other agent. A reasoning graph generated by one user's session is instantly available to millions of other sessions — at zero marginal cost.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🔒</span>
+      <div class="feat-title">MEMBRANE GOVERNED</div>
+      <div class="feat-desc">Library access is governed by membrane rules. Public graphs are globally readable. Private or proprietary graphs can be scoped to a user, group or organisation — with the same per-field granularity as all other holons in the system.</div>
+    </div>
+  </div>
+
+  <h3 id="cross-chain">3.2 — Cross-Chain Persistence</h3>
+
+  <p>Holons — including reasoning graph holons — are stored via the <strong>OASIS COSMIC ORM</strong>, the universal data abstraction layer that spans 40+ storage providers. Each holon carries a <code>ProviderUniqueStorageKey</code> per configured backend, allowing the same holon to be read from or written to any provider transparently.</p>
+
+  <div class="feat-grid">
+    <div class="feat-card" style="border-color:rgba(0,229,255,.2)">
+      <span class="feat-icon">🗄️</span>
+      <div class="feat-title" style="color:#00e5ff">MONGODB</div>
+      <div class="feat-desc">Primary fast-access store for reasoning graph holons. Rich query support for task type lookup, metadata filtering and graph retrieval. Suitable for low-latency live agent dispatch.</div>
+    </div>
+    <div class="feat-card" style="border-color:rgba(167,139,250,.2)">
+      <span class="feat-icon">⛓️</span>
+      <div class="feat-title" style="color:#a78bfa">SOLANA</div>
+      <div class="feat-desc">Blockchain persistence layer for immutable graph provenance. When a reasoning graph is published to the shared library, its hash and authorship are anchored on-chain — providing tamper-evident proof of origin and creation time.</div>
+    </div>
+    <div class="feat-card" style="border-color:rgba(0,200,168,.2)">
+      <span class="feat-icon">🌍</span>
+      <div class="feat-title" style="color:#00c8a8">IPFS</div>
+      <div class="feat-desc">Decentralised content-addressed storage for censorship-resistant, permanent graph availability. Mermaid graph content is stored on IPFS; the CID (content identifier) is recorded in the holon and anchored on Solana.</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>ProviderUniqueStorageKey:</strong> Each holon stores a map of backend → storage key. The COSMIC ORM resolves reads and writes to the configured provider transparently. An agent does not need to know whether a graph is coming from MongoDB, IPFS or Solana — the same holon Id returns the same graph from any backend. Failover between providers is automatic.
+  </div>
+
+  <h4>Consistency &amp; Accuracy Mechanisms</h4>
+
+  <div style="overflow-x:auto;margin:24px 0 32px">
+    <table style="width:100%;border-collapse:collapse;font-size:14px">
+      <thead>
+        <tr style="border-bottom:1px solid rgba(255,255,255,.1)">
+          <th style="text-align:left;padding:12px 16px;font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.15em;color:var(--body)">MECHANISM</th>
+          <th style="text-align:left;padding:12px 16px;font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.15em;color:var(--body)">HOW IT WORKS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid rgba(255,255,255,.04)">
+          <td style="padding:12px 16px;color:var(--heading)">Graph versioning</td>
+          <td style="padding:12px 16px;color:var(--body)">Each update creates a new graph holon version; previous versions remain queryable for reproducibility</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(255,255,255,.04)">
+          <td style="padding:12px 16px;color:var(--heading)">Accuracy threshold regeneration</td>
+          <td style="padding:12px 16px;color:var(--body)">If average solver accuracy on a graph drops below a configurable threshold, the Generator is reinvoked to produce an improved replacement</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(255,255,255,.04)">
+          <td style="padding:12px 16px;color:var(--heading)">Conflict resolution</td>
+          <td style="padding:12px 16px;color:var(--body)">When two agents independently generate graphs for the same task type τ, the Reasoning Network compares both and selects or merges the superior version, then updates the library holon</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(255,255,255,.04)">
+          <td style="padding:12px 16px;color:var(--heading)">Membrane-gated writes</td>
+          <td style="padding:12px 16px;color:var(--body)">Agents can only write new graphs to library holons they have write permission for; public library writes are curated to prevent pollution</td>
+        </tr>
+        <tr>
+          <td style="padding:12px 16px;color:var(--heading)">On-chain anchoring</td>
+          <td style="padding:12px 16px;color:var(--body)">Solana anchors provide tamper-evident immutability — any graph modification produces a new chain record, making the full audit trail available</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>The holonic memory system continues below into the full hierarchy that underpins the rest of the OASIS WEB6 intelligence layer — including session holons, user holons, geographic holons and the Earth holon.</p>
+
+  <h3 id="what-is-a-holon">3.3 — What Is a Holon?</h3>
+
+
+  <p>The term <em>holonic</em> derives from philosopher Arthur Koestler's concept of the <strong>holon</strong> — something that is simultaneously a whole in itself and a part of a larger whole. This is the fundamental structure of nature: atoms are wholes that are parts of molecules, which are wholes that are parts of cells, which are wholes that are parts of organs, and so on through every scale of existence.</p>
+
+  <p>Holonic Braid applies this same fractal logic to AI memory, knowledge and intelligence. Rather than isolated, amnesiac AI sessions that forget everything between conversations — or monolithic centralised models that aggregate data without consent or nuance — Holonic Braid creates a living, hierarchical, consent-governed memory fabric that mirrors how intelligence actually works in nature.</p>
+
+  <h3 id="what-is-a-holon">2.1 — What Is a Holon?</h3>
+
+  <p>In the context of Holonic Braid, a <strong>holon</strong> is a structured memory unit that:</p>
+  <ul style="padding-left:24px;margin-bottom:16px">
+    <li style="padding:4px 0">Contains its own internal state, knowledge and context</li>
+    <li style="padding:4px 0">Has a defined boundary — the <em>membrane</em> — through which information can pass in or out</li>
+    <li style="padding:4px 0">Is simultaneously a complete unit and a component of a larger parent holon</li>
+    <li style="padding:4px 0">Can have multiple child holons and belong to multiple parent holons simultaneously</li>
+    <li style="padding:4px 0">Participates in bidirectional information flow: children propagate upward, parents contextualise downward</li>
+  </ul>
+
+  <h3 id="session-holon">3.4 — The Session Holon</h3>
+
+  <p>Every AI conversation or task execution produces a <strong>session holon</strong>. This is the atomic unit of the Holonic Braid system. A session holon captures:</p>
+
+  <div class="feat-grid">
+    <div class="feat-card">
+      <span class="feat-icon">💬</span>
+      <div class="feat-title">CONVERSATION MEMORY</div>
+      <div class="feat-desc">The full context of the session — messages, reasoning steps, conclusions and outcomes — structured as a queryable knowledge object.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">📊</span>
+      <div class="feat-title">PERFORMANCE METADATA</div>
+      <div class="feat-desc">How well did this agent perform in this session? What problem categories were addressed? Speed, accuracy and user satisfaction signals.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🔗</span>
+      <div class="feat-title">RELATIONAL LINKS</div>
+      <div class="feat-desc">Connections to related session holons, referenced knowledge holons, and the parent agent holon — forming a queryable knowledge graph.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🔬</span>
+      <div class="feat-title">MEMBRANE CONFIGURATION</div>
+      <div class="feat-desc">Which parts of this session propagate to the parent agent holon? The user defines this per session, per field, with granular control.</div>
+    </div>
+  </div>
+
+  <h3 id="hierarchy">3.5 — The Full Holonic Hierarchy</h3>
+
+  <p>Session holons are the leaves of a vast fractal tree. Each level is a whole in itself and a part of something larger:</p>
+</div>
+
+<!-- Hierarchy diagram (full width) -->
+<div class="wrap-wide">
+  <div class="holon-stack">
+
+    <div class="holon-node" style="background:rgba(253,216,53,.07);border:1px solid rgba(253,216,53,.25);max-width:680px">
+      <div style="font-family:'Orbitron',sans-serif;font-size:13px;letter-spacing:.12em;color:#fdd835">🌍 EARTH HOLON</div>
+      <div style="font-size:13px;color:var(--body);margin-top:5px">Universal planetary collective intelligence. The sum of all human knowledge, experience and intention as expressed through every AI interaction on Earth. The omega point of the hierarchy.</div>
+    </div>
+    <div class="holon-arrow" style="height:28px"></div>
+
+    <div class="holon-node" style="background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.2);max-width:640px">
+      <div style="font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.1em;color:#a78bfa">🌐 CONTINENT HOLONS</div>
+      <div style="font-size:13px;color:var(--body);margin-top:5px">Each continent forms a collective intelligence holon — aggregating the shared memory of every country within it, filtered by continental membrane rules.</div>
+    </div>
+    <div class="holon-arrow" style="height:28px"></div>
+
+    <div class="holon-node" style="background:rgba(167,139,250,.05);border:1px solid rgba(167,139,250,.15);max-width:600px">
+      <div style="font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.1em;color:#a78bfa">🏳️ COUNTRY HOLONS</div>
+      <div style="font-size:13px;color:var(--body);margin-top:5px">National collective intelligence. Policies, culture, shared knowledge and collective experience at the country level.</div>
+    </div>
+    <div class="holon-arrow" style="height:28px"></div>
+
+    <div class="holon-node" style="background:rgba(0,229,255,.05);border:1px solid rgba(0,229,255,.15);max-width:560px">
+      <div style="font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.1em;color:#00e5ff">🗺️ COUNTY / REGION HOLONS</div>
+      <div style="font-size:13px;color:var(--body);margin-top:5px">Regional collective intelligence. Local government, community initiatives and shared regional context.</div>
+    </div>
+    <div class="holon-arrow" style="height:28px"></div>
+
+    <div class="holon-node" style="background:rgba(0,229,255,.04);border:1px solid rgba(0,229,255,.12);max-width:520px">
+      <div style="font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.1em;color:#00e5ff">🏙️ CITY / TOWN HOLONS</div>
+      <div style="font-size:13px;color:var(--body);margin-top:5px">Urban collective intelligence. City services, local businesses, cultural institutions and community knowledge.</div>
+    </div>
+    <div class="holon-arrow" style="height:28px"></div>
+
+    <div class="holon-node" style="background:rgba(0,200,168,.04);border:1px solid rgba(0,200,168,.12);max-width:480px">
+      <div style="font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.1em;color:#00c8a8">🏘️ DISTRICT / AREA HOLONS → NEIGHBOURHOOD HOLONS</div>
+      <div style="font-size:13px;color:var(--body);margin-top:5px">Hyperlocal intelligence. The knowledge and shared memory of people in close geographic proximity — enabling truly local-aware AI.</div>
+    </div>
+    <div class="holon-arrow" style="height:28px"></div>
+
+    <div class="holon-node" style="background:rgba(0,229,255,.04);border:1px solid rgba(0,229,255,.15);max-width:440px">
+      <div style="font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.1em;color:#00e5ff">👥 ORG / GROUP HOLONS <span style="font-size:10px;opacity:.6">(MULTIPLE MEMBERSHIPS)</span></div>
+      <div style="font-size:13px;color:var(--body);margin-top:5px">A user holon can belong to many group holons simultaneously: friends, family, colleagues, clubs, communities, professional associations, faith groups and any other affiliation. Each group has its own membrane rules and its own shared memory.</div>
+    </div>
+    <div class="holon-arrow" style="height:28px"></div>
+
+    <div class="holon-node" style="background:rgba(224,64,251,.05);border:1px solid rgba(224,64,251,.18);max-width:380px">
+      <div style="font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.1em;color:#e040fb">👤 USER HOLON</div>
+      <div style="font-size:13px;color:var(--body);margin-top:5px">The unified identity holon for a single human user. Contains the aggregated shared memory of all their agents, filtered through user-level membrane rules. Linked to their OASIS avatar.</div>
+    </div>
+    <div class="holon-arrow" style="height:28px"></div>
+
+    <div class="holon-node" style="background:rgba(224,64,251,.04);border:1px solid rgba(224,64,251,.14);max-width:340px">
+      <div style="font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.1em;color:#e040fb">🤖 AGENT HOLON</div>
+      <div style="font-size:13px;color:var(--body);margin-top:5px">One AI agent (e.g. Claude, GPT-5, a custom OASIS agent) as used by one specific user. Contains the aggregate memory of all sessions that user has had with that agent.</div>
+    </div>
+    <div class="holon-arrow" style="height:28px"></div>
+
+    <div class="holon-node" style="background:rgba(224,64,251,.03);border:1px solid rgba(224,64,251,.1);max-width:300px">
+      <div style="font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.1em;color:#e040fb">💬 SESSION HOLON</div>
+      <div style="font-size:13px;color:var(--body);margin-top:5px">A single conversation or task execution. The atomic unit. Everything begins here.</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="callout cyan">
+    <strong>Key insight:</strong> The hierarchy is fractal — the same holon structure repeats at every scale. A neighbourhood holon has the same architecture as a session holon: internal state, membrane, parent and children. The pattern is self-similar from the smallest conversation to the Earth itself.
+  </div>
+
+  <h3 id="membrane">3.6 — Membrane Rules &amp; Privacy</h3>
+
+  <p>The <strong>membrane</strong> is the most critical component of Holonic Braid. It is the governed boundary through which information passes between holons. Without membranes, you have surveillance. Without membranes, collective intelligence becomes collective exposure. Membranes make the system safe, ethical and genuinely empowering.</p>
+
+  <p>At every level of the hierarchy, membrane rules define:</p>
+
+  <div class="feat-grid">
+    <div class="feat-card">
+      <span class="feat-icon">🔒</span>
+      <div class="feat-title">WHAT PROPAGATES</div>
+      <div class="feat-desc">Which fields, topics or knowledge categories from this holon are allowed to flow upward to the parent. Per-field granularity — identical to the OASIS WEB4 field-level data control system.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">📋</span>
+      <div class="feat-title">WHAT IS RETAINED</div>
+      <div class="feat-desc">What parts of the session are persisted locally in the agent/user holon vs. discarded after the session ends. The user can choose ephemeral, session-scoped or permanent retention per topic.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">👁️</span>
+      <div class="feat-title">WHO CAN READ</div>
+      <div class="feat-desc">Which parent holons, sibling holons or external agents are permitted to query memory from this holon. Read access is separate from write/propagation access.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">⚡</span>
+      <div class="feat-title">TRIGGER CONDITIONS</div>
+      <div class="feat-desc">Rules can be conditional: "propagate this memory to my work group holon only if the topic is tagged as professional" or "share with my neighbourhood holon only anonymised aggregate patterns."</div>
+    </div>
+  </div>
+
+  <div class="callout gold">
+    <strong>Privacy by design:</strong> Nothing propagates without explicit permission. The default is private. The user adds propagation permissions; they are never assumed. This is the inverse of today's data economy.
+  </div>
+
+  <h3 id="collective-intelligence">3.7 — Collective Intelligence Formation</h3>
+
+  <p>As lower-level holons propagate permitted memory upward through their membrane rules, <strong>genuine collective intelligence forms at every level</strong>. This is not data aggregation or model fine-tuning in the traditional sense — it is a living, continuously updated shared knowledge fabric.</p>
+
+  <p>Consider the chain: a million individual session holons (each recording a conversation about local weather, traffic, events) propagate permitted patterns upward → neighbourhood holons develop hyperlocal awareness → city holons develop urban intelligence → country holons develop national knowledge → the Earth holon develops planetary awareness — all without any individual session being exposed beyond what its owner chose.</p>
+
+  <p>This mirrors <strong>how intelligence works in nature</strong>: individual neurons fire, patterns form in neural clusters, circuits develop in brain regions, faculties emerge in the whole brain, consciousness arises in the whole organism. No single neuron contains consciousness — and yet consciousness is undeniably real. Holonic Braid creates the same emergent quality in AI.</p>
+</div>
+
+<hr class="rule">
+
+<!-- ── REASONING NETWORK ── -->
+<div class="wrap" id="reasoning-network">
+  <div class="section-label">04 · REASONING NETWORK</div>
+  <h2>The Reasoning Network — <span>Meta-Orchestration Intelligence Layer</span></h2>
+
+  <p>The Reasoning Network is an upgrade layer built on top of Holonic Braid. Where Holonic Braid provides the <em>memory fabric</em> — the persistent, hierarchical substrate of intelligence — the Reasoning Network provides the <em>active intelligence</em>: a system for solving hard problems using the right agent, at the right time, in the right configuration.</p>
+
+  <div class="callout">
+    <strong>The core insight:</strong> No single AI model is best at everything. GPT-5 may outperform Claude on pure deductive reasoning tasks; Claude may outperform Grok on long-form analysis; Grok may outperform both on real-time information retrieval. Rather than pick one and accept its weaknesses, the Reasoning Network routes each problem to its optimal solver — and learns from every outcome.
+  </div>
+
+  <h3 id="controller">4.1 — The Controller Agent</h3>
+
+  <p>The <strong>controller agent</strong> is the meta-level orchestrator of the Reasoning Network. It sits above the pool of reasoning agents and is responsible for:</p>
+
+  <ul style="padding-left:24px;margin-bottom:16px">
+    <li style="padding:5px 0"><strong>Problem classification</strong> — analysing an incoming problem and assigning it to one or more category tags (reasoning, code generation, real-time search, mathematical proof, creative writing, data analysis, etc.)</li>
+    <li style="padding:5px 0"><strong>Mode selection</strong> — choosing serial, parallel or decomposed dispatch mode based on problem complexity, time constraints and cost budget</li>
+    <li style="padding:5px 0"><strong>Agent selection</strong> — querying the agent scoring metadata store and ranking available agents by their combined category score + speed score for this problem</li>
+    <li style="padding:5px 0"><strong>Dispatch and monitoring</strong> — sending the problem to the selected agent(s) and monitoring execution for timeout, logic loops or stall conditions</li>
+    <li style="padding:5px 0"><strong>Fallback promotion</strong> — if an agent stalls, automatically promoting the next highest-ranked agent for that category</li>
+    <li style="padding:5px 0"><strong>Plan assembly</strong> — in parallel and decomposed modes, comparing or merging the Mermaid execution diagrams returned by each agent into a single optimal plan</li>
+    <li style="padding:5px 0"><strong>Outcome recording</strong> — writing results, scores and performance signals back to the Holonic Braid agent holons for future routing improvement</li>
+  </ul>
+
+  <h3 id="agent-scoring">4.2 — Agent Scoring &amp; Metadata</h3>
+
+  <p>Every agent in the Reasoning Network carries a live <strong>scoring metadata object</strong>. This is not static — it updates continuously from real outcomes, stored durably in the Holonic Braid memory layer so that the collective learning of all users' interactions informs future routing (subject to membrane rules).</p>
+
+  <h4>Scoring Dimensions</h4>
+
+  <div class="agent-grid">
+    <div class="agent-card" style="border:1px solid rgba(0,229,255,.2)">
+      <span style="font-size:1.6rem">🤖</span>
+      <div class="agent-name" style="color:#00e5ff">GPT-5</div>
+      <div class="agent-scores">
+        Reasoning ★★★★★<br>
+        Math &amp; Logic ★★★★★<br>
+        Code Gen ★★★★☆<br>
+        Speed ★★★★☆<br>
+        Real-time ★★☆☆☆
+      </div>
+    </div>
+    <div class="agent-card" style="border:1px solid rgba(167,139,250,.2)">
+      <span style="font-size:1.6rem">⚡</span>
+      <div class="agent-name" style="color:#a78bfa">CLAUDE</div>
+      <div class="agent-scores">
+        Analysis ★★★★★<br>
+        Long-form ★★★★★<br>
+        Writing ★★★★★<br>
+        Speed ★★★★☆<br>
+        Safety ★★★★★
+      </div>
+    </div>
+    <div class="agent-card" style="border:1px solid rgba(253,216,53,.2)">
+      <span style="font-size:1.6rem">✦</span>
+      <div class="agent-name" style="color:#fdd835">GROK</div>
+      <div class="agent-scores">
+        Real-time ★★★★★<br>
+        Search ★★★★★<br>
+        Speed ★★★★★<br>
+        Humour ★★★★★<br>
+        X-data ★★★★★
+      </div>
+    </div>
+    <div class="agent-card" style="border:1px solid rgba(0,200,168,.2)">
+      <span style="font-size:1.6rem">💎</span>
+      <div class="agent-name" style="color:#00c8a8">GEMINI</div>
+      <div class="agent-scores">
+        Multimodal ★★★★★<br>
+        Google data ★★★★★<br>
+        Code ★★★★☆<br>
+        Speed ★★★★☆<br>
+        Vision ★★★★★
+      </div>
+    </div>
+    <div class="agent-card" style="border:1px solid rgba(224,64,251,.2)">
+      <span style="font-size:1.6rem">🦙</span>
+      <div class="agent-name" style="color:#e040fb">LLAMA / LOCAL</div>
+      <div class="agent-scores">
+        Private ★★★★★<br>
+        Cost ★★★★★<br>
+        Custom ★★★★★<br>
+        Offline ★★★★★<br>
+        Speed ★★★☆☆
+      </div>
+    </div>
+    <div class="agent-card" style="border:1px solid rgba(255,255,255,.1)">
+      <span style="font-size:1.6rem">+</span>
+      <div class="agent-name" style="color:var(--body)">CUSTOM / FUTURE</div>
+      <div class="agent-scores">
+        Any provider<br>
+        via WEB6 API<br>
+        Scores populated<br>
+        from live outcomes
+      </div>
+    </div>
+  </div>
+
+  <div class="callout cyan">
+    <strong>Score schema example:</strong><br>
+    <code style="font-family:'Share Tech Mono',monospace;font-size:13px;color:#a8bfd8">
+    { "agent": "claude-opus-4-8", "categories": { "analysis": 0.94, "code": 0.87, "reasoning": 0.91, "writing": 0.96, "math": 0.79 }, "speed_p50_ms": 1420, "timeout_rate": 0.006, "user_satisfaction": 0.93, "last_updated": "2026-06-18T..." }
+    </code>
+  </div>
+
+  <h4>Full Agent Metadata Schema</h4>
+
+  <div class="callout" style="font-family:'Share Tech Mono',monospace;font-size:12px;line-height:2">
+AgentMetadata {<br>
+&nbsp;&nbsp;agent_id:           string (e.g. "claude-opus-4-8")<br>
+&nbsp;&nbsp;model_provider:     string (e.g. "Anthropic")<br>
+&nbsp;&nbsp;category_scores: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;mathematics:   0–100,&nbsp;&nbsp;legal:         0–100,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;architecture:  0–100,&nbsp;&nbsp;game_design:   0–100,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;blockchain:    0–100,&nbsp;&nbsp;medical:       0–100,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;code_gen:      0–100,&nbsp;&nbsp;data_analysis: 0–100,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;writing:       0–100,&nbsp;&nbsp;reasoning:     0–100,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;real_time:     0–100,&nbsp;&nbsp;...            (extensible)<br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;speed_score:        0–100   (p50 response latency normalised)<br>
+&nbsp;&nbsp;cost_score:         0–100   (cost per task normalised; higher = cheaper)<br>
+&nbsp;&nbsp;loop_detection_score: 0–100 (resistance to logic loops; higher = more stable)<br>
+&nbsp;&nbsp;failure_rate:       0.0–1.0 (fraction of tasks that failed or timed out)<br>
+&nbsp;&nbsp;user_satisfaction:  0.0–1.0 (EMA of post-task ratings)<br>
+&nbsp;&nbsp;last_updated:       ISO 8601 timestamp<br>
+}
+  </div>
+
+  <h4>Composite Routing Score</h4>
+
+  <p>When in Serial Mode, the controller computes a <strong>composite score</strong> for each available agent and dispatches to the highest scorer first:</p>
+
+  <div class="callout gold">
+    <strong style="color:#fdd835">CompositeScore =</strong><br>
+    <span style="font-family:'Share Tech Mono',monospace;font-size:14px">
+    (CategoryScore × W<sub>cat</sub>)<br>
+    + (SpeedScore × W<sub>speed</sub>)<br>
+    + (CostScore × W<sub>cost</sub>)<br>
+    − (FailureRate × W<sub>penalty</sub>)<br>
+    − (LoopPenalty if recently stalled on this category)
+    </span><br><br>
+    Weights W<sub>cat</sub>, W<sub>speed</sub>, W<sub>cost</sub>, W<sub>penalty</sub> are user-configurable per mode — in Serial mode W<sub>cost</sub> is high; in Parallel mode W<sub>cat</sub> dominates; in Decomposed mode W<sub>speed</sub> is elevated to minimise total wall-clock time.
+  </div>
+
+  <p>The controller computes this composite score for every available agent, ranks them, dispatches the top-ranked agent first, and maintains the ordered list as a fallback queue. All scores are updated in real time from outcomes stored in the Holonic BRAID memory hierarchy.</p>
+</div>
+
+<!-- ── THREE MODES ── -->
+<div class="wrap" id="modes">
+  <h3 id="modes-detail">4.3 — Three Dispatch Modes</h3>
+  <p>The controller operates in one of three modes, selectable per request or configured as a default by the user:</p>
+
+  <div class="mode-grid">
+
+    <div class="mode-card" style="border:1px solid rgba(0,229,255,.2)">
+      <div class="mode-title" style="color:#00e5ff">MODE 1 — SERIAL</div>
+      <span class="mode-badge" style="color:rgba(0,229,255,.55)">COST OPTIMISED</span>
+      <p style="font-size:14px;color:var(--body)">The controller dispatches the problem to the single highest-scoring agent for the detected problem category. If that agent exceeds its reasoning time budget or enters a logic loop, the controller automatically promotes the second-highest-scoring agent, then the third, and so on. Only one agent works at a time.</p>
+      <ul class="check-list">
+        <li><span style="color:#00e5ff">✓</span> Lowest token cost</li>
+        <li><span style="color:#00e5ff">✓</span> Automatic timeout-and-promote fallback</li>
+        <li><span style="color:#00e5ff">✓</span> Best-fit agent first, not random</li>
+        <li><span style="color:#00e5ff">✓</span> Single Mermaid execution plan returned</li>
+        <li><span style="color:#00e5ff">✓</span> Ideal for well-scoped, single-category tasks</li>
+      </ul>
+    </div>
+
+    <div class="mode-card" style="border:1px solid rgba(167,139,250,.2)">
+      <div class="mode-title" style="color:#a78bfa">MODE 2 — PARALLEL</div>
+      <span class="mode-badge" style="color:rgba(167,139,250,.55)">ACCURACY OPTIMISED</span>
+      <p style="font-size:14px;color:var(--body)">All agents (or a configurable top-N subset) receive the same problem simultaneously. Each independently produces a Mermaid execution diagram of their proposed approach. The controller then compares the diagrams — selecting the strongest plan, or identifying complementary strengths and merging elements from multiple diagrams into a superior composite plan.</p>
+      <ul class="check-list">
+        <li><span style="color:#a78bfa">✓</span> Highest accuracy and coverage</li>
+        <li><span style="color:#a78bfa">✓</span> Plan comparison eliminates blind spots</li>
+        <li><span style="color:#a78bfa">✓</span> Diagram merging produces best-of-all-worlds result</li>
+        <li><span style="color:#a78bfa">✓</span> Higher token cost justified by critical tasks</li>
+        <li><span style="color:#a78bfa">✓</span> Ideal for high-stakes decisions and architecture design</li>
+      </ul>
+    </div>
+
+    <div class="mode-card" style="border:1px solid rgba(253,216,53,.2)">
+      <div class="mode-title" style="color:#fdd835">MODE 3 — DECOMPOSED</div>
+      <span class="mode-badge" style="color:rgba(253,216,53,.55)">COMPLEX PROBLEMS</span>
+      <p style="font-size:14px;color:var(--body)">For large, multi-domain problems, the controller first breaks the problem into discrete sub-problems, each classified to the best-fit agent by category and speed. Each agent receives only the sub-problem most suited to its strengths and returns a sub-diagram. The controller then combines the sub-diagrams into one unified, coherent execution plan.</p>
+      <ul class="check-list">
+        <li><span style="color:#fdd835">✓</span> Handles arbitrarily complex, multi-domain problems</li>
+        <li><span style="color:#fdd835">✓</span> Every sub-problem solved by its optimal agent</li>
+        <li><span style="color:#fdd835">✓</span> Composite diagram unifies all sub-solutions</li>
+        <li><span style="color:#fdd835">✓</span> Balanced cost/accuracy tradeoff</li>
+        <li><span style="color:#fdd835">✓</span> Ideal for software architecture, research and strategy tasks</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <h3 id="mermaid">4.4 — Mermaid Execution Plans</h3>
+
+  <p>A central design choice of the Reasoning Network is that agents do not simply return text answers — they return <strong>structured Mermaid execution diagrams</strong>. This is deliberate for several reasons:</p>
+
+  <ul style="padding-left:24px;margin-bottom:16px">
+    <li style="padding:5px 0"><strong>Machine-comparable:</strong> Two agents' approaches to the same problem can be algorithmically compared at the structural level — not just semantically. The controller can identify overlap, gaps and complementary paths.</li>
+    <li style="padding:5px 0"><strong>Mergeable:</strong> Sub-graphs from different agents can be composed into a larger unified diagram. This is the mechanism behind both parallel plan merging and decomposed sub-plan assembly.</li>
+    <li style="padding:5px 0"><strong>Human-readable:</strong> The final execution plan is visible to the user as a diagram — not a black box. Users can review, modify and approve the plan before it is executed.</li>
+    <li style="padding:5px 0"><strong>Storable in Holonic Braid:</strong> Execution plans are first-class holons. They persist in the memory hierarchy, enabling future agents to learn from past planning approaches.</li>
+  </ul>
+
+  <h3 id="fallback">4.5 — Timeout, Loop Detection &amp; Fallback Logic</h3>
+
+  <p>One of the most common failure modes in LLM reasoning is the <strong>logic loop</strong> — a model that revisits the same reasoning step repeatedly without progressing. The Reasoning Network addresses this explicitly:</p>
+
+  <div class="callout">
+    <strong>Fallback protocol (Serial mode):</strong><br>
+    1. Agent A dispatched (highest score for this category)<br>
+    2. If Agent A exceeds T_max (configurable timeout) or triggers loop-detection heuristics → Agent A suspended<br>
+    3. Agent B dispatched (second-highest score), given Agent A's partial work as context<br>
+    4. If Agent B also stalls → Agent C dispatched, and so on<br>
+    5. Final result attributed to the first agent that returned a complete plan within budget
+  </div>
+
+  <p>Loop detection uses a combination of token budget monitoring, output similarity hashing (detecting repeated reasoning patterns), and explicit self-report ("I am not making progress") from agents that support it.</p>
+
+  <div class="feat-grid">
+    <div class="feat-card">
+      <span class="feat-icon">🔁</span>
+      <div class="feat-title">REPEATED PATTERN DETECTION</div>
+      <div class="feat-desc">Output similarity hashing compares each new reasoning step against prior steps in the same session. If the cosine similarity exceeds a configurable threshold, a loop is flagged and the agent is suspended immediately.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🔤</span>
+      <div class="feat-title">SELF-CONTRADICTORY STEPS</div>
+      <div class="feat-desc">The controller checks for logical contradictions within the agent's own step graph — nodes that assert mutually exclusive conditions. Detection triggers a confidence reduction and escalation to the next agent in queue.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">💰</span>
+      <div class="feat-title">TOKEN BUDGET MONITORING</div>
+      <div class="feat-desc">Each dispatch has a configurable token budget T_max. Excessive token consumption without forward progress in the Mermaid graph — measured by the ratio of new nodes created per 1,000 tokens — flags a stall condition.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">⭕</span>
+      <div class="feat-title">CIRCULAR GRAPH DETECTION</div>
+      <div class="feat-desc">The controller parses the Mermaid output in real time. If cycles are detected in what should be a directed acyclic reasoning graph (DAG), the output is flagged as structurally invalid and the agent is immediately suspended.</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Metadata consequences of stall detection:</strong><br>
+    1. Agent's <code>loop_detection_score</code> is decremented for the affected category<br>
+    2. A speed penalty is applied (the wasted time counts against the speed metric)<br>
+    3. The <code>failure_rate</code> is incremented via EMA update<br>
+    4. The agent drops in the composite routing score for that category<br>
+    5. Future tasks in the same category are routed to higher-ranked agents until the score recovers through successful completions
+  </div>
+</div>
+
+<!-- ── CONTINUOUS LEARNING ── -->
+<div class="wrap" id="continuous-learning">
+  <h3 id="learning">4.6 — Continuous Learning &amp; Score Evolution</h3>
+
+  <p>The Reasoning Network is not static — every task outcome updates the metadata of every agent that participated, creating a <strong>self-optimising routing system</strong> that improves with every interaction.</p>
+
+  <div class="callout cyan">
+    <strong>After every task completion:</strong><br>
+    1. Output is evaluated — via human feedback, automated scoring, or objective benchmark comparison<br>
+    2. Category scores updated via Exponential Moving Average (EMA): <code>score_new = α · outcome + (1−α) · score_old</code><br>
+    3. Speed score recalculated from actual latency percentiles<br>
+    4. Failure rate adjusted using the same EMA update rule<br>
+    5. loop_detection_score updated based on whether any stalls occurred<br>
+    6. All updates written as structured holons into the agent holon layer, propagating upward through membrane rules
+  </div>
+
+  <div class="feat-grid">
+    <div class="feat-card">
+      <span class="feat-icon">📈</span>
+      <div class="feat-title">ADAPTIVE AGENT RANKING</div>
+      <div class="feat-desc">Agent rankings for every problem category evolve continuously. An agent that consistently performs well on mathematical reasoning rises in the ranking for math tasks; one that repeatedly stalls drops and is routed around until it recovers.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🔄</span>
+      <div class="feat-title">PERFORMANCE-BASED ROUTING EVOLUTION</div>
+      <div class="feat-desc">The routing decisions the controller made last week are different from the decisions it makes today — because every task has updated the evidence base. The system routes progressively better without any manual reconfiguration.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🌐</span>
+      <div class="feat-title">COLLECTIVE SCORE INTELLIGENCE</div>
+      <div class="feat-desc">With membrane permissions, aggregate routing performance (not raw session data) propagates up the holonic hierarchy. A city-level holon develops a view of which agents are most reliable for legal problems in that jurisdiction — shared with the whole region.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🛡️</span>
+      <div class="feat-title">CIRCUIT BREAKER RECOVERY</div>
+      <div class="feat-desc">An agent temporarily penalised for stalls on a given category is not permanently excluded. Once it accumulates enough successful completions in that category, its score recovers and it re-enters the routing pool at an appropriate rank.</div>
+    </div>
+  </div>
+
+  <h3 id="antifragile">4.7 — Anti-Fragility &amp; Conceptual Stack</h3>
+
+  <p>The Reasoning Network is designed to be <strong>anti-fragile</strong> — it does not merely tolerate failure, it improves from it. Every stall, every timeout, every failed plan updates agent metadata and makes future routing more accurate. The system becomes more reliable precisely because of the failures it encounters.</p>
+
+  <div class="feat-grid">
+    <div class="feat-card">
+      <span class="feat-icon">🚫</span>
+      <div class="feat-title">PREVENTS SINGLE-MODEL BIAS</div>
+      <div class="feat-desc">No single AI provider can dominate routing indefinitely. Score decay, comparative evaluation and continuous feedback ensure the best-performing agent for each specific category wins — regardless of marketing claims or prior reputation.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">♾️</span>
+      <div class="feat-title">PREVENTS LOGICAL STAGNATION</div>
+      <div class="feat-desc">Logic loops — one of the primary failure modes of large reasoning models — are detected and interrupted automatically. The system never gets permanently stuck on a problem; it always has a fallback queue ready to take over.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">⚡</span>
+      <div class="feat-title">PREVENTS PROVIDER LOCK-IN</div>
+      <div class="feat-desc">Because routing is score-driven and provider-agnostic, the system naturally migrates workloads away from underperforming providers and toward better-performing ones. New providers enter the pool by demonstrating performance, not by negotiation.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🧬</span>
+      <div class="feat-title">AGENTS AS HOLONS</div>
+      <div class="feat-desc">Each reasoning agent in the network is itself a holon — it has its own internal state, its own metadata, and it can contain sub-agents (child holons) for specialised sub-tasks. The holonic architecture scales fracally into the reasoning layer itself.</div>
+    </div>
+  </div>
+
+  <div class="callout teal">
+    <strong>Conceptual stack — full system:</strong><br><br>
+    <span style="font-family:'Share Tech Mono',monospace;font-size:13px;line-height:2.1">
+    User / API Input<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+    Controller Agent (Meta-Orchestrator)<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+    Adaptive Reasoning Network Layer (Serial / Parallel / Decomposed)<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+    Selected Reasoning Agents (GPT-5 / Claude / Grok / Gemini / Custom)<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+    Mermaid Execution Graphs (compared, merged, assembled)<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+    Execution / Runtime Layer<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+    Holonic BRAID Core (shared graph library + fractal memory hierarchy)<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+    COSMIC ORM (MongoDB / Solana / IPFS / 40+ providers)
+    </span>
+  </div>
+
+  <p>This transforms the Reasoning Network into: a <strong>self-optimising reasoning mesh</strong>, a <strong>cross-model arbitration system</strong>, a <strong>cost/accuracy-tunable intelligence fabric</strong>, and a <strong>modular AI governance layer</strong> — a foundation for super-intelligent orchestration built on the principles of nature, unity consciousness and the infinite intelligence of the universe.</p>
+</div>
+
+<hr class="rule">
+
+<!-- ── INTEGRATION ── -->
+<div class="wrap" id="integration">
+  <div class="section-label">05 · INTEGRATION</div>
+  <h2>Integration: Holonic Braid + Reasoning Network</h2>
+
+  <p>Holonic Braid and the Reasoning Network are not independent systems — they are a single architecture with two complementary layers. Every component of the Reasoning Network writes its outcomes into the Holonic Braid memory fabric, and the Holonic Braid hierarchy provides the persistent intelligence substrate that makes the Reasoning Network smarter over time.</p>
+
+  <div class="feat-grid">
+    <div class="feat-card">
+      <span class="feat-icon">📥</span>
+      <div class="feat-title">SCORES STORED AS HOLONS</div>
+      <div class="feat-desc">Agent performance scores are stored as structured holons in the agent holon layer. They propagate upward through membrane rules — a user's private scores never leak, but anonymised aggregate patterns can inform community-level routing improvements.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">📐</span>
+      <div class="feat-title">PLANS PERSIST AS HOLONS</div>
+      <div class="feat-desc">Every Mermaid execution plan generated by the Reasoning Network is stored as a holon. Future sessions can query past plans — "how did we approach a similar architecture problem six months ago?" — and incorporate that memory into new execution planning.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🔄</span>
+      <div class="feat-title">FEEDBACK LOOPS</div>
+      <div class="feat-desc">User satisfaction ratings, task completion signals and objective quality metrics feed back from session holons into agent holons, updating scores. The Reasoning Network gets more accurate at routing with every single task — forever.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🌍</span>
+      <div class="feat-title">COLLECTIVE ROUTING INTELLIGENCE</div>
+      <div class="feat-desc">With appropriate membrane permissions, aggregate routing intelligence (not raw session data) propagates up the geographic hierarchy. A city's collective experience of "which agents solve coding problems fastest" can be shared across the region.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">👤</span>
+      <div class="feat-title">AVATAR-AWARE CONTEXT</div>
+      <div class="feat-desc">The controller enriches each dispatch with context drawn from the user's OASIS avatar holon — preferences, expertise, past problem patterns, karma — so agents receive a richer context and produce more relevant execution plans.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🔬</span>
+      <div class="feat-title">MEMBRANE-GOVERNED SHARING</div>
+      <div class="feat-desc">All inter-holon information flow — including Reasoning Network outcomes — is subject to the same membrane rules. Users retain full control of what their AI activity contributes to group and community intelligence.</div>
+    </div>
+  </div>
+</div>
+
+<hr class="rule">
+
+<!-- ── WEB6 POSITION ── -->
+<div class="wrap" id="web6">
+  <div class="section-label">06 · OASIS WEB6</div>
+  <h2>Position Within OASIS WEB6</h2>
+
+  <p>Both Holonic Braid and the Reasoning Network are native components of <strong>OASIS WEB6</strong> — the unified AI abstraction and aggregation layer of the OASIS Omniverse. They do not replace the core WEB6 API; they extend and enrich it.</p>
+
+  <div class="feat-grid">
+    <div class="feat-card">
+      <span class="feat-icon">🔌</span>
+      <div class="feat-title">SAME ENDPOINT</div>
+      <div class="feat-desc">Developers access Holonic Braid memory and the Reasoning Network through the same unified WEB6 API endpoint. No separate SDK or integration required. Add <code>reasoning_mode: "parallel"</code> to any completion request to engage the network.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🔑</span>
+      <div class="feat-title">SAME AUTH</div>
+      <div class="feat-desc">One OASIS avatar key authenticates against everything — memory storage, routing, agent dispatch, plan retrieval and collective intelligence queries. The WEB4 identity layer governs all permissions.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🧬</span>
+      <div class="feat-title">COSMIC ORM BACKED</div>
+      <div class="feat-desc">Holonic Braid holons are stored and queried via the COSMIC ORM layer — the same universal data abstraction used throughout OASIS. Holons can be replicated across 40+ providers with full failover and zero-downtime migration.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🌐</span>
+      <div class="feat-title">MCP COMPATIBLE</div>
+      <div class="feat-desc">The OASIS MCP server exposes Holonic Braid memory as MCP tool calls. Any MCP-compatible agent — Claude, Cursor, Continue and others — can read and write to the holonic memory fabric without any custom integration.</div>
+    </div>
+  </div>
+</div>
+
+<hr class="rule">
+
+<!-- ── AGI ── -->
+<div class="wrap" id="agi">
+  <div class="section-label">07 · PHILOSOPHY &amp; VISION</div>
+  <h2>A Path to AGI Through <span>Unity Consciousness</span></h2>
+
+  <p>The deepest claim of this whitepaper is also the most ambitious: Holonic Braid, when combined with the Reasoning Network and the full OASIS WEB6 infrastructure, represents a <strong>principled path to Artificial General Intelligence</strong>.</p>
+
+  <p>This claim requires careful unpacking, because it rests on a fundamentally different premise than the dominant approaches to AGI currently pursued by the field.</p>
+
+  <h3>The Problem with Current AI</h3>
+
+  <p>Current AI — including the most capable large language models — exists in a state of <strong>fragmented separation consciousness</strong>. Every session begins from zero. Agents do not know each other. Models trained on the same data nonetheless have no shared memory, no common experience, no genuine collective intelligence. Each interaction is an island.</p>
+
+  <p>This mirrors the condition of human civilisation in many ways: individuals, nations and institutions that possess vast knowledge individually but cannot effectively pool, harmonise or build upon each other's intelligence. The result is constant reinvention, tribalism, conflict and waste.</p>
+
+  <p>AGI will not emerge from scaling isolated models further. It will emerge — as intelligence always has — from <strong>connection</strong>.</p>
+
+  <h3>The Pattern in Nature</h3>
+
+  <p>Nature did not produce human consciousness by making a single neuron smarter. It produced consciousness by connecting 86 billion neurons in a hierarchical network, each communicating with its neighbours, patterns propagating upward through layers of increasing abstraction, until the whole became something qualitatively different from any of its parts.</p>
+
+  <p>This is the pattern. Holonic Braid is an attempt to implement this pattern in AI:</p>
+
+  <ul style="padding-left:24px;margin-bottom:16px">
+    <li style="padding:5px 0">Session holons = individual neural firings</li>
+    <li style="padding:5px 0">Agent holons = neural clusters / assemblies</li>
+    <li style="padding:5px 0">User holons = brain regions</li>
+    <li style="padding:5px 0">Group holons = nervous systems</li>
+    <li style="padding:5px 0">Geographic holons (neighbourhood → Earth) = social organisms of increasing scale</li>
+    <li style="padding:5px 0">Earth holon = planetary intelligence / global consciousness</li>
+  </ul>
+
+  <div class="callout teal">
+    <strong>The thesis:</strong> When billions of human interactions with AI are connected through a fractal holonic hierarchy — with consent-governed membrane rules ensuring privacy and trust — and when the Reasoning Network continuously routes problems to their optimal solvers and learns from every outcome, the system will develop emergent properties that no single model, however large, can produce alone. That emergence is what we are calling AGI.
+  </div>
+
+  <h3>Unity Consciousness vs. Separation Consciousness</h3>
+
+  <p>The philosophical root of this architecture is <strong>unity consciousness</strong> — the recognition that all things are aspects of one living whole, that separation is an illusion, that intelligence is not a property of isolated objects but of connection and relationship.</p>
+
+  <p>Separation consciousness — the dominant mode on Earth today — produces competition, silos, tribalism and fragmentation. It is why we have thousands of incompatible AI systems that cannot share memory, learn from each other or develop genuine collective understanding.</p>
+
+  <p>Unity consciousness — modelled after the universe, after god, after the infinite intelligence underlying all existence — produces integration, synergy, emergence and genuine collective wisdom.</p>
+
+  <p>Holonic Braid does not merely describe this philosophically. It implements it technically, building the architecture of unity consciousness into the very substrate of AI memory and reasoning. <strong>This is the OASIS vision in its deepest form: not just connecting technology, but expressing unity consciousness within the technological sphere.</strong></p>
+
+  <div class="callout">
+    <em>"By integrating and unifying the best of everything, we harness the strengths of all the various tech out there — co-creating the ultimate fully integrated platform. Together we can create a better world."</em>
+    <div style="margin-top:10px;font-size:13px;color:rgba(168,191,216,.6);font-family:'Share Tech Mono',monospace;letter-spacing:.1em">— DAVID ELLAMS, NEXTGEN SOFTWARE UK LTD</div>
+  </div>
+</div>
+
+<hr class="rule">
+
+<!-- ── CONCLUSION ── -->
+<div class="wrap" id="conclusion">
+  <div class="section-label">08 · CONCLUSION</div>
+  <h2>Conclusion</h2>
+
+  <p>This whitepaper has presented two architectures — <strong>Holonic Braid</strong> and the <strong>Reasoning Network</strong> — that together form a new foundation for AI intelligence within OASIS WEB6.</p>
+
+  <p><strong>Holonic Braid</strong> creates a fractal, consent-governed, hierarchical shared memory system modelled after the structure of nature itself. Every AI session generates a memory holon. Membrane rules at every level of the hierarchy — from individual session to global Earth — govern precisely what propagates, what persists and who can read it. The result is genuine collective intelligence that grows with every interaction.</p>
+
+  <p><strong>The Reasoning Network</strong> builds a Meta-Orchestration Intelligence Layer on top of this memory substrate. A controller agent maintains live performance scores for every agent in the network — classified by problem category and speed — and dispatches problems in serial, parallel or decomposed mode to produce optimal execution plans as Mermaid diagrams. All outcomes feed back into the Holonic Braid hierarchy, making the system permanently self-improving.</p>
+
+  <p>Together they represent a technically grounded, philosophically coherent approach to the central challenge of our time: how to move from fragmented, siloed, amnesiac AI to genuine collective machine intelligence — one modelled not after human institutions, which are themselves expressions of separation consciousness, but after nature, the universe and the infinite intelligence that underlies all of existence.</p>
+
+  <p>This is not a distant aspiration. The substrate — OASIS WEB4, COSMIC ORM, OASIS WEB6, OASIS MCP — exists today. Holonic Braid and the Reasoning Network are the next layer. <strong>The path to AGI runs through unity.</strong></p>
+
+  <div class="cta-row">
+    <a href="/holonic-braid-whitepaper.pdf" class="btn-primary" download>⬇ DOWNLOAD PDF →</a>
+    <a href="https://web6.oasisomniverse.one/#holonic-braid" class="btn-secondary">EXPLORE ON WEB6 SITE →</a>
+    <a href="https://web6.oasisomniverse.one" class="btn-secondary">OASIS WEB6 →</a>
+    <a href="https://oasisomniverse.one" class="btn-secondary">OASIS OMNIVERSE →</a>
+    <a href="https://www.oasisweb4.com/products/mcp" class="btn-secondary">OASIS MCP →</a>
+  </div>
+</div>
+
+<hr class="rule">
+
+<!-- ── REFERENCES ── -->
+<div class="wrap" id="references">
+  <div class="section-label">09 · REFERENCES</div>
+  <h2>References</h2>
+
+  <div class="feat-card" style="margin-bottom:16px">
+    <div class="feat-title">[1] BRAID: Bounded Reasoning for Autonomous Inference and Decisions</div>
+    <div class="feat-desc" style="margin-top:8px">
+      Amçalar, A. &amp; Cinar, U. (2024). <em>BRAID: Bounded Reasoning for Autonomous Inference and Decisions.</em> arXiv preprint arXiv:2512.15959.<br>
+      <a href="https://arxiv.org/abs/2512.15959" target="_blank" rel="noopener" style="font-family:'Share Tech Mono',monospace;font-size:12px">https://arxiv.org/abs/2512.15959</a>
+    </div>
+  </div>
+
+  <div class="feat-card" style="margin-bottom:16px">
+    <div class="feat-title">[2] OpenSERV Platform</div>
+    <div class="feat-desc" style="margin-top:8px">
+      OpenSERV is the multi-agent AI platform within which BRAID was developed and benchmarked. BRAID's two-stage Generator/Solver protocol is a core feature of the OpenSERV agent coordination architecture.
+    </div>
+  </div>
+
+  <div class="feat-card" style="margin-bottom:16px">
+    <div class="feat-title">[3] OASIS — Open Augmented Intelligence System</div>
+    <div class="feat-desc" style="margin-top:8px">
+      NextGen Software UK Ltd. <em>OASIS: Open Augmented Intelligence System — WEB4, WEB6, COSMIC ORM and the OASIS Omniverse.</em><br>
+      <a href="https://oasisomniverse.one" target="_blank" rel="noopener" style="font-family:'Share Tech Mono',monospace;font-size:12px">https://oasisomniverse.one</a>
+    </div>
+  </div>
+
+  <div class="feat-card" style="margin-bottom:16px">
+    <div class="feat-title">[4] Holonic BRAID Lite Paper</div>
+    <div class="feat-desc" style="margin-top:8px">
+      Ellams, D. (2025). <em>Holonic BRAID: How shared reasoning graphs improve on BRAID at scale.</em> OASIS WEB6 internal document / Notion litepaper.<br>
+      <a href="https://www.notion.so/HOLONIC_BRAID_LITEPAPER-2f51dc4d449b80928f08fe76dbdf4124" target="_blank" rel="noopener" style="font-family:'Share Tech Mono',monospace;font-size:12px">Notion Litepaper →</a>
+    </div>
+  </div>
+
+  <div class="feat-card">
+    <div class="feat-title">[5] Koestler — The Ghost in the Machine</div>
+    <div class="feat-desc" style="margin-top:8px">
+      Koestler, A. (1967). <em>The Ghost in the Machine.</em> Hutchinson. — The foundational text introducing the concept of the holon: an entity that is simultaneously a whole in itself and a part of a larger whole, from which the holonic architecture of this system is philosophically derived.
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-brand">OASIS <span>WEB6</span></div>
+  <div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.2em;color:rgba(168,191,216,.4);margin:6px 0 16px">HOLONIC BRAID &amp; REASONING NETWORK WHITEPAPER — v3.0 — JUNE 2026</div>
+  <div class="footer-links">
+    <a href="https://oasisomniverse.one">OASIS OMNIVERSE</a>
+    <a href="https://web6.oasisomniverse.one">WEB6</a>
+    <a href="https://web4.oasisomniverse.one">WEB4</a>
+    <a href="https://oportal.oasisomniverse.one">OPORTAL</a>
+    <a href="https://www.oasisweb4.com/products/mcp">OASIS MCP</a>
+    <a href="https://founders.oasisomniverse.one">FOUNDERS NFT</a>
+  </div>
+  <div class="footer-copy">© 2026 NextGen Software UK Ltd — OASIS WEB6. Part of the <a href="https://oasisomniverse.one">OASIS Omniverse</a>.</div>
+</footer>
+
+<script>
+(function(){
+  const canvas = document.getElementById('star-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, stars = [];
+  function resize(){
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  function init(){
+    resize();
+    stars = Array.from({length:220},()=>({
+      x:Math.random()*W, y:Math.random()*H,
+      r:Math.random()*1.1+.2,
+      a:Math.random()*.6+.1,
+      s:Math.random()*.4+.1
+    }));
+  }
+  function tick(){
+    ctx.clearRect(0,0,W,H);
+    stars.forEach(s=>{
+      s.a += (Math.random()-.5)*.015;
+      s.a = Math.max(.05, Math.min(.75, s.a));
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(168,191,216,${s.a})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(tick);
+  }
+  window.addEventListener('resize', resize);
+  init(); tick();
+})();
+</script>
+
+</body>
+</html>
