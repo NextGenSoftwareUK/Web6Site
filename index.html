@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OASIS WEB6 — The Unified AI Abstraction Layer</title>
+<meta name="description" content="OASIS WEB6 — one API to unify every AI model, agent, orchestrator and protocol. Route intelligently across OpenAI, Anthropic, Gemini, Ollama and beyond.">
+<meta property="og:title" content="OASIS WEB6 — The Unified AI Abstraction Layer">
+<meta property="og:description" content="One API. Every AI. Route, orchestrate and normalise across every model and protocol in the OASIS omniverse.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='44' fill='none' stroke='%23fdd835' stroke-width='6'/><circle cx='50' cy='50' r='10' fill='%23fdd835'/><line x1='50' y1='6' x2='50' y2='94' stroke='%23fdd835' stroke-width='2.5' opacity='.4'/><line x1='6' y1='50' x2='94' y2='50' stroke='%23fdd835' stroke-width='2.5' opacity='.4'/><line x1='18' y1='18' x2='82' y2='82' stroke='%23fdd835' stroke-width='2' opacity='.25'/><line x1='82' y1='18' x2='18' y2='82' stroke='%23fdd835' stroke-width='2' opacity='.25'/></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --purple:#fdd835;--purple-glow:rgba(253,216,53,.18);
+  --cyan:#00e5ff;
+  --gold:#f0a500;
+  --bg-deep:#030714;--bg-card:#0a1535;--bg-card2:#071028;
+  --text:#d0e4ff;--text-dim:#6a80a8;
+  --heading:#ffffff;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg-deep);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden}
+
+/* ── STAR CANVAS ── */
+#star-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 40px;display:flex;align-items:center;justify-content:space-between;background:rgba(3,7,20,.88);backdrop-filter:blur(12px);border-bottom:1px solid rgba(253,216,53,.12)}
+.nav-brand{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;letter-spacing:.22em;color:#fff;text-decoration:none}
+.nav-brand span{color:var(--purple)}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.14em;color:#a8bfd8;text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--purple)}
+
+/* ── SECTIONS ── */
+.section{position:relative;z-index:1;padding:100px 40px;max-width:1200px;margin:0 auto}
+.section-full{position:relative;z-index:1;padding:100px 40px}
+.section-kicker{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.28em;color:var(--purple);margin-bottom:16px;text-align:center}
+.section-title{font-family:'Orbitron',sans-serif;font-size:clamp(26px,4vw,44px);font-weight:900;letter-spacing:.06em;color:var(--heading);text-align:center;margin-bottom:18px;line-height:1.15}
+.section-line{display:block;width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--purple),transparent);margin:0 auto 36px}
+.section-sub{font-size:17px;color:#a8bfd8;text-align:center;max-width:720px;margin:0 auto 56px;line-height:1.7}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 40px 80px;position:relative;z-index:1}
+.hero-kicker{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.35em;color:var(--purple);margin-bottom:28px;display:flex;align-items:center;justify-content:center;gap:12px}
+.hero-kicker::before,.hero-kicker::after{content:'';width:50px;height:1px;background:linear-gradient(90deg,transparent,var(--purple))}
+.hero-kicker::after{background:linear-gradient(90deg,var(--purple),transparent)}
+.hero h1{font-family:'Orbitron',sans-serif;font-size:clamp(36px,7vw,88px);font-weight:900;letter-spacing:.08em;color:var(--heading);line-height:1.05;margin-bottom:16px}
+.hero h1 span{color:var(--purple);text-shadow:0 0 40px rgba(253,216,53,.5)}
+.hero-tagline{font-family:'Share Tech Mono',monospace;font-size:clamp(13px,2vw,18px);letter-spacing:.22em;color:var(--purple);margin-bottom:28px;opacity:.9}
+.hero-desc{font-size:clamp(15px,1.8vw,19px);color:#a8bfd8;max-width:660px;line-height:1.75;margin-bottom:48px}
+.hero-ctas{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-bottom:0}
+.btn-primary{font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:.14em;color:#fff;background:linear-gradient(135deg,rgba(253,216,53,.25),rgba(253,216,53,.1));border:1px solid rgba(253,216,53,.5);border-radius:999px;padding:14px 32px;text-decoration:none;transition:background .25s,border-color .25s,box-shadow .25s;display:inline-block}
+.btn-primary:hover{background:linear-gradient(135deg,rgba(253,216,53,.4),rgba(253,216,53,.2));border-color:var(--purple);box-shadow:0 0 32px rgba(253,216,53,.25)}
+.btn-secondary{font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:.14em;color:#a8bfd8;background:transparent;border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:14px 32px;text-decoration:none;transition:border-color .25s,color .25s;display:inline-block}
+.btn-secondary:hover{border-color:rgba(255,255,255,.3);color:#fff}
+
+/* ── HERO SVG ── */
+.hero-bg{order:10;display:block;width:100%;max-width:780px;margin-top:64px;pointer-events:none;opacity:.88}
+
+/* ── LAYER STACK ── */
+.layer-stack{max-width:740px;margin:0 auto;display:flex;flex-direction:column;gap:4px}
+.layer-item{display:flex;align-items:center;gap:16px;padding:14px 22px;border-radius:10px;border:1px solid rgba(255,255,255,.07);background:var(--bg-card)}
+.layer-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.layer-label{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.14em;flex:1;color:#a8bfd8}
+.layer-tag{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.16em;color:var(--text-dim)}
+.layer-divider{text-align:center;padding:6px 0;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.2em;color:rgba(253,216,53,.4)}
+
+/* ── PROVIDER GRID ── */
+.provider-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;max-width:1100px;margin:0 auto}
+.provider-card{background:var(--bg-card);border:1px solid rgba(253,216,53,.1);border-radius:12px;padding:26px 20px;text-align:center;transition:transform .3s,border-color .3s,box-shadow .3s}
+.provider-card:hover{transform:translateY(-4px);border-color:rgba(253,216,53,.32);box-shadow:0 12px 36px rgba(253,216,53,.1)}
+.provider-icon{font-size:32px;margin-bottom:12px;display:block}
+.provider-name{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--heading);margin-bottom:6px}
+.provider-type{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.12em;color:var(--purple);opacity:.75}
+
+/* ── FEATURES ── */
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:1100px;margin:0 auto}
+.feature-card{background:var(--bg-card);border:1px solid rgba(253,216,53,.1);border-radius:14px;padding:32px 26px;transition:transform .3s,border-color .3s}
+.feature-card:hover{transform:translateY(-5px);border-color:rgba(253,216,53,.3)}
+.feature-icon{font-size:32px;margin-bottom:16px;display:block}
+.feature-title{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;color:var(--heading);margin-bottom:10px}
+.feature-desc{font-size:14px;color:#a8bfd8;line-height:1.65}
+
+/* ── CODE BLOCK ── */
+.code-wrap{background:#020810;border:1px solid rgba(253,216,53,.22);border-radius:12px;padding:28px 32px;max-width:840px;margin:0 auto;overflow-x:auto}
+.code-wrap pre{font-family:'Share Tech Mono',monospace;font-size:13px;color:#c0d8f8;line-height:1.75;white-space:pre}
+.c{color:#3e5570}
+.k{color:var(--purple)}
+.s{color:#7ec8e3}
+.n{color:#f0a500}
+
+/* ── ENDPOINT BADGE ── */
+.endpoint-badge{display:flex;align-items:center;justify-content:center;gap:12px;background:rgba(253,216,53,.08);border:1px solid rgba(253,216,53,.28);border-radius:999px;padding:13px 28px;font-family:'Share Tech Mono',monospace;font-size:15px;color:var(--purple);letter-spacing:.08em;max-width:fit-content;margin:0 auto 52px}
+.endpoint-dot{width:8px;height:8px;border-radius:50%;background:#00cc44;box-shadow:0 0 8px rgba(0,204,68,.7);flex-shrink:0}
+
+/* ── INTEGRATION BAND ── */
+.integration-band{max-width:860px;margin:0 auto;background:linear-gradient(135deg,rgba(253,216,53,.06),rgba(10,21,53,.96));border:1px solid rgba(253,216,53,.22);border-radius:20px;padding:60px 44px;text-align:center}
+.integration-band h3{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;letter-spacing:.08em;color:var(--heading);margin-bottom:16px}
+.integration-band p{font-size:16px;color:#a8bfd8;line-height:1.7;max-width:640px;margin:0 auto 28px}
+.pill-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:32px}
+.pill{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.18em;color:var(--purple);border:1px solid rgba(253,216,53,.28);border-radius:999px;padding:7px 16px}
+
+/* ── FOOTER ── */
+footer{position:relative;z-index:1;border-top:1px solid rgba(253,216,53,.1);padding:52px 40px 40px;text-align:center}
+.footer-brand{font-family:'Orbitron',sans-serif;font-size:15px;font-weight:900;letter-spacing:.2em;color:#fff;margin-bottom:8px}
+.footer-brand span{color:var(--purple)}
+.footer-sub{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.22em;color:var(--text-dim);margin-bottom:32px}
+.footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:22px;margin-bottom:32px}
+.footer-links a{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.14em;color:#a8bfd8;text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:var(--purple)}
+.footer-copy{font-size:12px;color:var(--text-dim)}
+.footer-copy a{color:var(--purple);text-decoration:none}
+</style>
+</head>
+<body>
+
+<canvas id="star-canvas"></canvas>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="https://oasisomniverse.one" class="nav-brand">OASIS <span>WEB6</span></a>
+  <ul class="nav-links">
+    <li><a href="#what">WHAT IS WEB6</a></li>
+    <li><a href="#providers">PROVIDERS</a></li>
+    <li><a href="#features">FEATURES</a></li>
+    <li><a href="#api">API</a></li>
+    <li><a href="https://oasisomniverse.one">ECOSYSTEM →</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-kicker">WEB6 · THE AI LAYER</div>
+  <h1>OASIS <span>WEB6</span></h1>
+  <div class="hero-tagline">ONE API. EVERY AI.</div>
+  <p class="hero-desc">The unified AI abstraction and aggregation layer. Route, orchestrate and normalise across every AI model, agent and protocol — from a single clean OASIS endpoint.</p>
+  <div class="hero-ctas">
+    <a href="https://api.web6.oasisomniverse.one" class="btn-primary">EXPLORE THE API →</a>
+    <a href="https://oasisomniverse.one" class="btn-secondary">BACK TO ECOSYSTEM</a>
+  </div>
+
+  <!-- Hero diagram: providers converging into WEB6 hub, then out to app -->
+  <svg class="hero-bg" viewBox="0 0 780 360" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+    <defs>
+      <filter id="gp">
+        <feGaussianBlur stdDeviation="4" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <filter id="gs">
+        <feGaussianBlur stdDeviation="2.5" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <style>
+        .orb{animation:orb-pulse 2.6s ease-in-out infinite alternate}
+        @keyframes orb-pulse{from{opacity:.22;r:46}to{opacity:.5;r:54}}
+        .dash-out{stroke-dasharray:6 5;animation:dash-fwd 1s linear infinite}
+        .dash-in{stroke-dasharray:6 5;animation:dash-rev 1.4s linear infinite}
+        @keyframes dash-fwd{to{stroke-dashoffset:-44}}
+        @keyframes dash-rev{to{stroke-dashoffset:44}}
+      </style>
+    </defs>
+
+    <!-- Subtle grid -->
+    <line x1="0"   y1="180" x2="780" y2="180" stroke="#fdd835" stroke-width=".3" opacity=".07"/>
+    <line x1="390" y1="0"   x2="390" y2="360" stroke="#fdd835" stroke-width=".3" opacity=".07"/>
+
+    <!-- HUB pulsing outer ring -->
+    <circle cx="390" cy="180" class="orb" stroke="#fdd835" stroke-width=".9" fill="none" filter="url(#gp)"/>
+    <circle cx="390" cy="180" r="40"  stroke="#fdd835" stroke-width="1.6" fill="rgba(253,216,53,.07)" filter="url(#gp)"/>
+    <circle cx="390" cy="180" r="22"  stroke="#fdd835" stroke-width="1"   fill="rgba(253,216,53,.14)" opacity=".7"/>
+    <circle cx="390" cy="180" r="8"   fill="#fdd835" opacity=".95" filter="url(#gp)"/>
+    <text x="390" y="215" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="9" font-weight="700" letter-spacing="2.5" fill="#fff" opacity=".9">WEB6 API</text>
+
+    <!-- Provider nodes (left side) with spokes -->
+    <!-- OpenAI: top-left -->
+    <line x1="175" y1="68"  x2="352" y2="165" stroke="#fdd835" stroke-width=".9" opacity=".28" class="dash-in"/>
+    <circle cx="175" cy="68" r="20" fill="rgba(253,216,53,.07)" stroke="#fdd835" stroke-width="1" opacity=".7"/>
+    <text x="175" y="65"  text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="7.5" letter-spacing="1.5" fill="#fdd835">OPENAI</text>
+    <text x="175" y="76"  text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6"   letter-spacing="1"   fill="#fdd835" opacity=".6">GPT-4o</text>
+    <!-- Anthropic: mid-left -->
+    <line x1="128" y1="180" x2="350" y2="180" stroke="#fdd835" stroke-width=".9" opacity=".28" class="dash-in"/>
+    <circle cx="128" cy="180" r="20" fill="rgba(253,216,53,.07)" stroke="#fdd835" stroke-width="1" opacity=".7"/>
+    <text x="128" y="177" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6.5" letter-spacing="1"   fill="#fdd835">ANTHROPIC</text>
+    <text x="128" y="188" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6"   letter-spacing="1"   fill="#fdd835" opacity=".6">CLAUDE</text>
+    <!-- Gemini: bottom-left -->
+    <line x1="175" y1="292" x2="352" y2="195" stroke="#fdd835" stroke-width=".9" opacity=".28" class="dash-in"/>
+    <circle cx="175" cy="292" r="20" fill="rgba(253,216,53,.07)" stroke="#fdd835" stroke-width="1" opacity=".7"/>
+    <text x="175" y="289" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="7.5" letter-spacing="1.5" fill="#fdd835">GEMINI</text>
+    <text x="175" y="300" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6"   letter-spacing="1"   fill="#fdd835" opacity=".6">GOOGLE</text>
+
+    <!-- Outer left nodes (smaller) -->
+    <!-- Ollama: far top-left -->
+    <line x1="58" y1="100" x2="155" y2="165" stroke="#fdd835" stroke-width=".6" opacity=".2" class="dash-in"/>
+    <circle cx="58" cy="100" r="14" fill="rgba(253,216,53,.05)" stroke="#fdd835" stroke-width=".8" opacity=".5"/>
+    <text x="58" y="97"  text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6.5" letter-spacing="1" fill="#fdd835" opacity=".8">OLLAMA</text>
+    <text x="58" y="107" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="5.5" letter-spacing=".8" fill="#fdd835" opacity=".5">LOCAL</text>
+    <!-- Mistral: far bottom-left -->
+    <line x1="58" y1="260" x2="155" y2="195" stroke="#fdd835" stroke-width=".6" opacity=".2" class="dash-in"/>
+    <circle cx="58" cy="260" r="14" fill="rgba(253,216,53,.05)" stroke="#fdd835" stroke-width=".8" opacity=".5"/>
+    <text x="58" y="257" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6.5" letter-spacing="1" fill="#fdd835" opacity=".8">MISTRAL</text>
+    <text x="58" y="267" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="5.5" letter-spacing=".8" fill="#fdd835" opacity=".5">MIXTRAL</text>
+
+    <!-- Provider nodes (right side) — more providers -->
+    <!-- Llama: top-right -->
+    <line x1="605" y1="68"  x2="428" y2="165" stroke="#fdd835" stroke-width=".9" opacity=".28" class="dash-in"/>
+    <circle cx="605" cy="68" r="20" fill="rgba(253,216,53,.07)" stroke="#fdd835" stroke-width="1" opacity=".7"/>
+    <text x="605" y="65"  text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="7.5" letter-spacing="1.5" fill="#fdd835">LLAMA</text>
+    <text x="605" y="76"  text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6"   letter-spacing="1"   fill="#fdd835" opacity=".6">META</text>
+    <!-- Groq: mid-right -->
+    <line x1="652" y1="180" x2="430" y2="180" stroke="#fdd835" stroke-width=".9" opacity=".28" class="dash-in"/>
+    <circle cx="652" cy="180" r="20" fill="rgba(253,216,53,.07)" stroke="#fdd835" stroke-width="1" opacity=".7"/>
+    <text x="652" y="177" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="7.5" letter-spacing="1.5" fill="#fdd835">GROQ</text>
+    <text x="652" y="188" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6"   letter-spacing="1"   fill="#fdd835" opacity=".6">LLAMA</text>
+    <!-- Cohere: bottom-right -->
+    <line x1="605" y1="292" x2="428" y2="195" stroke="#fdd835" stroke-width=".9" opacity=".28" class="dash-in"/>
+    <circle cx="605" cy="292" r="20" fill="rgba(253,216,53,.07)" stroke="#fdd835" stroke-width="1" opacity=".7"/>
+    <text x="605" y="289" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="7.5" letter-spacing="1.5" fill="#fdd835">COHERE</text>
+    <text x="605" y="300" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6"   letter-spacing="1"   fill="#fdd835" opacity=".6">COMMAND</text>
+
+    <!-- Outer right nodes -->
+    <!-- HuggingFace -->
+    <line x1="722" y1="100" x2="625" y2="165" stroke="#fdd835" stroke-width=".6" opacity=".2" class="dash-in"/>
+    <circle cx="722" cy="100" r="14" fill="rgba(253,216,53,.05)" stroke="#fdd835" stroke-width=".8" opacity=".5"/>
+    <text x="722" y="97"  text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6" letter-spacing=".8" fill="#fdd835" opacity=".8">HF</text>
+    <text x="722" y="107" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="5" letter-spacing=".5" fill="#fdd835" opacity=".5">MODELS</text>
+    <!-- xAI Grok -->
+    <line x1="722" y1="260" x2="625" y2="195" stroke="#fdd835" stroke-width=".6" opacity=".2" class="dash-in"/>
+    <circle cx="722" cy="260" r="14" fill="rgba(253,216,53,.05)" stroke="#fdd835" stroke-width=".8" opacity=".5"/>
+    <text x="722" y="257" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6.5" letter-spacing="1" fill="#fdd835" opacity=".8">XAI</text>
+    <text x="722" y="267" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="5.5" letter-spacing=".8" fill="#fdd835" opacity=".5">GROK</text>
+
+    <!-- Travelling pulses inbound (provider → hub) -->
+    <circle r="3.5" fill="#fdd835" filter="url(#gs)">
+      <animateMotion dur="1.8s" repeatCount="indefinite" begin="0s"><mpath href="#p-openai"/></animateMotion>
+    </circle>
+    <circle r="3.5" fill="#fdd835" filter="url(#gs)">
+      <animateMotion dur="1.8s" repeatCount="indefinite" begin=".3s"><mpath href="#p-anthropic"/></animateMotion>
+    </circle>
+    <circle r="3.5" fill="#fdd835" filter="url(#gs)">
+      <animateMotion dur="1.8s" repeatCount="indefinite" begin=".6s"><mpath href="#p-gemini"/></animateMotion>
+    </circle>
+    <circle r="3.5" fill="#fdd835" filter="url(#gs)">
+      <animateMotion dur="1.8s" repeatCount="indefinite" begin=".9s"><mpath href="#p-llama"/></animateMotion>
+    </circle>
+    <circle r="3.5" fill="#fdd835" filter="url(#gs)">
+      <animateMotion dur="1.8s" repeatCount="indefinite" begin="1.2s"><mpath href="#p-groq"/></animateMotion>
+    </circle>
+    <circle r="3.5" fill="#fdd835" filter="url(#gs)">
+      <animateMotion dur="1.8s" repeatCount="indefinite" begin="1.5s"><mpath href="#p-cohere"/></animateMotion>
+    </circle>
+
+    <!-- Hidden motion paths -->
+    <path id="p-openai"   d="M175,68  L390,180" fill="none"/>
+    <path id="p-anthropic" d="M128,180 L390,180" fill="none"/>
+    <path id="p-gemini"   d="M175,292 L390,180" fill="none"/>
+    <path id="p-llama"    d="M605,68  L390,180" fill="none"/>
+    <path id="p-groq"     d="M652,180 L390,180" fill="none"/>
+    <path id="p-cohere"   d="M605,292 L390,180" fill="none"/>
+  </svg>
+</section>
+
+<!-- ── WHAT IS WEB6 ── -->
+<section class="section" id="what">
+  <div class="section-kicker">THE CONCEPT</div>
+  <h2 class="section-title">WHAT IS WEB6?</h2>
+  <span class="section-line"></span>
+  <p class="section-sub">The AI landscape is fragmented — dozens of providers, incompatible APIs, competing agent protocols and orchestration frameworks. WEB6 is the abstraction layer that unifies them all, so you build once and deploy everywhere.</p>
+  <div class="layer-stack">
+    <div class="layer-item" style="border-color:rgba(0,229,255,.25);background:rgba(0,229,255,.04)">
+      <div class="layer-dot" style="background:#00e5ff;box-shadow:0 0 8px rgba(0,229,255,.6)"></div>
+      <div class="layer-label" style="color:#00e5ff">YOUR APPLICATION</div>
+      <div class="layer-tag" style="color:#00e5ff">ONE UNIFIED INTERFACE</div>
+    </div>
+    <div class="layer-divider">↓ CALLS</div>
+    <div class="layer-item" style="border-color:rgba(253,216,53,.35);background:rgba(253,216,53,.07)">
+      <div class="layer-dot" style="background:#fdd835;box-shadow:0 0 8px rgba(253,216,53,.6)"></div>
+      <div class="layer-label" style="color:#fdd835">WEB6 OASIS AI API &nbsp;·&nbsp; api.web6.oasisomniverse.one</div>
+      <div class="layer-tag" style="color:#fdd835">ABSTRACTION LAYER</div>
+    </div>
+    <div class="layer-divider">↓ ROUTES TO</div>
+    <div class="layer-item">
+      <div class="layer-dot" style="background:#fdd835;opacity:.65"></div>
+      <div class="layer-label">OpenAI &nbsp;·&nbsp; Anthropic &nbsp;·&nbsp; Google Gemini &nbsp;·&nbsp; Meta Llama &nbsp;·&nbsp; xAI Grok</div>
+      <div class="layer-tag">LLM PROVIDERS</div>
+    </div>
+    <div class="layer-item" style="opacity:.8">
+      <div class="layer-dot" style="background:#8060c0;opacity:.7"></div>
+      <div class="layer-label">Mistral &nbsp;·&nbsp; Groq &nbsp;·&nbsp; Cohere &nbsp;·&nbsp; Ollama &nbsp;·&nbsp; Hugging Face &nbsp;·&nbsp; +more</div>
+      <div class="layer-tag">OPEN-SOURCE &amp; LOCAL</div>
+    </div>
+    <div class="layer-item" style="opacity:.65">
+      <div class="layer-dot" style="background:#5050a0;opacity:.6"></div>
+      <div class="layer-label">LangChain &nbsp;·&nbsp; AutoGen &nbsp;·&nbsp; CrewAI &nbsp;·&nbsp; MCP &nbsp;·&nbsp; A2A Protocol &nbsp;·&nbsp; Semantic Kernel</div>
+      <div class="layer-tag">AGENT FRAMEWORKS</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROVIDERS ── -->
+<section class="section-full" id="providers" style="background:rgba(255,255,255,.008)">
+  <div class="section" style="padding-top:0;padding-bottom:0">
+    <div class="section-kicker">AI PROVIDERS</div>
+    <h2 class="section-title">EVERY MODEL. ONE ENDPOINT.</h2>
+    <span class="section-line"></span>
+    <p class="section-sub">WEB6 normalises the request and response interface for every major AI provider and open-source model runtime. Switch providers with a single config change — no refactoring required.</p>
+    <div class="provider-grid">
+      <div class="provider-card">
+        <span class="provider-icon">🤖</span>
+        <div class="provider-name">OPENAI</div>
+        <div class="provider-type">GPT-4o · o3 · DALL·E · Whisper</div>
+      </div>
+      <div class="provider-card">
+        <span class="provider-icon">⚡</span>
+        <div class="provider-name">ANTHROPIC</div>
+        <div class="provider-type">Claude Opus · Sonnet · Haiku</div>
+      </div>
+      <div class="provider-card">
+        <span class="provider-icon">💎</span>
+        <div class="provider-name">GOOGLE GEMINI</div>
+        <div class="provider-type">Gemini 2.5 · Flash · Pro · Veo</div>
+      </div>
+      <div class="provider-card">
+        <span class="provider-icon">🦙</span>
+        <div class="provider-name">META LLAMA</div>
+        <div class="provider-type">Llama 3.x · Code Llama · Scout</div>
+      </div>
+      <div class="provider-card">
+        <span class="provider-icon">🌀</span>
+        <div class="provider-name">MISTRAL</div>
+        <div class="provider-type">Mixtral · Mistral Large · Codestral</div>
+      </div>
+      <div class="provider-card">
+        <span class="provider-icon">🔥</span>
+        <div class="provider-name">GROQ</div>
+        <div class="provider-type">Ultra-fast LPU inference</div>
+      </div>
+      <div class="provider-card">
+        <span class="provider-icon">🏠</span>
+        <div class="provider-name">OLLAMA</div>
+        <div class="provider-type">Local · Private · Self-hosted</div>
+      </div>
+      <div class="provider-card">
+        <span class="provider-icon">🤗</span>
+        <div class="provider-name">HUGGING FACE</div>
+        <div class="provider-type">Open-source · Fine-tuned models</div>
+      </div>
+      <div class="provider-card">
+        <span class="provider-icon">🧠</span>
+        <div class="provider-name">COHERE</div>
+        <div class="provider-type">Command R+ · Embed · Rerank</div>
+      </div>
+      <div class="provider-card">
+        <span class="provider-icon">✦</span>
+        <div class="provider-name">XAI</div>
+        <div class="provider-type">Grok 3 · Grok Vision</div>
+      </div>
+      <div class="provider-card" style="border-color:rgba(253,216,53,.08);opacity:.55;border-style:dashed">
+        <span class="provider-icon">+</span>
+        <div class="provider-name">MORE COMING</div>
+        <div class="provider-type">Continuously expanding</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURES ── -->
+<section class="section" id="features">
+  <div class="section-kicker">CAPABILITIES</div>
+  <h2 class="section-title">WHAT WEB6 GIVES YOU</h2>
+  <span class="section-line"></span>
+  <p class="section-sub">More than a proxy — WEB6 is an intelligent orchestration and normalisation layer with deep OASIS WEB4 integration built in.</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <span class="feature-icon">🔀</span>
+      <div class="feature-title">UNIFIED API</div>
+      <div class="feature-desc">One REST endpoint for every provider. Same request shape, same response schema. Swap models with a single parameter change — no client-side refactoring needed.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🧭</span>
+      <div class="feature-title">INTELLIGENT ROUTING</div>
+      <div class="feature-desc">Route requests automatically to the best model for the task — by capability, latency, cost or availability. Define routing rules declaratively, or let WEB6 decide.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🤝</span>
+      <div class="feature-title">AGENT ORCHESTRATION</div>
+      <div class="feature-desc">Coordinate multi-agent workflows across heterogeneous AI runtimes. Chain agents, pass context, monitor progress and handle failures — through one unified interface.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📡</span>
+      <div class="feature-title">PROTOCOL NORMALISATION</div>
+      <div class="feature-desc">Abstracts over MCP, A2A, LangChain, AutoGen, CrewAI and Semantic Kernel. Write once against the WEB6 protocol and reach every agent framework.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🛡️</span>
+      <div class="feature-title">FAILOVER &amp; LOAD BALANCING</div>
+      <div class="feature-desc">Automatic fallback to secondary providers when a model is unavailable or rate-limited. Built-in retry logic, circuit breaking and cost-aware load distribution.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🌐</span>
+      <div class="feature-title">WEB4 INTEGRATION</div>
+      <div class="feature-desc">Natively connected to the OASIS WEB4 identity and data layer. Avatar-aware context, karma-weighted responses and COSMIC ORM data grounding — out of the box.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">💰</span>
+      <div class="feature-title">COST OPTIMISATION</div>
+      <div class="feature-desc">Route cheaper tasks to smaller models automatically. Track spend per provider, per user and per OASIS avatar. Set budgets and caps — WEB6 enforces them.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📊</span>
+      <div class="feature-title">OBSERVABILITY</div>
+      <div class="feature-desc">Unified logs, latency metrics and token usage across every provider. Debug multi-agent workflows with end-to-end trace IDs that span the full OASIS stack.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔑</span>
+      <div class="feature-title">SINGLE AUTH</div>
+      <div class="feature-desc">One OASIS avatar key authenticates against every provider. No per-provider API key management. Permissions and quotas are governed at the WEB4 identity layer.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── API ── -->
+<section class="section-full" id="api" style="background:rgba(255,255,255,.008)">
+  <div class="section" style="padding-top:0;padding-bottom:0">
+    <div class="section-kicker">THE ENDPOINT</div>
+    <h2 class="section-title">ONE ENDPOINT. ALL MODELS.</h2>
+    <span class="section-line"></span>
+    <p class="section-sub">Authenticate with your OASIS avatar key and start making requests immediately — no per-provider SDK setup, no credential juggling.</p>
+
+    <div class="endpoint-badge">
+      <span class="endpoint-dot"></span>
+      api.web6.oasisomniverse.one
+    </div>
+
+    <div class="code-wrap">
+      <pre><span class="c">// Route a completion to whichever model fits best</span>
+POST https://api.web6.oasisomniverse.one/v1/complete
+Authorization: Bearer &lt;your-oasis-avatar-key&gt;
+
+{
+  <span class="k">"provider"</span>: <span class="s">"auto"</span>,          <span class="c">// "openai" | "anthropic" | "gemini" | "ollama" | ...</span>
+  <span class="k">"model"</span>:    <span class="s">"auto"</span>,          <span class="c">// or a specific model ID</span>
+  <span class="k">"messages"</span>: [
+    { <span class="k">"role"</span>: <span class="s">"user"</span>, <span class="k">"content"</span>: <span class="s">"Hello from the OASIS"</span> }
+  ],
+  <span class="k">"routing"</span>: {
+    <span class="k">"priority"</span>: <span class="s">"cost"</span>,         <span class="c">// "cost" | "latency" | "quality"</span>
+    <span class="k">"fallback"</span>: <span class="s">true</span>
+  },
+  <span class="k">"oasis"</span>: {
+    <span class="k">"avatar_id"</span>: <span class="s">"your-avatar-id"</span>  <span class="c">// optional — injects WEB4 context</span>
+  }
+}</pre>
+    </div>
+  </div>
+</section>
+
+<!-- ── WEB4 INTEGRATION ── -->
+<section class="section">
+  <div class="section-kicker">DEEP INTEGRATION</div>
+  <h2 class="section-title">POWERED BY WEB4</h2>
+  <span class="section-line"></span>
+  <div class="integration-band">
+    <h3>IDENTITY-AWARE AI</h3>
+    <p>WEB6 sits natively on top of the <strong>OASIS WEB4 foundation</strong> — the universal identity, data and reputation layer. Every AI request can be grounded with your avatar's history, karma score and COSMIC ORM data. Build AI experiences that know who the user is across every connected world in the omniverse.</p>
+    <div class="pill-row">
+      <span class="pill">AVATAR CONTEXT</span>
+      <span class="pill">KARMA WEIGHTING</span>
+      <span class="pill">COSMIC ORM</span>
+      <span class="pill">CROSS-WORLD MEMORY</span>
+      <span class="pill">HYPERDRIVE PROVIDERS</span>
+    </div>
+    <a href="https://web4.oasisomniverse.one" class="btn-primary">EXPLORE WEB4 →</a>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-brand">OASIS <span>WEB6</span></div>
+  <div class="footer-sub">THE UNIFIED AI ABSTRACTION LAYER</div>
+  <div class="footer-links">
+    <a href="https://oasisomniverse.one">OASIS OMNIVERSE</a>
+    <a href="https://web4.oasisomniverse.one">WEB4</a>
+    <a href="https://starnet.oasisomniverse.one">STARNET</a>
+    <a href="https://oportal.oasisomniverse.one">OPORTAL</a>
+    <a href="https://star.oasisomniverse.one">STAR ODK</a>
+    <a href="https://ogengine.oasisomniverse.one">OGENGINE</a>
+    <a href="https://holonet.oasisomniverse.one">HOLONET</a>
+    <a href="https://ourworld.oasisomniverse.one">OUR WORLD</a>
+    <a href="https://odoom.oasisomniverse.one">ODOOM</a>
+    <a href="https://oquake.oasisomniverse.one">OQUAKE</a>
+    <a href="https://web7.oasisomniverse.one">WEB7</a>
+    <a href="https://web8.oasisomniverse.one">WEB8</a>
+    <a href="https://web9.oasisomniverse.one">WEB9</a>
+    <a href="https://web10.oasisomniverse.one">WEB10</a>
+    <a href="https://founders.oasisomniverse.one">FOUNDERS NFT</a>
+    <a href="https://api.web6.oasisomniverse.one">API →</a>
+  </div>
+  <div class="footer-copy">© 2026 NextGen Software UK Ltd — OASIS WEB6. Part of the <a href="https://oasisomniverse.one">OASIS Omniverse</a>.</div>
+</footer>
+
+<script>
+(function(){
+  const canvas = document.getElementById('star-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, stars = [];
+
+  function resize(){
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    stars = Array.from({length:200}, () => ({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 1.4 + 0.2,
+      a: Math.random() * 0.75 + 0.1,
+      s: Math.random() * 0.4 + 0.1
+    }));
+  }
+
+  function tick(t){
+    ctx.clearRect(0, 0, W, H);
+    stars.forEach(s => {
+      const a = s.a * (0.55 + 0.45 * Math.sin(t * 0.001 * s.s + s.x));
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(200,210,255,${a})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(tick);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  requestAnimationFrame(tick);
+})();
+</script>
+
+</body>
+</html>
