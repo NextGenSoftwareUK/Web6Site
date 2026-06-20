@@ -103,8 +103,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 40px;display:fl
 .pill{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.18em;color:var(--purple);border:1px solid rgba(253,216,53,.28);border-radius:999px;padding:7px 16px}
 
 /* ── FOOTER ── */
-footer{position:relative;z-index:1;border-top:1px solid rgba(224,64,251,.1);padding:52px 40px 40px}
-.foot-inner{max-width:1400px;margin:0 auto}
+footer{position:relative;z-index:1;border-top:1px solid rgba(224,64,251,.1);padding:52px 0 40px}
+.foot-inner{max-width:1200px;margin:0 auto;padding:0 40px}
 .foot-brand-row{text-align:center;margin-bottom:3.5rem}
 .foot-brand-name{font-family:'Orbitron',sans-serif;font-size:15px;font-weight:900;letter-spacing:.2em;color:var(--purple);margin-bottom:8px}
 .foot-sub{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.22em;color:#a8bfd8}
@@ -112,11 +112,11 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(224,64,251,.1);padd
 .foot-col h4{font-family:'Orbitron',sans-serif;font-size:.72rem;letter-spacing:.15em;font-weight:700;color:var(--purple);margin-bottom:1rem;text-transform:uppercase}
 .foot-col ul{list-style:none;padding:0;margin:0}
 .foot-col ul li{margin-bottom:.25rem}
-.foot-col ul li a{color:#a8bfd8;text-decoration:none;font-size:.9rem;transition:color .2s}
-footer a:hover{color:#fdd835;filter:drop-shadow(0 0 8px rgba(253,216,53,1)) drop-shadow(0 0 20px rgba(253,216,53,.8)) drop-shadow(0 0 40px rgba(253,216,53,.4))}
+.foot-col ul li a{color:#a8bfd8;text-decoration:none;font-size:.9rem;transition:filter .3s ease,color .3s ease}
+footer a:hover,.foot-col ul li a:hover{color:#fdd835;filter:drop-shadow(0 0 8px rgba(253,216,53,1)) drop-shadow(0 0 20px rgba(253,216,53,.8)) drop-shadow(0 0 40px rgba(253,216,53,.4))}
 .foot-bottom{border-top:1px solid rgba(224,64,251,.08);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
 .foot-bottom p{color:#a8bfd8;font-size:.82rem}
-.foot-bottom a{color:#a8bfd8;text-decoration:none}
+.foot-bottom a{color:#a8bfd8;text-decoration:none;transition:filter .3s ease,color .3s ease}
 @media(max-width:900px){.foot-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:500px){.foot-grid{grid-template-columns:1fr}}
 </style>
@@ -186,61 +186,73 @@ footer a:hover{color:#fdd835;filter:drop-shadow(0 0 8px rgba(253,216,53,1)) drop
 
     <!-- Provider nodes (left side) with spokes -->
     <!-- OpenAI: top-left -->
-    <line x1="175" y1="68"  x2="352" y2="165" stroke="#fdd835" stroke-width=".9" opacity=".28" class="dash-in"/>
-    <circle cx="175" cy="68" r="20" fill="rgba(253,216,53,.07)" stroke="#fdd835" stroke-width="1" opacity=".7"/>
-    <text x="175" y="65"  text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="7.5" letter-spacing="1.5" fill="#fdd835">OPENAI</text>
-    <text x="175" y="76"  text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6"   letter-spacing="1"   fill="#fdd835" opacity=".6">GPT-4o</text>
+    <line x1="175" y1="68"  x2="345" y2="160" stroke="#fdd835" stroke-width=".9" opacity=".28" class="dash-in"/>
+    <circle cx="175" cy="68" r="30" fill="rgba(253,216,53,.07)" stroke="#fdd835" stroke-width="1" opacity=".7"/>
+    <text x="175" y="65"  text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="8.5" letter-spacing="1"   fill="#fdd835">OPENAI</text>
+    <text x="175" y="77"  text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6.5" letter-spacing=".8" fill="#fdd835" opacity=".6">GPT-4o</text>
     <!-- Anthropic: mid-left -->
-    <line x1="128" y1="180" x2="350" y2="180" stroke="#fdd835" stroke-width=".9" opacity=".28" class="dash-in"/>
-    <circle cx="128" cy="180" r="20" fill="rgba(253,216,53,.07)" stroke="#fdd835" stroke-width="1" opacity=".7"/>
-    <text x="128" y="177" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6.5" letter-spacing="1"   fill="#fdd835">ANTHROPIC</text>
-    <text x="128" y="188" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6"   letter-spacing="1"   fill="#fdd835" opacity=".6">CLAUDE</text>
+    <line x1="128" y1="180" x2="338" y2="180" stroke="#fdd835" stroke-width=".9" opacity=".28" class="dash-in"/>
+    <circle cx="128" cy="180" r="30" fill="rgba(253,216,53,.07)" stroke="#fdd835" stroke-width="1" opacity=".7"/>
+    <text x="128" y="177" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="7"   letter-spacing=".5" fill="#fdd835">ANTHROPIC</text>
+    <text x="128" y="189" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6.5" letter-spacing=".8" fill="#fdd835" opacity=".6">CLAUDE</text>
     <!-- Gemini: bottom-left -->
-    <line x1="175" y1="292" x2="352" y2="195" stroke="#fdd835" stroke-width=".9" opacity=".28" class="dash-in"/>
-    <circle cx="175" cy="292" r="20" fill="rgba(253,216,53,.07)" stroke="#fdd835" stroke-width="1" opacity=".7"/>
-    <text x="175" y="289" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="7.5" letter-spacing="1.5" fill="#fdd835">GEMINI</text>
-    <text x="175" y="300" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6"   letter-spacing="1"   fill="#fdd835" opacity=".6">GOOGLE</text>
+    <line x1="175" y1="292" x2="345" y2="200" stroke="#fdd835" stroke-width=".9" opacity=".28" class="dash-in"/>
+    <circle cx="175" cy="292" r="30" fill="rgba(253,216,53,.07)" stroke="#fdd835" stroke-width="1" opacity=".7"/>
+    <text x="175" y="289" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="8.5" letter-spacing="1"   fill="#fdd835">GEMINI</text>
+    <text x="175" y="301" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6.5" letter-spacing=".8" fill="#fdd835" opacity=".6">GOOGLE</text>
 
     <!-- Outer left nodes (smaller) -->
     <!-- Ollama: far top-left -->
-    <line x1="58" y1="100" x2="155" y2="165" stroke="#fdd835" stroke-width=".6" opacity=".2" class="dash-in"/>
-    <circle cx="58" cy="100" r="14" fill="rgba(253,216,53,.05)" stroke="#fdd835" stroke-width=".8" opacity=".5"/>
-    <text x="58" y="97"  text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6.5" letter-spacing="1" fill="#fdd835" opacity=".8">OLLAMA</text>
-    <text x="58" y="107" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="5.5" letter-spacing=".8" fill="#fdd835" opacity=".5">LOCAL</text>
+    <line x1="58" y1="100" x2="148" y2="160" stroke="#fdd835" stroke-width=".6" opacity=".2" class="dash-in"/>
+    <circle cx="58" cy="100" r="21" fill="rgba(253,216,53,.05)" stroke="#fdd835" stroke-width=".8" opacity=".5"/>
+    <text x="58" y="97"  text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="7"   letter-spacing=".6" fill="#fdd835" opacity=".8">OLLAMA</text>
+    <text x="58" y="108" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6"   letter-spacing=".5" fill="#fdd835" opacity=".5">LOCAL</text>
     <!-- Mistral: far bottom-left -->
-    <line x1="58" y1="260" x2="155" y2="195" stroke="#fdd835" stroke-width=".6" opacity=".2" class="dash-in"/>
-    <circle cx="58" cy="260" r="14" fill="rgba(253,216,53,.05)" stroke="#fdd835" stroke-width=".8" opacity=".5"/>
-    <text x="58" y="257" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6.5" letter-spacing="1" fill="#fdd835" opacity=".8">MISTRAL</text>
-    <text x="58" y="267" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="5.5" letter-spacing=".8" fill="#fdd835" opacity=".5">MIXTRAL</text>
+    <line x1="58" y1="260" x2="148" y2="200" stroke="#fdd835" stroke-width=".6" opacity=".2" class="dash-in"/>
+    <circle cx="58" cy="260" r="21" fill="rgba(253,216,53,.05)" stroke="#fdd835" stroke-width=".8" opacity=".5"/>
+    <text x="58" y="257" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="7"   letter-spacing=".6" fill="#fdd835" opacity=".8">MISTRAL</text>
+    <text x="58" y="268" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6"   letter-spacing=".5" fill="#fdd835" opacity=".5">MIXTRAL</text>
 
     <!-- Provider nodes (right side) — more providers -->
     <!-- Llama: top-right -->
-    <line x1="605" y1="68"  x2="428" y2="165" stroke="#fdd835" stroke-width=".9" opacity=".28" class="dash-in"/>
-    <circle cx="605" cy="68" r="20" fill="rgba(253,216,53,.07)" stroke="#fdd835" stroke-width="1" opacity=".7"/>
-    <text x="605" y="65"  text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="7.5" letter-spacing="1.5" fill="#fdd835">LLAMA</text>
-    <text x="605" y="76"  text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6"   letter-spacing="1"   fill="#fdd835" opacity=".6">META</text>
+    <line x1="605" y1="68"  x2="435" y2="160" stroke="#fdd835" stroke-width=".9" opacity=".28" class="dash-in"/>
+    <circle cx="605" cy="68" r="30" fill="rgba(253,216,53,.07)" stroke="#fdd835" stroke-width="1" opacity=".7"/>
+    <text x="605" y="65"  text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="8.5" letter-spacing="1"   fill="#fdd835">LLAMA</text>
+    <text x="605" y="77"  text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6.5" letter-spacing=".8" fill="#fdd835" opacity=".6">META</text>
     <!-- Groq: mid-right -->
-    <line x1="652" y1="180" x2="430" y2="180" stroke="#fdd835" stroke-width=".9" opacity=".28" class="dash-in"/>
-    <circle cx="652" cy="180" r="20" fill="rgba(253,216,53,.07)" stroke="#fdd835" stroke-width="1" opacity=".7"/>
-    <text x="652" y="177" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="7.5" letter-spacing="1.5" fill="#fdd835">GROQ</text>
-    <text x="652" y="188" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6"   letter-spacing="1"   fill="#fdd835" opacity=".6">LLAMA</text>
+    <line x1="652" y1="180" x2="442" y2="180" stroke="#fdd835" stroke-width=".9" opacity=".28" class="dash-in"/>
+    <circle cx="652" cy="180" r="30" fill="rgba(253,216,53,.07)" stroke="#fdd835" stroke-width="1" opacity=".7"/>
+    <text x="652" y="177" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="8.5" letter-spacing="1"   fill="#fdd835">GROQ</text>
+    <text x="652" y="189" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6.5" letter-spacing=".8" fill="#fdd835" opacity=".6">LLAMA</text>
     <!-- Cohere: bottom-right -->
-    <line x1="605" y1="292" x2="428" y2="195" stroke="#fdd835" stroke-width=".9" opacity=".28" class="dash-in"/>
-    <circle cx="605" cy="292" r="20" fill="rgba(253,216,53,.07)" stroke="#fdd835" stroke-width="1" opacity=".7"/>
-    <text x="605" y="289" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="7.5" letter-spacing="1.5" fill="#fdd835">COHERE</text>
-    <text x="605" y="300" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6"   letter-spacing="1"   fill="#fdd835" opacity=".6">COMMAND</text>
+    <line x1="605" y1="292" x2="435" y2="200" stroke="#fdd835" stroke-width=".9" opacity=".28" class="dash-in"/>
+    <circle cx="605" cy="292" r="30" fill="rgba(253,216,53,.07)" stroke="#fdd835" stroke-width="1" opacity=".7"/>
+    <text x="605" y="289" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="8.5" letter-spacing="1"   fill="#fdd835">COHERE</text>
+    <text x="605" y="301" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6.5" letter-spacing=".8" fill="#fdd835" opacity=".6">COMMAND</text>
 
     <!-- Outer right nodes -->
     <!-- HuggingFace -->
-    <line x1="722" y1="100" x2="625" y2="165" stroke="#fdd835" stroke-width=".6" opacity=".2" class="dash-in"/>
-    <circle cx="722" cy="100" r="14" fill="rgba(253,216,53,.05)" stroke="#fdd835" stroke-width=".8" opacity=".5"/>
-    <text x="722" y="97"  text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6" letter-spacing=".8" fill="#fdd835" opacity=".8">HF</text>
-    <text x="722" y="107" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="5" letter-spacing=".5" fill="#fdd835" opacity=".5">MODELS</text>
+    <line x1="722" y1="100" x2="632" y2="160" stroke="#fdd835" stroke-width=".6" opacity=".2" class="dash-in"/>
+    <circle cx="722" cy="100" r="21" fill="rgba(253,216,53,.05)" stroke="#fdd835" stroke-width=".8" opacity=".5"/>
+    <text x="722" y="97"  text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="7"   letter-spacing=".5" fill="#fdd835" opacity=".8">HF</text>
+    <text x="722" y="108" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6"   letter-spacing=".4" fill="#fdd835" opacity=".5">MODELS</text>
     <!-- xAI Grok -->
-    <line x1="722" y1="260" x2="625" y2="195" stroke="#fdd835" stroke-width=".6" opacity=".2" class="dash-in"/>
-    <circle cx="722" cy="260" r="14" fill="rgba(253,216,53,.05)" stroke="#fdd835" stroke-width=".8" opacity=".5"/>
-    <text x="722" y="257" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6.5" letter-spacing="1" fill="#fdd835" opacity=".8">XAI</text>
-    <text x="722" y="267" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="5.5" letter-spacing=".8" fill="#fdd835" opacity=".5">GROK</text>
+    <line x1="722" y1="260" x2="632" y2="200" stroke="#fdd835" stroke-width=".6" opacity=".2" class="dash-in"/>
+    <circle cx="722" cy="260" r="21" fill="rgba(253,216,53,.05)" stroke="#fdd835" stroke-width=".8" opacity=".5"/>
+    <text x="722" y="257" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="7"   letter-spacing=".6" fill="#fdd835" opacity=".8">XAI</text>
+    <text x="722" y="268" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6"   letter-spacing=".5" fill="#fdd835" opacity=".5">GROK</text>
+
+    <!-- Protocols & orchestration — WEB6 abstracts more than just models -->
+    <!-- MCP / agent protocols: top -->
+    <line x1="390" y1="48" x2="390" y2="138" stroke="#a78bfa" stroke-width=".9" opacity=".3" class="dash-in"/>
+    <circle cx="390" cy="48" r="38" fill="rgba(167,139,250,.08)" stroke="#a78bfa" stroke-width="1" opacity=".75"/>
+    <text x="390" y="44"  text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="8"   letter-spacing=".4" fill="#a78bfa">MCP · A2A</text>
+    <text x="390" y="57"  text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6.5" letter-spacing=".3" fill="#a78bfa" opacity=".65">PROTOCOLS</text>
+    <!-- Orchestration frameworks: bottom -->
+    <line x1="390" y1="312" x2="390" y2="222" stroke="#a78bfa" stroke-width=".9" opacity=".3" class="dash-in"/>
+    <circle cx="390" cy="312" r="38" fill="rgba(167,139,250,.08)" stroke="#a78bfa" stroke-width="1" opacity=".75"/>
+    <text x="390" y="308" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="8.5" letter-spacing=".6" fill="#a78bfa">AGENTS</text>
+    <text x="390" y="321" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6.5" letter-spacing=".3" fill="#a78bfa" opacity=".65">ORCHESTRATION</text>
 
     <!-- Travelling pulses inbound (provider → hub) -->
     <circle r="3.5" fill="#fdd835" filter="url(#gs)">
@@ -261,6 +273,12 @@ footer a:hover{color:#fdd835;filter:drop-shadow(0 0 8px rgba(253,216,53,1)) drop
     <circle r="3.5" fill="#fdd835" filter="url(#gs)">
       <animateMotion dur="1.8s" repeatCount="indefinite" begin="1.5s"><mpath href="#p-cohere"/></animateMotion>
     </circle>
+    <circle r="3.5" fill="#a78bfa" filter="url(#gs)">
+      <animateMotion dur="1.8s" repeatCount="indefinite" begin="1.8s"><mpath href="#p-mcp"/></animateMotion>
+    </circle>
+    <circle r="3.5" fill="#a78bfa" filter="url(#gs)">
+      <animateMotion dur="1.8s" repeatCount="indefinite" begin="2.1s"><mpath href="#p-agents"/></animateMotion>
+    </circle>
 
     <!-- Hidden motion paths -->
     <path id="p-openai"   d="M175,68  L390,180" fill="none"/>
@@ -269,6 +287,8 @@ footer a:hover{color:#fdd835;filter:drop-shadow(0 0 8px rgba(253,216,53,1)) drop
     <path id="p-llama"    d="M605,68  L390,180" fill="none"/>
     <path id="p-groq"     d="M652,180 L390,180" fill="none"/>
     <path id="p-cohere"   d="M605,292 L390,180" fill="none"/>
+    <path id="p-mcp"      d="M390,46  L390,180" fill="none"/>
+    <path id="p-agents"   d="M390,314 L390,180" fill="none"/>
   </svg>
 </section>
 
@@ -996,6 +1016,13 @@ Authorization: Bearer &lt;your-oasis-avatar-key&gt;
           <li><a href="https://oasis-web4.gitbook.io/oasis-web4-docs/" target="_blank" rel="noopener">GitBook Docs</a></li>
           <li><a href="https://github.com/NextGenSoftwareUK/OASIS" target="_blank" rel="noopener">GitHub</a></li>
           <li><a href="https://github.com/NextGenSoftwareUK/OASIS/tree/master/Docs/Devs/API%20Documentation" target="_blank" rel="noopener">API Reference</a></li>
+          <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/Devs/DEVELOPER_DOCUMENTATION_INDEX.md" target="_blank" rel="noopener">Developer Index</a></li>
+          <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/Devs/OASIS_Quick_Start_Guide.md" target="_blank" rel="noopener">Quick Start Guide</a></li>
+          <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/Devs/OASIS_ARCHITECTURE_OVERVIEW.md" target="_blank" rel="noopener">Architecture Overview</a></li>
+          <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/Devs/DEVELOPMENT_ENVIRONMENT_SETUP.md" target="_blank" rel="noopener">Environment Setup</a></li>
+          <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/Devs/OASIS-BEST-PRACTICES.md" target="_blank" rel="noopener">Best Practices</a></li>
+          <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/Devs/DOCKER_DEPLOYMENT_GUIDE.md" target="_blank" rel="noopener">Docker Deployment Guide</a></li>
+          <li><a href="https://github.com/NextGenSoftwareUK/OASIS/releases/tag/OASIS-Runtime-v4.5.1" target="_blank" rel="noopener">OASIS Runtime v4.5.1</a></li>
         </ul>
       </div>
       <div class="foot-col">
@@ -1010,6 +1037,12 @@ Authorization: Bearer &lt;your-oasis-avatar-key&gt;
           <li><a href="https://www.oasisweb4.com/holonic-architecture" target="_blank" rel="noopener">Holonic Architecture</a></li>
           <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/Devs/WIKI_DOCUMENTATION_INDEX.md" target="_blank" rel="noopener">Wiki</a></li>
           <li><a href="https://www.ourworldthegame.com/blog" target="_blank" rel="noopener">Blog</a></li>
+          <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/OASIS_Lite_Paper.md" target="_blank" rel="noopener">OASIS Lite Paper</a></li>
+          <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/OASIS_HYPERDRIVE_WHITEPAPER.md" target="_blank" rel="noopener">HyperDrive Whitepaper</a></li>
+          <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/OASIS_COSMIC_ORM_WHITEPAPER.md" target="_blank" rel="noopener">Cosmic ORM Whitepaper</a></li>
+          <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/OASIS_NFT_SYSTEM_WHITEPAPER.md" target="_blank" rel="noopener">NFT System Whitepaper</a></li>
+          <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/OASIS_UNIVERSAL_WALLET_WHITEPAPER.md" target="_blank" rel="noopener">Universal Wallet Whitepaper</a></li>
+          <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/OASIS_TECHNOLOGY_SUMMARY_AND_USE_CASES.md" target="_blank" rel="noopener">Use Cases</a></li>
         </ul>
       </div>
       <div class="foot-col">
@@ -1026,9 +1059,9 @@ Authorization: Bearer &lt;your-oasis-avatar-key&gt;
         <ul>
           <li><a href="https://discord.gg/q9gMKU6" target="_blank" rel="noopener">Discord</a></li>
           <li><a href="https://t.me/oasisweb4chat" target="_blank" rel="noopener">Telegram</a></li>
-          <li><a href="https://x.com/OASISWEB4" target="_blank" rel="noopener">𝕏 OASIS WEB4</a></li>
-          <li><a href="https://x.com/OurWorldTheGame" target="_blank" rel="noopener">𝕏 Our World</a></li>
-          <li><a href="https://x.com/HoloNET_OASIS" target="_blank" rel="noopener">𝕏 HoloNET</a></li>
+          <li><a href="https://x.com/OASISWEB4" target="_blank" rel="noopener">X OASIS WEB4</a></li>
+          <li><a href="https://x.com/OurWorldTheGame" target="_blank" rel="noopener">X Our World</a></li>
+          <li><a href="https://x.com/HoloNET_OASIS" target="_blank" rel="noopener">X HoloNET</a></li>
           <li><a href="https://www.youtube.com/@WEB4OASIS" target="_blank" rel="noopener">YouTube OASIS</a></li>
           <li><a href="https://www.youtube.com/@ourworld-the-game" target="_blank" rel="noopener">YouTube Our World</a></li>
           <li><a href="https://www.youtube.com/channel/UC0_O4RwdY3lq1m3-K-njUxA" target="_blank" rel="noopener">YouTube Our World Legacy</a></li>
@@ -1041,6 +1074,8 @@ Authorization: Bearer &lt;your-oasis-avatar-key&gt;
           <li><a href="https://github.com/NextGenSoftwareUK/OASIS/issues" target="_blank" rel="noopener">Report an Issue</a></li>
           <li><a href="https://github.com/NextGenSoftwareUK/OASIS/discussions" target="_blank" rel="noopener">Discussions</a></li>
           <li><a href="https://tally.so/r/WOZjNa" target="_blank" rel="noopener">Submit a Support Ticket</a></li>
+          <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/Devs/CONTRIBUTING.md" target="_blank" rel="noopener">Contributing</a></li>
+          <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/Devs/CODE_OF_CONDUCT.md" target="_blank" rel="noopener">Code of Conduct</a></li>
         </ul>
       </div>
     </div>
