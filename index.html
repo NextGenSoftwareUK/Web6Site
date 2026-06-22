@@ -134,7 +134,7 @@ footer a:hover,.foot-col ul li a:hover{color:#fdd835;filter:drop-shadow(0 0 8px 
     <li><a href="#features">FEATURES</a></li>
     <li><a href="#api">API</a></li>
     <li><a href="#holonic-braid">HOLONIC BRAID</a></li>
-    <li><a href="#reasoning-network">REASONING NETWORK</a></li>
+    <li><a href="#reasoning-network">FAHRN</a></li>
     <li><a href="#mcp">MCP</a></li>
     <li><a href="https://oasisomniverse.one" target="_blank" rel="noopener">ECOSYSTEM</a></li>
   </ul>
@@ -490,7 +490,7 @@ POST https://api.web6.oasisomniverse.one/v1/complete
 Authorization: Bearer &lt;your-oasis-avatar-key&gt;
 
 {
-  <span class="k">"provider"</span>: <span class="s">"auto"</span>,          <span class="c">// "openai" | "anthropic" | "gemini" | "ollama" | ...</span>
+  <span class="k">"provider"</span>: <span class="s">"auto"</span>,          <span class="c">// "auto" | "openai" | "anthropic" | "gemini" | "groq" | "mistral" | ...</span>
   <span class="k">"model"</span>:    <span class="s">"auto"</span>,          <span class="c">// or a specific model ID</span>
   <span class="k">"messages"</span>: [
     { <span class="k">"role"</span>: <span class="s">"user"</span>, <span class="k">"content"</span>: <span class="s">"Hello from the OASIS"</span> }
@@ -499,9 +499,20 @@ Authorization: Bearer &lt;your-oasis-avatar-key&gt;
     <span class="k">"priority"</span>: <span class="s">"cost"</span>,         <span class="c">// "cost" | "latency" | "quality"</span>
     <span class="k">"fallback"</span>: <span class="s">true</span>
   },
-  <span class="k">"oasis"</span>: {
-    <span class="k">"avatar_id"</span>: <span class="s">"your-avatar-id"</span>  <span class="c">// optional — injects WEB4 context</span>
-  }
+  <span class="k">"avatarId"</span>: <span class="s">"your-avatar-id"</span>     <span class="c">// optional — injects WEB4 identity/karma context</span>
+}</pre>
+    </div>
+
+    <div class="code-wrap" style="margin-top:24px">
+      <pre><span class="c">// Dispatch a problem straight to FAHRN - the controller agent scores agents, picks a</span>
+<span class="c">// dispatch mode, runs loop detection and returns the assembled Mermaid execution plan</span>
+POST https://api.web6.oasisomniverse.one/v1/reasoning-network/dispatch
+Authorization: Bearer &lt;your-oasis-avatar-key&gt;
+
+{
+  <span class="k">"problem"</span>:  <span class="s">"Plan a zero-downtime migration of a 50M row table"</span>,
+  <span class="k">"taskType"</span>: <span class="s">"architecture"</span>,
+  <span class="k">"mode"</span>:     <span class="s">"Parallel"</span>   <span class="c">// "Serial" | "Parallel" | "Decomposed"</span>
 }</pre>
     </div>
   </div>
@@ -668,9 +679,10 @@ Authorization: Bearer &lt;your-oasis-avatar-key&gt;
 <section class="section-full" id="reasoning-network" style="background:rgba(255,255,255,.008)">
   <div class="section" style="padding-top:0;padding-bottom:0">
     <div class="section-kicker">META-ORCHESTRATION INTELLIGENCE LAYER · COMPOSITE SCORING · CONTINUOUS LEARNING · ANTI-FRAGILE</div>
-    <h2 class="section-title">THE REASONING NETWORK</h2>
+    <h2 class="section-title">FAHRN</h2>
+    <div style="text-align:center;font-family:'Share Tech Mono',monospace;font-size:13px;letter-spacing:.18em;color:#a78bfa;margin-bottom:18px">FRACTAL ADAPTIVE HOLONIC REASONING NETWORK</div>
     <span class="section-line"></span>
-    <p class="section-sub">A self-optimising reasoning mesh built on top of Holonic BRAID. A controller agent dispatches work to scored agents in serial, parallel or decomposed mode — using a composite score of category performance, speed, cost and loop-detection stability — and learns from every outcome via EMA score updates stored in the holonic memory hierarchy.</p>
+    <p class="section-sub">FAHRN is the self-optimising reasoning mesh built on top of Holonic BRAID. A controller agent dispatches work to scored agents in serial, parallel or decomposed mode — using a composite score of category performance, speed, cost and loop-detection stability — and learns from every outcome via EMA score updates stored in the holonic memory hierarchy.</p>
 
     <!-- Agent scoring diagram -->
     <div style="background:var(--bg-card);border:1px solid rgba(253,216,53,.15);border-radius:16px;padding:32px;max-width:900px;margin:0 auto 56px">
@@ -800,7 +812,7 @@ Authorization: Bearer &lt;your-oasis-avatar-key&gt;
       var layers=[
         {label:'USER / API INPUT',       sub:null,                                   color:'#c8ddf0',y:18, h:52,nW:360},
         {label:'CONTROLLER AGENT',        sub:'Meta-Orchestrator',                   color:'#e8f0ff',y:94, h:66,nW:500},
-        {label:'ADAPTIVE REASONING NETWORK',sub:'Serial · Parallel · Decomposed',   color:'#a78bfa',y:184,h:68,nW:640},
+        {label:'FAHRN',sub:'Fractal Adaptive Holonic Reasoning Network · Serial · Parallel · Decomposed',   color:'#a78bfa',y:184,h:68,nW:640},
         {label:'REASONING AGENTS',        sub:'GPT-5 · Claude · Grok · Gemini · Custom',color:'#00e5ff',y:276,h:68,nW:680},
         {label:'MERMAID EXECUTION GRAPHS',sub:'compared · merged · assembled',       color:'#00c8a8',y:368,h:66,nW:540},
         {label:'EXECUTION / RUNTIME LAYER',sub:null,                                 color:'#8ab4d4',y:458,h:52,nW:440},
