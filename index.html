@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OASIS WEB6 — The Unified AI Abstraction Layer</title>
-<meta name="description" content="OASIS WEB6 — one API to unify every AI model, agent, orchestrator and protocol. Route intelligently across OpenAI, Anthropic, Gemini, Ollama and beyond.">
-<meta property="og:title" content="OASIS WEB6 — The Unified AI Abstraction Layer">
+<title>OASIS WEB6 â€” The Unified AI Abstraction Layer</title>
+<meta name="description" content="OASIS WEB6 â€” one API to unify every AI model, agent, orchestrator and protocol. Route intelligently across OpenAI, Anthropic, Gemini, Ollama and beyond.">
+<meta property="og:title" content="OASIS WEB6 â€” The Unified AI Abstraction Layer">
 <meta property="og:description" content="One API. Every AI. Route, orchestrate and normalise across every model and protocol in the OASIS omniverse.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='44' fill='none' stroke='%23fdd835' stroke-width='6'/><circle cx='50' cy='50' r='10' fill='%23fdd835'/><line x1='50' y1='6' x2='50' y2='94' stroke='%23fdd835' stroke-width='2.5' opacity='.4'/><line x1='6' y1='50' x2='94' y2='50' stroke='%23fdd835' stroke-width='2.5' opacity='.4'/><line x1='18' y1='18' x2='82' y2='82' stroke='%23fdd835' stroke-width='2' opacity='.25'/><line x1='82' y1='18' x2='18' y2='82' stroke='%23fdd835' stroke-width='2' opacity='.25'/></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -22,10 +22,10 @@
 html{scroll-behavior:smooth}
 body{background:var(--bg-deep);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden}
 
-/* ── STAR CANVAS ── */
+/* â”€â”€ STAR CANVAS â”€â”€ */
 #star-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
 
-/* ── NAV ── */
+/* â”€â”€ NAV â”€â”€ */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 40px;display:flex;align-items:center;justify-content:space-between;background:rgba(3,7,20,.88);backdrop-filter:blur(12px);border-bottom:1px solid rgba(253,216,53,.12)}
 .nav-brand{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;letter-spacing:.22em;color:#fff;text-decoration:none}
 .nav-brand span{color:var(--purple)}
@@ -52,9 +52,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 40px;display:fl
   .layer-tag{font-size:9px}
   .w6-outer-card{padding:1rem!important}
   .w6-mode-card{padding:1.25rem!important}
+  .w6-card{padding:1rem .75rem!important;max-width:100%!important}
+  .integration-band{padding:1.5rem 1rem!important}
+  .code-wrap{padding:1rem!important}
+  .endpoint-badge{padding:10px 16px!important;font-size:13px!important}
 }
 
-/* ── SECTIONS ── */
+/* â”€â”€ SECTIONS â”€â”€ */
 .section{position:relative;z-index:1;padding:100px 40px;max-width:1200px;margin:0 auto}
 .section-full{position:relative;z-index:1;padding:100px 40px}
 .section-kicker{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.28em;color:var(--purple);margin-bottom:16px;text-align:center}
@@ -62,7 +66,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 40px;display:fl
 .section-line{display:block;width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--purple),transparent);margin:0 auto 36px}
 .section-sub{font-size:17px;color:#a8bfd8;text-align:center;max-width:720px;margin:0 auto 56px;line-height:1.7}
 
-/* ── HERO ── */
+/* â”€â”€ HERO â”€â”€ */
 .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 40px 80px;position:relative;z-index:1}
 .hero-kicker{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.35em;color:var(--purple);margin-bottom:28px;display:flex;align-items:center;justify-content:center;gap:12px}
 .hero-kicker::before,.hero-kicker::after{content:'';width:50px;height:1px;background:linear-gradient(90deg,transparent,var(--purple))}
@@ -77,10 +81,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 40px;display:fl
 .btn-secondary{font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:.14em;color:#a8bfd8;background:transparent;border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:14px 32px;text-decoration:none;transition:border-color .25s,color .25s;display:inline-block}
 .btn-secondary:hover{border-color:rgba(255,255,255,.3);color:#fff}
 
-/* ── HERO SVG ── */
+/* â”€â”€ HERO SVG â”€â”€ */
 .hero-bg{order:10;display:block;width:100%;max-width:1560px;margin-top:64px;pointer-events:none;opacity:.88}
 
-/* ── LAYER STACK ── */
+/* â”€â”€ LAYER STACK â”€â”€ */
 .layer-stack{max-width:740px;margin:0 auto;display:flex;flex-direction:column;gap:4px}
 .layer-item{display:flex;align-items:center;gap:16px;padding:14px 22px;border-radius:10px;border:1px solid rgba(255,255,255,.07);background:var(--bg-card)}
 .layer-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
@@ -88,7 +92,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 40px;display:fl
 .layer-tag{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.16em;color:var(--text-dim)}
 .layer-divider{text-align:center;padding:6px 0;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.2em;color:rgba(253,216,53,.4)}
 
-/* ── PROVIDER GRID ── */
+/* â”€â”€ PROVIDER GRID â”€â”€ */
 .provider-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;max-width:1100px;margin:0 auto}
 .provider-card{background:var(--bg-card);border:1px solid rgba(253,216,53,.1);border-radius:12px;padding:26px 20px;text-align:center;transition:transform .3s,border-color .3s,box-shadow .3s}
 .provider-card:hover{transform:translateY(-4px);border-color:rgba(253,216,53,.32);box-shadow:0 12px 36px rgba(253,216,53,.1)}
@@ -96,7 +100,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 40px;display:fl
 .provider-name{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--heading);margin-bottom:6px}
 .provider-type{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.12em;color:var(--purple);opacity:.75}
 
-/* ── FEATURES ── */
+/* â”€â”€ FEATURES â”€â”€ */
 .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:1100px;margin:0 auto}
 .feature-card{background:var(--bg-card);border:1px solid rgba(253,216,53,.1);border-radius:14px;padding:32px 26px;transition:transform .3s,border-color .3s}
 .feature-card:hover{transform:translateY(-5px);border-color:rgba(253,216,53,.3)}
@@ -104,7 +108,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 40px;display:fl
 .feature-title{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;color:var(--heading);margin-bottom:10px}
 .feature-desc{font-size:16px;color:#a8bfd8;line-height:1.65}
 
-/* ── CODE BLOCK ── */
+/* â”€â”€ CODE BLOCK â”€â”€ */
 .code-wrap{background:#020810;border:1px solid rgba(253,216,53,.22);border-radius:12px;padding:28px 32px;max-width:840px;margin:0 auto;overflow-x:auto}
 .code-wrap pre{font-family:'Share Tech Mono',monospace;font-size:13px;color:#c0d8f8;line-height:1.75;white-space:pre}
 .c{color:#3e5570}
@@ -112,18 +116,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 40px;display:fl
 .s{color:#7ec8e3}
 .n{color:#f0a500}
 
-/* ── ENDPOINT BADGE ── */
+/* â”€â”€ ENDPOINT BADGE â”€â”€ */
 .endpoint-badge{display:flex;align-items:center;justify-content:center;gap:12px;background:rgba(253,216,53,.08);border:1px solid rgba(253,216,53,.28);border-radius:999px;padding:13px 28px;font-family:'Share Tech Mono',monospace;font-size:15px;color:var(--purple);letter-spacing:.08em;max-width:fit-content;margin:0 auto 52px}
 .endpoint-dot{width:8px;height:8px;border-radius:50%;background:#00cc44;box-shadow:0 0 8px rgba(0,204,68,.7);flex-shrink:0}
 
-/* ── INTEGRATION BAND ── */
+/* â”€â”€ INTEGRATION BAND â”€â”€ */
 .integration-band{max-width:860px;margin:0 auto;background:linear-gradient(135deg,rgba(253,216,53,.06),rgba(10,21,53,.96));border:1px solid rgba(253,216,53,.22);border-radius:20px;padding:60px 44px;text-align:center}
 .integration-band h3{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;letter-spacing:.08em;color:var(--heading);margin-bottom:16px}
 .integration-band p{font-size:16px;color:#a8bfd8;line-height:1.7;max-width:640px;margin:0 auto 28px}
 .pill-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:32px}
 .pill{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.18em;color:var(--purple);border:1px solid rgba(253,216,53,.28);border-radius:999px;padding:7px 16px}
 
-/* ── FOOTER ── */
+/* â”€â”€ FOOTER â”€â”€ */
 footer{position:relative;z-index:1;border-top:1px solid rgba(224,64,251,.1);padding:52px 0 40px}
 .foot-inner{max-width:1200px;margin:0 auto;padding:0 40px}
 .foot-brand-row{text-align:center;margin-bottom:3.5rem}
@@ -147,7 +151,7 @@ footer a:hover,.foot-col ul li a:hover{color:#fdd835;filter:drop-shadow(0 0 8px 
   .foot-bottom{font-size:.78rem;line-height:1.5}
 }
 
-/* ── RESPONSIVE: CARDS / GRIDS / HERO SVG ── */
+/* â”€â”€ RESPONSIVE: CARDS / GRIDS / HERO SVG â”€â”€ */
 @media(max-width:900px){
   nav{padding:16px 20px}
   .section,.section-full .section{padding-left:1rem;padding-right:1rem}
@@ -182,7 +186,7 @@ footer a:hover,.foot-col ul li a:hover{color:#fdd835;filter:drop-shadow(0 0 8px 
 
 <canvas id="star-canvas"></canvas>
 
-<!-- ── NAV ── -->
+<!-- â”€â”€ NAV â”€â”€ -->
 <nav>
   <a href="https://oasisomniverse.one" class="nav-brand" target="_blank" rel="noopener">OASIS <span>WEB6</span></a>
   <ul class="nav-links">
@@ -201,15 +205,15 @@ footer a:hover,.foot-col ul li a:hover{color:#fdd835;filter:drop-shadow(0 0 8px 
   </div>
 </nav>
 
-<!-- ── HERO ── -->
+<!-- â”€â”€ HERO â”€â”€ -->
 <section class="hero">
-  <div class="hero-kicker">WEB6 · THE AI LAYER</div>
+  <div class="hero-kicker">WEB6 Â· THE AI LAYER</div>
   <h1>OASIS <span>WEB6</span></h1>
   <div class="hero-tagline">ONE API. EVERY AI.</div>
-  <p class="hero-desc">The unified AI abstraction and aggregation layer — built on top of WEB4 and WEB5. Route, orchestrate and normalise across every AI model, agent and protocol, with the world's richest cross-reality data foundation feeding directly into every request.</p>
+  <p class="hero-desc">The unified AI abstraction and aggregation layer â€” built on top of WEB4 and WEB5. Route, orchestrate and normalise across every AI model, agent and protocol, with the world's richest cross-reality data foundation feeding directly into every request.</p>
   <div class="hero-ctas">
-    <a href="https://api.web6.oasisomniverse.one" class="btn-primary" target="_blank" rel="noopener">EXPLORE THE API →</a>
-    <a href="/holonic-braid-whitepaper.html" class="btn-secondary">READ THE WHITEPAPER →</a>
+    <a href="https://api.web6.oasisomniverse.one" class="btn-primary" target="_blank" rel="noopener">EXPLORE THE API â†’</a>
+    <a href="/holonic-braid-whitepaper.html" class="btn-secondary">READ THE WHITEPAPER â†’</a>
     <a href="https://oasisomniverse.one" class="btn-secondary" target="_blank" rel="noopener">BACK TO ECOSYSTEM</a>
   </div>
 
@@ -274,7 +278,7 @@ footer a:hover,.foot-col ul li a:hover{color:#fdd835;filter:drop-shadow(0 0 8px 
     <text x="58" y="257" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="7"   letter-spacing=".6" fill="#fdd835" opacity=".8">MISTRAL</text>
     <text x="58" y="268" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6"   letter-spacing=".5" fill="#fdd835" opacity=".5">MIXTRAL</text>
 
-    <!-- Provider nodes (right side) — more providers -->
+    <!-- Provider nodes (right side) â€” more providers -->
     <!-- Llama: top-right -->
     <line x1="605" y1="68"  x2="435" y2="160" stroke="#fdd835" stroke-width=".9" opacity=".28" class="dash-in"/>
     <circle cx="605" cy="68" r="30" fill="rgba(253,216,53,.07)" stroke="#fdd835" stroke-width="1" opacity=".7"/>
@@ -303,11 +307,11 @@ footer a:hover,.foot-col ul li a:hover{color:#fdd835;filter:drop-shadow(0 0 8px 
     <text x="722" y="257" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="7"   letter-spacing=".6" fill="#fdd835" opacity=".8">XAI</text>
     <text x="722" y="268" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6"   letter-spacing=".5" fill="#fdd835" opacity=".5">GROK</text>
 
-    <!-- Protocols & orchestration — WEB6 abstracts more than just models -->
+    <!-- Protocols & orchestration â€” WEB6 abstracts more than just models -->
     <!-- MCP / agent protocols: top -->
     <line x1="390" y1="48" x2="390" y2="138" stroke="#a78bfa" stroke-width=".9" opacity=".3" class="dash-in"/>
     <circle cx="390" cy="48" r="38" fill="rgba(167,139,250,.08)" stroke="#a78bfa" stroke-width="1" opacity=".75"/>
-    <text x="390" y="44"  text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="8"   letter-spacing=".4" fill="#a78bfa">MCP · A2A</text>
+    <text x="390" y="44"  text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="8"   letter-spacing=".4" fill="#a78bfa">MCP Â· A2A</text>
     <text x="390" y="57"  text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6.5" letter-spacing=".3" fill="#a78bfa" opacity=".65">PROTOCOLS</text>
     <!-- Orchestration frameworks: bottom -->
     <line x1="390" y1="312" x2="390" y2="222" stroke="#a78bfa" stroke-width=".9" opacity=".3" class="dash-in"/>
@@ -315,7 +319,7 @@ footer a:hover,.foot-col ul li a:hover{color:#fdd835;filter:drop-shadow(0 0 8px 
     <text x="390" y="308" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="8.5" letter-spacing=".6" fill="#a78bfa">AGENTS</text>
     <text x="390" y="321" text-anchor="middle" font-family="Share Tech Mono,monospace" font-size="6.5" letter-spacing=".3" fill="#a78bfa" opacity=".65">ORCHESTRATION</text>
 
-    <!-- Travelling pulses inbound (provider → hub) -->
+    <!-- Travelling pulses inbound (provider â†’ hub) -->
     <circle r="3.5" fill="#fdd835" filter="url(#gs)">
       <animateMotion dur="1.8s" repeatCount="indefinite" begin="0s"><mpath href="#p-openai"/></animateMotion>
     </circle>
@@ -353,120 +357,120 @@ footer a:hover,.foot-col ul li a:hover{color:#fdd835;filter:drop-shadow(0 0 8px 
   </svg>
 </section>
 
-<!-- ── WHAT IS WEB6 ── -->
+<!-- â”€â”€ WHAT IS WEB6 â”€â”€ -->
 <section class="section" id="what">
   <div class="section-kicker">THE CONCEPT</div>
   <h2 class="section-title">WHAT IS WEB6?</h2>
   <span class="section-line"></span>
-  <p class="section-sub">The AI landscape is fragmented — dozens of providers, incompatible APIs, competing agent protocols and orchestration frameworks. WEB6 is the abstraction layer that unifies them all, so you build once and deploy everywhere.</p>
+  <p class="section-sub">The AI landscape is fragmented â€” dozens of providers, incompatible APIs, competing agent protocols and orchestration frameworks. WEB6 is the abstraction layer that unifies them all, so you build once and deploy everywhere.</p>
   <div class="layer-stack">
     <div class="layer-item" style="border-color:rgba(0,229,255,.25);background:rgba(0,229,255,.04)">
       <div class="layer-dot" style="background:#00e5ff;box-shadow:0 0 8px rgba(0,229,255,.6)"></div>
       <div class="layer-label" style="color:#00e5ff">YOUR APPLICATION</div>
       <div class="layer-tag" style="color:#00e5ff">ONE UNIFIED INTERFACE</div>
     </div>
-    <div class="layer-divider">↓ CALLS</div>
+    <div class="layer-divider">â†“ CALLS</div>
     <div class="layer-item" style="border-color:rgba(253,216,53,.35);background:rgba(253,216,53,.07)">
       <div class="layer-dot" style="background:#fdd835;box-shadow:0 0 8px rgba(253,216,53,.6)"></div>
-      <div class="layer-label" style="color:#fdd835">WEB6 OASIS AI API &nbsp;·&nbsp; api.web6.oasisomniverse.one</div>
+      <div class="layer-label" style="color:#fdd835">WEB6 OASIS AI API &nbsp;Â·&nbsp; api.web6.oasisomniverse.one</div>
       <div class="layer-tag" style="color:#fdd835">ABSTRACTION LAYER</div>
     </div>
-    <div class="layer-divider">↓ ROUTES TO</div>
+    <div class="layer-divider">â†“ ROUTES TO</div>
     <div class="layer-item">
       <div class="layer-dot" style="background:#fdd835;opacity:.65"></div>
-      <div class="layer-label">OpenAI &nbsp;·&nbsp; Anthropic &nbsp;·&nbsp; Google Gemini &nbsp;·&nbsp; Meta Llama &nbsp;·&nbsp; xAI Grok</div>
+      <div class="layer-label">OpenAI &nbsp;Â·&nbsp; Anthropic &nbsp;Â·&nbsp; Google Gemini &nbsp;Â·&nbsp; Meta Llama &nbsp;Â·&nbsp; xAI Grok</div>
       <div class="layer-tag">LLM PROVIDERS</div>
     </div>
     <div class="layer-item" style="opacity:.8">
       <div class="layer-dot" style="background:#8060c0;opacity:.7"></div>
-      <div class="layer-label">Mistral &nbsp;·&nbsp; Groq &nbsp;·&nbsp; Cohere &nbsp;·&nbsp; Ollama &nbsp;·&nbsp; Hugging Face &nbsp;·&nbsp; +more</div>
+      <div class="layer-label">Mistral &nbsp;Â·&nbsp; Groq &nbsp;Â·&nbsp; Cohere &nbsp;Â·&nbsp; Ollama &nbsp;Â·&nbsp; Hugging Face &nbsp;Â·&nbsp; +more</div>
       <div class="layer-tag">OPEN-SOURCE &amp; LOCAL</div>
     </div>
     <div class="layer-item" style="opacity:.65">
       <div class="layer-dot" style="background:#5050a0;opacity:.6"></div>
-      <div class="layer-label">LangChain &nbsp;·&nbsp; AutoGen &nbsp;·&nbsp; CrewAI &nbsp;·&nbsp; MCP &nbsp;·&nbsp; A2A Protocol &nbsp;·&nbsp; Semantic Kernel</div>
+      <div class="layer-label">LangChain &nbsp;Â·&nbsp; AutoGen &nbsp;Â·&nbsp; CrewAI &nbsp;Â·&nbsp; MCP &nbsp;Â·&nbsp; A2A Protocol &nbsp;Â·&nbsp; Semantic Kernel</div>
       <div class="layer-tag">AGENT FRAMEWORKS</div>
     </div>
   </div>
 </section>
 
-<!-- ── PROVIDERS ── -->
+<!-- â”€â”€ PROVIDERS â”€â”€ -->
 <section class="section-full" id="providers" style="background:rgba(255,255,255,.008)">
   <div class="section" style="padding-top:0;padding-bottom:0">
     <div class="section-kicker">AI PROVIDERS</div>
     <h2 class="section-title">EVERY MODEL. ONE ENDPOINT.</h2>
     <span class="section-line"></span>
-    <p class="section-sub">WEB6 normalises the request and response interface for every major AI provider and open-source model runtime. Switch providers with a single config change — no refactoring required.</p>
+    <p class="section-sub">WEB6 normalises the request and response interface for every major AI provider and open-source model runtime. Switch providers with a single config change â€” no refactoring required.</p>
     <div class="provider-grid">
       <div class="provider-card">
-        <span class="provider-icon">🤖</span>
+        <span class="provider-icon">ðŸ¤–</span>
         <div class="provider-name">OPENAI</div>
-        <div class="provider-type">GPT-5 · GPT-4o · o3 · DALL·E · Whisper</div>
+        <div class="provider-type">GPT-5 Â· GPT-4o Â· o3 Â· DALLÂ·E Â· Whisper</div>
       </div>
       <div class="provider-card">
-        <span class="provider-icon">⚡</span>
+        <span class="provider-icon">âš¡</span>
         <div class="provider-name">ANTHROPIC</div>
-        <div class="provider-type">Claude Opus · Sonnet · Haiku</div>
+        <div class="provider-type">Claude Opus Â· Sonnet Â· Haiku</div>
       </div>
       <div class="provider-card">
-        <span class="provider-icon">💎</span>
+        <span class="provider-icon">ðŸ’Ž</span>
         <div class="provider-name">GOOGLE GEMINI</div>
-        <div class="provider-type">Gemini 2.5 · Flash · Pro · Veo</div>
+        <div class="provider-type">Gemini 2.5 Â· Flash Â· Pro Â· Veo</div>
       </div>
       <div class="provider-card">
-        <span class="provider-icon">🦙</span>
+        <span class="provider-icon">ðŸ¦™</span>
         <div class="provider-name">META LLAMA</div>
-        <div class="provider-type">Llama 3.x · Code Llama · Scout</div>
+        <div class="provider-type">Llama 3.x Â· Code Llama Â· Scout</div>
       </div>
       <div class="provider-card">
-        <span class="provider-icon">🌀</span>
+        <span class="provider-icon">ðŸŒ€</span>
         <div class="provider-name">MISTRAL</div>
-        <div class="provider-type">Mixtral · Mistral Large · Codestral</div>
+        <div class="provider-type">Mixtral Â· Mistral Large Â· Codestral</div>
       </div>
       <div class="provider-card">
-        <span class="provider-icon">🔥</span>
+        <span class="provider-icon">ðŸ”¥</span>
         <div class="provider-name">GROQ</div>
         <div class="provider-type">Ultra-fast LPU inference</div>
       </div>
       <div class="provider-card">
-        <span class="provider-icon">🏠</span>
+        <span class="provider-icon">ðŸ </span>
         <div class="provider-name">OLLAMA</div>
-        <div class="provider-type">Local · Private · Self-hosted</div>
+        <div class="provider-type">Local Â· Private Â· Self-hosted</div>
       </div>
       <div class="provider-card">
-        <span class="provider-icon">🤗</span>
+        <span class="provider-icon">ðŸ¤—</span>
         <div class="provider-name">HUGGING FACE</div>
-        <div class="provider-type">Open-source · Fine-tuned models</div>
+        <div class="provider-type">Open-source Â· Fine-tuned models</div>
       </div>
       <div class="provider-card">
-        <span class="provider-icon">🧠</span>
+        <span class="provider-icon">ðŸ§ </span>
         <div class="provider-name">COHERE</div>
-        <div class="provider-type">Command R+ · Embed · Rerank</div>
+        <div class="provider-type">Command R+ Â· Embed Â· Rerank</div>
       </div>
       <div class="provider-card">
-        <span class="provider-icon">✦</span>
+        <span class="provider-icon">âœ¦</span>
         <div class="provider-name">XAI</div>
-        <div class="provider-type">Grok 3 · Grok Vision</div>
+        <div class="provider-type">Grok 3 Â· Grok Vision</div>
       </div>
       <div class="provider-card">
-        <span class="provider-icon">🐋</span>
+        <span class="provider-icon">ðŸ‹</span>
         <div class="provider-name">DEEPSEEK</div>
-        <div class="provider-type">R1 · V3 · Coder</div>
+        <div class="provider-type">R1 Â· V3 Â· Coder</div>
       </div>
       <div class="provider-card">
-        <span class="provider-icon">☁️</span>
+        <span class="provider-icon">â˜ï¸</span>
         <div class="provider-name">AWS BEDROCK</div>
-        <div class="provider-type">Titan · Nova · Jurassic</div>
+        <div class="provider-type">Titan Â· Nova Â· Jurassic</div>
       </div>
       <div class="provider-card">
-        <span class="provider-icon">🔷</span>
+        <span class="provider-icon">ðŸ”·</span>
         <div class="provider-name">AZURE OPENAI</div>
-        <div class="provider-type">Enterprise GPT · DALL·E · Vision</div>
+        <div class="provider-type">Enterprise GPT Â· DALLÂ·E Â· Vision</div>
       </div>
       <div class="provider-card">
-        <span class="provider-icon">🎨</span>
+        <span class="provider-icon">ðŸŽ¨</span>
         <div class="provider-name">STABILITY AI</div>
-        <div class="provider-type">SDXL · Stable Diffusion · SVD</div>
+        <div class="provider-type">SDXL Â· Stable Diffusion Â· SVD</div>
       </div>
       <div class="provider-card" style="border-color:rgba(253,216,53,.08);opacity:.55;border-style:dashed">
         <span class="provider-icon">+</span>
@@ -477,68 +481,68 @@ footer a:hover,.foot-col ul li a:hover{color:#fdd835;filter:drop-shadow(0 0 8px 
   </div>
 </section>
 
-<!-- ── FEATURES ── -->
+<!-- â”€â”€ FEATURES â”€â”€ -->
 <section class="section" id="features">
   <div class="section-kicker">CAPABILITIES</div>
   <h2 class="section-title">WHAT WEB6 GIVES YOU</h2>
   <span class="section-line"></span>
-  <p class="section-sub">More than a proxy — WEB6 is an intelligent orchestration and normalisation layer sitting on top of both WEB4 and WEB5. Every AI request is grounded with real-world identity, cross-reality app data and a living holon graph — making it the most contextually rich AI API ever built.</p>
+  <p class="section-sub">More than a proxy â€” WEB6 is an intelligent orchestration and normalisation layer sitting on top of both WEB4 and WEB5. Every AI request is grounded with real-world identity, cross-reality app data and a living holon graph â€” making it the most contextually rich AI API ever built.</p>
   <div class="features-grid">
     <div class="feature-card">
-      <span class="feature-icon">🔀</span>
+      <span class="feature-icon">ðŸ”€</span>
       <div class="feature-title">UNIFIED API</div>
-      <div class="feature-desc">One REST endpoint for every provider. Same request shape, same response schema. Swap models with a single parameter change — no client-side refactoring needed.</div>
+      <div class="feature-desc">One REST endpoint for every provider. Same request shape, same response schema. Swap models with a single parameter change â€” no client-side refactoring needed.</div>
     </div>
     <div class="feature-card">
-      <span class="feature-icon">🧭</span>
+      <span class="feature-icon">ðŸ§­</span>
       <div class="feature-title">INTELLIGENT ROUTING</div>
-      <div class="feature-desc">Route requests automatically to the best model for the task — by capability, latency, cost or availability. Define routing rules declaratively, or let WEB6 decide.</div>
+      <div class="feature-desc">Route requests automatically to the best model for the task â€” by capability, latency, cost or availability. Define routing rules declaratively, or let WEB6 decide.</div>
     </div>
     <div class="feature-card">
-      <span class="feature-icon">🤝</span>
+      <span class="feature-icon">ðŸ¤</span>
       <div class="feature-title">AGENT ORCHESTRATION</div>
-      <div class="feature-desc">Coordinate multi-agent workflows across heterogeneous AI runtimes. Chain agents, pass context, monitor progress and handle failures — through one unified interface.</div>
+      <div class="feature-desc">Coordinate multi-agent workflows across heterogeneous AI runtimes. Chain agents, pass context, monitor progress and handle failures â€” through one unified interface.</div>
     </div>
     <div class="feature-card">
-      <span class="feature-icon">📡</span>
+      <span class="feature-icon">ðŸ“¡</span>
       <div class="feature-title">PROTOCOL NORMALISATION</div>
       <div class="feature-desc">Abstracts over MCP, A2A, LangChain, AutoGen, CrewAI and Semantic Kernel. Write once against the WEB6 protocol and reach every agent framework.</div>
     </div>
     <div class="feature-card">
-      <span class="feature-icon">🛡️</span>
+      <span class="feature-icon">ðŸ›¡ï¸</span>
       <div class="feature-title">FAILOVER &amp; LOAD BALANCING</div>
       <div class="feature-desc">Automatic fallback to secondary providers when a model is unavailable or rate-limited. Built-in retry logic, circuit breaking and cost-aware load distribution.</div>
     </div>
     <div class="feature-card">
-      <span class="feature-icon">🌐</span>
+      <span class="feature-icon">ðŸŒ</span>
       <div class="feature-title">WEB4 UNIFICATION + WEB5 XP</div>
-      <div class="feature-desc">WEB6 sits on top of both WEB4 (unification, karma, COSMIC ORM — 40+ storage providers) and WEB5 (STAR ODK, STARNET holon graph, all cross-world OAPP data). Every AI call is automatically grounded with the world's richest cross-reality dataset.</div>
+      <div class="feature-desc">WEB6 sits on top of both WEB4 (unification, karma, COSMIC ORM â€” 40+ storage providers) and WEB5 (STAR ODK, STARNET holon graph, all cross-world OAPP data). Every AI call is automatically grounded with the world's richest cross-reality dataset.</div>
     </div>
     <div class="feature-card">
-      <span class="feature-icon">💰</span>
+      <span class="feature-icon">ðŸ’°</span>
       <div class="feature-title">COST OPTIMISATION</div>
-      <div class="feature-desc">Route cheaper tasks to smaller models automatically. Track spend per provider, per user and per OASIS avatar. Set budgets and caps — WEB6 enforces them.</div>
+      <div class="feature-desc">Route cheaper tasks to smaller models automatically. Track spend per provider, per user and per OASIS avatar. Set budgets and caps â€” WEB6 enforces them.</div>
     </div>
     <div class="feature-card">
-      <span class="feature-icon">📊</span>
+      <span class="feature-icon">ðŸ“Š</span>
       <div class="feature-title">OBSERVABILITY</div>
       <div class="feature-desc">Unified logs, latency metrics and token usage across every provider. Debug multi-agent workflows with end-to-end trace IDs that span the full OASIS stack.</div>
     </div>
     <div class="feature-card">
-      <span class="feature-icon">🔑</span>
+      <span class="feature-icon">ðŸ”‘</span>
       <div class="feature-title">SINGLE AUTH</div>
       <div class="feature-desc">One OASIS avatar key authenticates against every provider. No per-provider API key management. Permissions and quotas are governed at the WEB4 UNIFICATION LAYER.</div>
     </div>
   </div>
 </section>
 
-<!-- ── API ── -->
+<!-- â”€â”€ API â”€â”€ -->
 <section class="section-full" id="api" style="background:rgba(255,255,255,.008)">
   <div class="section" style="padding-top:0;padding-bottom:0">
     <div class="section-kicker">THE ENDPOINT</div>
     <h2 class="section-title">ONE ENDPOINT. ALL MODELS.</h2>
     <span class="section-line"></span>
-    <p class="section-sub">Authenticate with your OASIS avatar key and start making requests immediately — no per-provider SDK setup, no credential juggling.</p>
+    <p class="section-sub">Authenticate with your OASIS avatar key and start making requests immediately â€” no per-provider SDK setup, no credential juggling.</p>
 
     <div class="endpoint-badge">
       <span class="endpoint-dot"></span>
@@ -560,7 +564,7 @@ Authorization: Bearer &lt;your-oasis-avatar-key&gt;
     <span class="k">"priority"</span>: <span class="s">"cost"</span>,         <span class="c">// "cost" | "latency" | "quality"</span>
     <span class="k">"fallback"</span>: <span class="s">true</span>
   },
-  <span class="k">"avatarId"</span>: <span class="s">"your-avatar-id"</span>     <span class="c">// optional — injects WEB4 identity/karma context</span>
+  <span class="k">"avatarId"</span>: <span class="s">"your-avatar-id"</span>     <span class="c">// optional â€” injects WEB4 identity/karma context</span>
 }</pre>
     </div>
 
@@ -579,18 +583,18 @@ Authorization: Bearer &lt;your-oasis-avatar-key&gt;
   </div>
 </section>
 
-<!-- ── WEB4 + WEB5 INTEGRATION ── -->
+<!-- â”€â”€ WEB4 + WEB5 INTEGRATION â”€â”€ -->
 <section class="section">
   <div class="section-kicker">DEEP INTEGRATION</div>
   <h2 class="section-title">POWERED BY WEB4 + WEB5</h2>
   <span class="section-line"></span>
-  <p class="section-sub">WEB6 doesn't just abstract AI providers — it sits on top of the entire OASIS data stack. WEB4 and WEB5 feed their world data directly into the AI layer, making every request aware of identity, reputation, cross-world state and a living ecosystem of apps and holons.</p>
+  <p class="section-sub">WEB6 doesn't just abstract AI providers â€” it sits on top of the entire OASIS data stack. WEB4 and WEB5 feed their world data directly into the AI layer, making every request aware of identity, reputation, cross-world state and a living ecosystem of apps and holons.</p>
 
   <div class="w6-two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:28px;max-width:1000px;margin:0 auto 40px">
     <!-- WEB4 panel -->
     <div class="integration-band" style="margin:0">
-      <h3 style="color:#00e5ff">WEB4 — IDENTITY &amp; DATA LAYER</h3>
-      <p>The universal identity, reputation and storage unification layer. Every AI request in WEB6 can be grounded with your avatar's full history, karma score and COSMIC ORM data across 40+ storage providers — giving AI models context that no other platform can offer.</p>
+      <h3 style="color:#00e5ff">WEB4 â€” IDENTITY &amp; DATA LAYER</h3>
+      <p>The universal identity, reputation and storage unification layer. Every AI request in WEB6 can be grounded with your avatar's full history, karma score and COSMIC ORM data across 40+ storage providers â€” giving AI models context that no other platform can offer.</p>
       <div class="pill-row">
         <span class="pill">AVATAR IDENTITY</span>
         <span class="pill">KARMA SCORES</span>
@@ -598,12 +602,12 @@ Authorization: Bearer &lt;your-oasis-avatar-key&gt;
         <span class="pill">CROSS-WORLD MEMORY</span>
         <span class="pill">40+ PROVIDERS</span>
       </div>
-      <a href="https://web4.oasisomniverse.one" class="btn-primary" target="_blank" rel="noopener">EXPLORE WEB4 →</a>
+      <a href="https://web4.oasisomniverse.one" class="btn-primary" target="_blank" rel="noopener">EXPLORE WEB4 â†’</a>
     </div>
     <!-- WEB5 panel -->
     <div class="integration-band" style="margin:0;border-color:rgba(167,139,250,.3);background:rgba(167,139,250,.04)">
-      <h3 style="color:#a78bfa">WEB5 — APP &amp; HOLON LAYER</h3>
-      <p>STAR ODK and STARNET publish every app, asset and interaction as a versioned holon in a living graph. WEB6 pulls this entire cross-world application data stream — all OAPPs, user interactions and holon state — directly into the AI layer, making it extraordinarily context-aware.</p>
+      <h3 style="color:#a78bfa">WEB5 â€” APP &amp; HOLON LAYER</h3>
+      <p>STAR ODK and STARNET publish every app, asset and interaction as a versioned holon in a living graph. WEB6 pulls this entire cross-world application data stream â€” all OAPPs, user interactions and holon state â€” directly into the AI layer, making it extraordinarily context-aware.</p>
       <div class="pill-row" style="--pill-color:rgba(167,139,250,.2);--pill-border:rgba(167,139,250,.35);--pill-text:#a78bfa">
         <span class="pill" style="background:rgba(167,139,250,.1);border-color:rgba(167,139,250,.3);color:#a78bfa">STAR ODK</span>
         <span class="pill" style="background:rgba(167,139,250,.1);border-color:rgba(167,139,250,.3);color:#a78bfa">STARNET GRAPH</span>
@@ -611,48 +615,48 @@ Authorization: Bearer &lt;your-oasis-avatar-key&gt;
         <span class="pill" style="background:rgba(167,139,250,.1);border-color:rgba(167,139,250,.3);color:#a78bfa">OAPP ECOSYSTEM</span>
         <span class="pill" style="background:rgba(167,139,250,.1);border-color:rgba(167,139,250,.3);color:#a78bfa">CROSS-WORLD STATE</span>
       </div>
-      <a href="https://star.oasisomniverse.one" class="btn-primary" style="background:linear-gradient(135deg,rgba(167,139,250,.25),rgba(167,139,250,.1));border-color:rgba(167,139,250,.5)" target="_blank" rel="noopener">EXPLORE WEB5 →</a>
+      <a href="https://star.oasisomniverse.one" class="btn-primary" style="background:linear-gradient(135deg,rgba(167,139,250,.25),rgba(167,139,250,.1));border-color:rgba(167,139,250,.5)" target="_blank" rel="noopener">EXPLORE WEB5 â†’</a>
     </div>
   </div>
 
-  <div style="max-width:1000px;margin:0 auto;background:rgba(253,216,53,.04);border:1px solid rgba(253,216,53,.2);border-radius:14px;padding:28px 36px;text-align:center">
+  <div class="w6-card" style="max-width:1000px;margin:0 auto;background:rgba(253,216,53,.04);border:1px solid rgba(253,216,53,.2);border-radius:14px;padding:28px 36px;text-align:center">
     <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.2em;color:#fdd835;margin-bottom:14px">THE RESULT</div>
-    <p style="font-size:17px;color:#e8f0ff;line-height:1.8;max-width:780px;margin:0 auto">WEB6 is the only AI abstraction layer that feeds <strong style="color:#00e5ff">real-world identity and cross-chain data (WEB4)</strong> and <strong style="color:#a78bfa">a live ecosystem of cross-world apps and holons (WEB5)</strong> directly into every AI model call — making it the most powerful and contextually rich AI API ever built.</p>
+    <p style="font-size:17px;color:#e8f0ff;line-height:1.8;max-width:780px;margin:0 auto">WEB6 is the only AI abstraction layer that feeds <strong style="color:#00e5ff">real-world identity and cross-chain data (WEB4)</strong> and <strong style="color:#a78bfa">a live ecosystem of cross-world apps and holons (WEB5)</strong> directly into every AI model call â€” making it the most powerful and contextually rich AI API ever built.</p>
   </div>
 </section>
 
-<!-- ── HOLONIC BRAID ── -->
+<!-- â”€â”€ HOLONIC BRAID â”€â”€ -->
 <section class="section" id="holonic-braid" style="background:radial-gradient(ellipse 70% 50% at 50% 50%,rgba(124,58,237,.06) 0%,transparent 70%)">
-  <div class="section-kicker">BRAID · FRACTAL HOLONIC SHARED MEMORY · CROSS-CHAIN PERSISTENCE</div>
+  <div class="section-kicker">BRAID Â· FRACTAL HOLONIC SHARED MEMORY Â· CROSS-CHAIN PERSISTENCE</div>
   <h2 class="section-title">HOLONIC BRAID</h2>
   <span class="section-line"></span>
-  <p class="section-sub">OASIS extends the OpenSERV BRAID framework (Amçalar &amp; Cinar, arXiv:2512.15959) with a fractal holonic shared graph library — delivering <strong style="color:#e8f0ff">74× PPD gains</strong> on GSM-Hard that scale indefinitely across agents and sessions. One shared library. Every reasoning graph ever generated — available to everyone, forever.</p>
+  <p class="section-sub">OASIS extends the OpenSERV BRAID framework (AmÃ§alar &amp; Cinar, arXiv:2512.15959) with a fractal holonic shared graph library â€” delivering <strong style="color:#e8f0ff">74Ã— PPD gains</strong> on GSM-Hard that scale indefinitely across agents and sessions. One shared library. Every reasoning graph ever generated â€” available to everyone, forever.</p>
 
   <!-- BRAID two-stage callout -->
-  <div style="max-width:860px;margin:0 auto 48px;background:rgba(0,229,255,.04);border:1px solid rgba(0,229,255,.18);border-radius:14px;padding:32px 36px">
+  <div class="w6-card" style="max-width:860px;margin:0 auto 48px;background:rgba(0,229,255,.04);border:1px solid rgba(0,229,255,.18);border-radius:14px;padding:32px 36px">
     <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.2em;color:#00e5ff;margin-bottom:20px">TWO-STAGE BRAID PROTOCOL</div>
     <div class="w6-braid-stage" style="display:grid;grid-template-columns:1fr auto 1fr;gap:20px;align-items:center;font-size:16px;color:#a8bfd8">
-      <div style="background:rgba(0,229,255,.06);border:1px solid rgba(0,229,255,.15);border-radius:10px;padding:18px 20px">
+      <div class="w6-card" style="background:rgba(0,229,255,.06);border:1px solid rgba(0,229,255,.15);border-radius:10px;padding:18px 20px">
         <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.12em;color:#00e5ff;margin-bottom:8px">GENERATOR</div>
-        High-tier model (gpt-4.1) creates a <strong style="color:#e8f0ff">Mermaid reasoning graph</strong> for task type τ — once per task type, stored as a holon in the shared library.
+        High-tier model (gpt-4.1) creates a <strong style="color:#e8f0ff">Mermaid reasoning graph</strong> for task type Ï„ â€” once per task type, stored as a holon in the shared library.
       </div>
-      <div class="w6-braid-arrow" style="font-family:'Share Tech Mono',monospace;font-size:20px;color:rgba(0,229,255,.5);text-align:center">→</div>
-      <div style="background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.15);border-radius:10px;padding:18px 20px">
+      <div class="w6-braid-arrow" style="font-family:'Share Tech Mono',monospace;font-size:20px;color:rgba(0,229,255,.5);text-align:center">â†’</div>
+      <div class="w6-card" style="background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.15);border-radius:10px;padding:18px 20px">
         <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.12em;color:#a78bfa;margin-bottom:8px">SOLVER</div>
-        Low-tier model (gpt-5-nano-minimal) <strong style="color:#e8f0ff">executes the graph</strong> against each task instance — at a fraction of the cost, with equal or superior accuracy.
+        Low-tier model (gpt-5-nano-minimal) <strong style="color:#e8f0ff">executes the graph</strong> against each task instance â€” at a fraction of the cost, with equal or superior accuracy.
       </div>
     </div>
     <div class="w6-stats-row" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px;text-align:center">
       <div>
-        <div style="font-family:'Share Tech Mono',monospace;font-size:22px;color:#fdd835">74×</div>
+        <div style="font-family:'Share Tech Mono',monospace;font-size:22px;color:#fdd835">74Ã—</div>
         <div style="font-size:16px;color:#a8bfd8">PPD on GSM-Hard</div>
       </div>
       <div>
-        <div style="font-family:'Share Tech Mono',monospace;font-size:22px;color:#00e5ff">30×</div>
+        <div style="font-family:'Share Tech Mono',monospace;font-size:22px;color:#00e5ff">30Ã—</div>
         <div style="font-size:16px;color:#a8bfd8">PPD on procedural tasks</div>
       </div>
       <div>
-        <div style="font-family:'Share Tech Mono',monospace;font-size:22px;color:#a78bfa">94%→98%</div>
+        <div style="font-family:'Share Tech Mono',monospace;font-size:22px;color:#a78bfa">94%â†’98%</div>
         <div style="font-size:16px;color:#a8bfd8">accuracy on GSM-Hard</div>
       </div>
     </div>
@@ -661,108 +665,108 @@ Authorization: Bearer &lt;your-oasis-avatar-key&gt;
   <!-- Hierarchy diagram -->
   <div style="max-width:860px;margin:0 auto 60px;display:flex;flex-direction:column;align-items:center;gap:0">
 
-    <div style="background:rgba(253,216,53,.08);border:1px solid rgba(253,216,53,.3);border-radius:10px;padding:14px 32px;text-align:center;width:100%;max-width:480px">
-      <div style="font-family:'Orbitron',sans-serif;font-size:13px;letter-spacing:.12em;color:#fdd835">🌍 EARTH HOLON</div>
+    <div class="w6-card" style="background:rgba(253,216,53,.08);border:1px solid rgba(253,216,53,.3);border-radius:10px;padding:14px 32px;text-align:center;width:100%;max-width:480px">
+      <div style="font-family:'Orbitron',sans-serif;font-size:13px;letter-spacing:.12em;color:#fdd835">ðŸŒ EARTH HOLON</div>
       <div style="font-size:16px;color:#a8bfd8;margin-top:4px">Universal collective intelligence</div>
     </div>
     <div style="width:2px;height:20px;background:linear-gradient(180deg,rgba(253,216,53,.4),rgba(167,139,250,.4))"></div>
 
-    <div style="background:rgba(167,139,250,.07);border:1px solid rgba(167,139,250,.25);border-radius:10px;padding:12px 32px;text-align:center;width:100%;max-width:440px">
-      <div style="font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.12em;color:#a78bfa">🌐 CONTINENT → COUNTRY → COUNTY → CITY → DISTRICT → NEIGHBOURHOOD</div>
-      <div style="font-size:16px;color:#a8bfd8;margin-top:4px">Geographic holon chain — memory propagates upward through membrane rules</div>
+    <div class="w6-card" style="background:rgba(167,139,250,.07);border:1px solid rgba(167,139,250,.25);border-radius:10px;padding:12px 32px;text-align:center;width:100%;max-width:440px">
+      <div style="font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.12em;color:#a78bfa">ðŸŒ CONTINENT â†’ COUNTRY â†’ COUNTY â†’ CITY â†’ DISTRICT â†’ NEIGHBOURHOOD</div>
+      <div style="font-size:16px;color:#a8bfd8;margin-top:4px">Geographic holon chain â€” memory propagates upward through membrane rules</div>
     </div>
     <div style="width:2px;height:20px;background:linear-gradient(180deg,rgba(167,139,250,.4),rgba(0,229,255,.4))"></div>
 
-    <div style="background:rgba(0,229,255,.06);border:1px solid rgba(0,229,255,.22);border-radius:10px;padding:12px 32px;text-align:center;width:100%;max-width:400px">
-      <div style="font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.12em;color:#00e5ff">👥 ORG / GROUP HOLONS</div>
-      <div style="font-size:16px;color:#a8bfd8;margin-top:4px">Friends · Family · Colleagues · Clubs · Communities (user can belong to many)</div>
+    <div class="w6-card" style="background:rgba(0,229,255,.06);border:1px solid rgba(0,229,255,.22);border-radius:10px;padding:12px 32px;text-align:center;width:100%;max-width:400px">
+      <div style="font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.12em;color:#00e5ff">ðŸ‘¥ ORG / GROUP HOLONS</div>
+      <div style="font-size:16px;color:#a8bfd8;margin-top:4px">Friends Â· Family Â· Colleagues Â· Clubs Â· Communities (user can belong to many)</div>
     </div>
     <div style="width:2px;height:20px;background:linear-gradient(180deg,rgba(0,229,255,.4),rgba(0,229,255,.25))"></div>
 
-    <div style="background:rgba(0,229,255,.05);border:1px solid rgba(0,229,255,.18);border-radius:10px;padding:12px 32px;text-align:center;width:100%;max-width:360px">
-      <div style="font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.12em;color:#00e5ff">👤 USER HOLON</div>
-      <div style="font-size:16px;color:#a8bfd8;margin-top:4px">All agents for this user — unified identity &amp; reputation</div>
+    <div class="w6-card" style="background:rgba(0,229,255,.05);border:1px solid rgba(0,229,255,.18);border-radius:10px;padding:12px 32px;text-align:center;width:100%;max-width:360px">
+      <div style="font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.12em;color:#00e5ff">ðŸ‘¤ USER HOLON</div>
+      <div style="font-size:16px;color:#a8bfd8;margin-top:4px">All agents for this user â€” unified identity &amp; reputation</div>
     </div>
     <div style="width:2px;height:20px;background:rgba(0,229,255,.2)"></div>
 
-    <div style="background:rgba(224,64,251,.06);border:1px solid rgba(224,64,251,.2);border-radius:10px;padding:12px 32px;text-align:center;width:100%;max-width:320px">
-      <div style="font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.12em;color:#e040fb">🤖 AGENT HOLON</div>
+    <div class="w6-card" style="background:rgba(224,64,251,.06);border:1px solid rgba(224,64,251,.2);border-radius:10px;padding:12px 32px;text-align:center;width:100%;max-width:320px">
+      <div style="font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.12em;color:#e040fb">ðŸ¤– AGENT HOLON</div>
       <div style="font-size:16px;color:#a8bfd8;margin-top:4px">All sessions for this agent, for this user</div>
     </div>
     <div style="width:2px;height:20px;background:rgba(224,64,251,.2)"></div>
 
-    <div style="background:rgba(224,64,251,.04);border:1px solid rgba(224,64,251,.15);border-radius:10px;padding:12px 32px;text-align:center;width:100%;max-width:280px">
-      <div style="font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.12em;color:#e040fb">💬 SESSION HOLON</div>
-      <div style="font-size:16px;color:#a8bfd8;margin-top:4px">One conversation — memory stored as a holon</div>
+    <div class="w6-card" style="background:rgba(224,64,251,.04);border:1px solid rgba(224,64,251,.15);border-radius:10px;padding:12px 32px;text-align:center;width:100%;max-width:280px">
+      <div style="font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.12em;color:#e040fb">ðŸ’¬ SESSION HOLON</div>
+      <div style="font-size:16px;color:#a8bfd8;margin-top:4px">One conversation â€” memory stored as a holon</div>
     </div>
   </div>
 
   <div class="features-grid" style="margin-bottom:48px">
     <div class="feature-card">
-      <span class="feature-icon">📚</span>
+      <span class="feature-icon">ðŸ“š</span>
       <div class="feature-title">SHARED GRAPH LIBRARY</div>
-      <div class="feature-desc">Reasoning graphs generated by any agent are stored as holons in a shared library. Every future agent doing the same task type retrieves the graph at zero generation cost — PPD gains compound globally rather than resetting per agent.</div>
+      <div class="feature-desc">Reasoning graphs generated by any agent are stored as holons in a shared library. Every future agent doing the same task type retrieves the graph at zero generation cost â€” PPD gains compound globally rather than resetting per agent.</div>
     </div>
     <div class="feature-card">
-      <span class="feature-icon">⛓️</span>
+      <span class="feature-icon">â›“ï¸</span>
       <div class="feature-title">CROSS-CHAIN PERSISTENCE</div>
-      <div class="feature-desc">Graph holons are replicated across MongoDB (fast access), Solana (immutable provenance) and IPFS (decentralised permanence) via the COSMIC ORM. Each holon carries a ProviderUniqueStorageKey per backend — same graph, any provider.</div>
+      <div class="feature-desc">Graph holons are replicated across MongoDB (fast access), Solana (immutable provenance) and IPFS (decentralised permanence) via the COSMIC ORM. Each holon carries a ProviderUniqueStorageKey per backend â€” same graph, any provider.</div>
     </div>
     <div class="feature-card">
-      <span class="feature-icon">🧬</span>
+      <span class="feature-icon">ðŸ§¬</span>
       <div class="feature-title">FRACTAL MEMORY HIERARCHY</div>
-      <div class="feature-desc">Every AI session generates a session holon. That holon is a child of the agent holon, which is a child of the user holon — memory and intelligence compound upward through every level of the hierarchy, from session to Earth.</div>
+      <div class="feature-desc">Every AI session generates a session holon. That holon is a child of the agent holon, which is a child of the user holon â€” memory and intelligence compound upward through every level of the hierarchy, from session to Earth.</div>
     </div>
     <div class="feature-card">
-      <span class="feature-icon">🔬</span>
+      <span class="feature-icon">ðŸ”¬</span>
       <div class="feature-title">MEMBRANE RULES</div>
-      <div class="feature-desc">At each boundary between holons, user-configurable membrane rules define which parts of the memory are persisted, propagated or kept private. Per-field granularity — nothing leaks without explicit permission.</div>
+      <div class="feature-desc">At each boundary between holons, user-configurable membrane rules define which parts of the memory are persisted, propagated or kept private. Per-field granularity â€” nothing leaks without explicit permission.</div>
     </div>
     <div class="feature-card">
-      <span class="feature-icon">🌍</span>
+      <span class="feature-icon">ðŸŒ</span>
       <div class="feature-title">COLLECTIVE INTELLIGENCE</div>
-      <div class="feature-desc">Session → Agent → User → Group → Neighbourhood → City → Country → Earth. Collective intelligence flows upward from every individual interaction to the planetary level — genuinely bottom-up, consent-governed emergence.</div>
+      <div class="feature-desc">Session â†’ Agent â†’ User â†’ Group â†’ Neighbourhood â†’ City â†’ Country â†’ Earth. Collective intelligence flows upward from every individual interaction to the planetary level â€” genuinely bottom-up, consent-governed emergence.</div>
     </div>
     <div class="feature-card">
-      <span class="feature-icon">♾️</span>
+      <span class="feature-icon">â™¾ï¸</span>
       <div class="feature-title">A PATH TO AGI</div>
       <div class="feature-desc">BRAID's PPD gains + holonic shared memory + geographic propagation = a system that improves with every interaction, at every scale. Modelled after nature, unity consciousness and the infinite intelligence of the universe.</div>
     </div>
   </div>
 
   <div style="text-align:center;display:flex;gap:16px;flex-wrap:wrap;justify-content:center">
-    <a href="/holonic-braid-whitepaper.html" class="btn-primary">READ THE FULL WHITEPAPER →</a>
-    <a href="https://www.notion.so/HOLONIC_BRAID_LITEPAPER-2f51dc4d449b80928f08fe76dbdf4124" class="btn-secondary" target="_blank" rel="noopener">ORIGINAL LITEPAPER →</a>
+    <a href="/holonic-braid-whitepaper.html" class="btn-primary">READ THE FULL WHITEPAPER â†’</a>
+    <a href="https://www.notion.so/HOLONIC_BRAID_LITEPAPER-2f51dc4d449b80928f08fe76dbdf4124" class="btn-secondary" target="_blank" rel="noopener">ORIGINAL LITEPAPER â†’</a>
   </div>
 </section>
 
-<!-- ── REASONING NETWORK ── -->
+<!-- â”€â”€ REASONING NETWORK â”€â”€ -->
 <section class="section-full" id="reasoning-network" style="background:rgba(255,255,255,.008)">
   <div class="section" style="padding-top:0;padding-bottom:0">
-    <div class="section-kicker">META-ORCHESTRATION INTELLIGENCE LAYER · COMPOSITE SCORING · CONTINUOUS LEARNING · ANTI-FRAGILE</div>
+    <div class="section-kicker">META-ORCHESTRATION INTELLIGENCE LAYER Â· COMPOSITE SCORING Â· CONTINUOUS LEARNING Â· ANTI-FRAGILE</div>
     <h2 class="section-title">FAHRN</h2>
     <div style="text-align:center;font-family:'Share Tech Mono',monospace;font-size:13px;letter-spacing:.18em;color:#a78bfa;margin-bottom:18px">FRACTAL ADAPTIVE HOLONIC REASONING NETWORK</div>
     <span class="section-line"></span>
-    <p class="section-sub">FAHRN is the self-optimising reasoning mesh built on top of Holonic BRAID. A controller agent dispatches work to scored agents in serial, parallel or decomposed mode — using a composite score of category performance, speed, cost and loop-detection stability — and learns from every outcome via EMA score updates stored in the holonic memory hierarchy.</p>
+    <p class="section-sub">FAHRN is the self-optimising reasoning mesh built on top of Holonic BRAID. A controller agent dispatches work to scored agents in serial, parallel or decomposed mode â€” using a composite score of category performance, speed, cost and loop-detection stability â€” and learns from every outcome via EMA score updates stored in the holonic memory hierarchy.</p>
 
     <!-- Agent scoring diagram -->
     <div class="w6-outer-card" style="background:var(--bg-card);border:1px solid rgba(253,216,53,.15);border-radius:16px;padding:32px;max-width:900px;margin:0 auto 56px">
-      <div style="font-family:'Orbitron',sans-serif;font-size:13px;letter-spacing:.15em;color:#fdd835;text-align:center;margin-bottom:28px">CONTROLLER AGENT — DISPATCH LOGIC</div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:13px;letter-spacing:.15em;color:#fdd835;text-align:center;margin-bottom:28px">CONTROLLER AGENT â€” DISPATCH LOGIC</div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(180px,100%),1fr));gap:16px;margin-bottom:32px">
         <div style="background:rgba(0,229,255,.05);border:1px solid rgba(0,229,255,.2);border-radius:10px;padding:16px;text-align:center">
-          <div style="font-size:1.6rem;margin-bottom:8px">🤖</div>
+          <div style="font-size:1.6rem;margin-bottom:8px">ðŸ¤–</div>
           <div style="font-family:'Orbitron',sans-serif;font-size:11px;color:#00e5ff;letter-spacing:.1em">GPT-5</div>
-          <div style="font-size:11px;color:#a8bfd8;margin-top:6px">Reasoning ★★★★★<br>Speed ★★★★☆<br>Code ★★★★☆</div>
+          <div style="font-size:11px;color:#a8bfd8;margin-top:6px">Reasoning â˜…â˜…â˜…â˜…â˜…<br>Speed â˜…â˜…â˜…â˜…â˜†<br>Code â˜…â˜…â˜…â˜…â˜†</div>
         </div>
         <div style="background:rgba(167,139,250,.05);border:1px solid rgba(167,139,250,.2);border-radius:10px;padding:16px;text-align:center">
-          <div style="font-size:1.6rem;margin-bottom:8px">⚡</div>
+          <div style="font-size:1.6rem;margin-bottom:8px">âš¡</div>
           <div style="font-family:'Orbitron',sans-serif;font-size:11px;color:#a78bfa;letter-spacing:.1em">CLAUDE</div>
-          <div style="font-size:11px;color:#a8bfd8;margin-top:6px">Analysis ★★★★★<br>Speed ★★★★☆<br>Writing ★★★★★</div>
+          <div style="font-size:11px;color:#a8bfd8;margin-top:6px">Analysis â˜…â˜…â˜…â˜…â˜…<br>Speed â˜…â˜…â˜…â˜…â˜†<br>Writing â˜…â˜…â˜…â˜…â˜…</div>
         </div>
         <div style="background:rgba(253,216,53,.05);border:1px solid rgba(253,216,53,.2);border-radius:10px;padding:16px;text-align:center">
-          <div style="font-size:1.6rem;margin-bottom:8px">✦</div>
+          <div style="font-size:1.6rem;margin-bottom:8px">âœ¦</div>
           <div style="font-family:'Orbitron',sans-serif;font-size:11px;color:#fdd835;letter-spacing:.1em">GROK</div>
-          <div style="font-size:11px;color:#a8bfd8;margin-top:6px">Real-time ★★★★★<br>Speed ★★★★★<br>Search ★★★★★</div>
+          <div style="font-size:11px;color:#a8bfd8;margin-top:6px">Real-time â˜…â˜…â˜…â˜…â˜…<br>Speed â˜…â˜…â˜…â˜…â˜…<br>Search â˜…â˜…â˜…â˜…â˜…</div>
         </div>
         <div style="background:rgba(224,64,251,.05);border:1px solid rgba(224,64,251,.2);border-radius:10px;padding:16px;text-align:center">
           <div style="font-size:1.6rem;margin-bottom:8px">+</div>
@@ -771,18 +775,18 @@ Authorization: Bearer &lt;your-oasis-avatar-key&gt;
         </div>
       </div>
       <!-- Composite score formula -->
-      <div style="background:rgba(253,216,53,.04);border:1px solid rgba(253,216,53,.15);border-radius:10px;padding:20px 24px;margin-top:8px">
+      <div class="w6-card" style="background:rgba(253,216,53,.04);border:1px solid rgba(253,216,53,.15);border-radius:10px;padding:20px 24px;margin-top:8px">
         <div style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.18em;color:#fdd835;margin-bottom:12px">COMPOSITE ROUTING SCORE</div>
         <div style="font-family:'Share Tech Mono',monospace;font-size:15px;color:#e8f0ff;line-height:2.2">
           CompositeScore =<br>
-          &nbsp;&nbsp;(W<sub>cat</sub> × CategoryScore)<br>
-          &nbsp;&nbsp;+ (W<sub>speed</sub> × SpeedScore)<br>
-          &nbsp;&nbsp;+ (W<sub>cost</sub> × CostScore)<br>
-          &nbsp;&nbsp;− (W<sub>penalty</sub> × FailureRate)<br>
-          &nbsp;&nbsp;− (LoopPenalty if recently stalled)
+          &nbsp;&nbsp;(W<sub>cat</sub> Ã— CategoryScore)<br>
+          &nbsp;&nbsp;+ (W<sub>speed</sub> Ã— SpeedScore)<br>
+          &nbsp;&nbsp;+ (W<sub>cost</sub> Ã— CostScore)<br>
+          &nbsp;&nbsp;âˆ’ (W<sub>penalty</sub> Ã— FailureRate)<br>
+          &nbsp;&nbsp;âˆ’ (LoopPenalty if recently stalled)
         </div>
         <div style="font-size:16px;color:#a8bfd8;margin-top:16px;line-height:1.8">
-          Weights are configurable per mode — Serial mode elevates W<sub>cost</sub>; Parallel mode favours W<sub>cat</sub>; Decomposed mode raises W<sub>speed</sub> to minimise wall-clock time. Agent metadata includes: <strong style="color:#fdd835">category_scores</strong>, <strong style="color:#fdd835">speed_score</strong>, <strong style="color:#fdd835">cost_score</strong>, <strong style="color:#fdd835">loop_detection_score</strong>, <strong style="color:#fdd835">failure_rate</strong> — all updated continuously from real outcomes.
+          Weights are configurable per mode â€” Serial mode elevates W<sub>cost</sub>; Parallel mode favours W<sub>cat</sub>; Decomposed mode raises W<sub>speed</sub> to minimise wall-clock time. Agent metadata includes: <strong style="color:#fdd835">category_scores</strong>, <strong style="color:#fdd835">speed_score</strong>, <strong style="color:#fdd835">cost_score</strong>, <strong style="color:#fdd835">loop_detection_score</strong>, <strong style="color:#fdd835">failure_rate</strong> â€” all updated continuously from real outcomes.
         </div>
       </div>
     </div>
@@ -790,67 +794,67 @@ Authorization: Bearer &lt;your-oasis-avatar-key&gt;
     <!-- Three modes -->
     <div class="w6-modes-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:28px;max-width:1100px;margin:0 auto 56px">
       <div class="w6-mode-card" style="background:var(--bg-card);border:1px solid rgba(0,229,255,.25);border-radius:16px;padding:36px">
-        <div style="font-family:'Orbitron',sans-serif;font-size:16px;letter-spacing:.1em;color:#00e5ff;margin-bottom:10px">MODE 1 — SERIAL</div>
+        <div style="font-family:'Orbitron',sans-serif;font-size:16px;letter-spacing:.1em;color:#00e5ff;margin-bottom:10px">MODE 1 â€” SERIAL</div>
         <div style="font-size:12px;font-family:'Share Tech Mono',monospace;letter-spacing:.15em;color:rgba(0,229,255,.65);margin-bottom:18px">COST OPTIMISED</div>
-        <p style="color:#c8ddf0;font-size:16px;line-height:1.8">The controller dispatches the problem to the highest-scoring agent for that category. If it stalls, the next best agent takes over. One agent works at a time — lowest token cost, still intelligent routing.</p>
+        <p style="color:#c8ddf0;font-size:16px;line-height:1.8">The controller dispatches the problem to the highest-scoring agent for that category. If it stalls, the next best agent takes over. One agent works at a time â€” lowest token cost, still intelligent routing.</p>
         <div style="margin-top:20px;display:flex;flex-direction:column;gap:10px">
-          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00e5ff;font-size:16px">✓</span> Lowest cost</div>
-          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00e5ff;font-size:16px">✓</span> Automatic fallback on timeout</div>
-          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00e5ff;font-size:16px">✓</span> Generates Mermaid execution plan</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00e5ff;font-size:16px">âœ“</span> Lowest cost</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00e5ff;font-size:16px">âœ“</span> Automatic fallback on timeout</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00e5ff;font-size:16px">âœ“</span> Generates Mermaid execution plan</div>
         </div>
       </div>
       <div class="w6-mode-card" style="background:var(--bg-card);border:1px solid rgba(167,139,250,.25);border-radius:16px;padding:36px">
-        <div style="font-family:'Orbitron',sans-serif;font-size:16px;letter-spacing:.1em;color:#a78bfa;margin-bottom:10px">MODE 2 — PARALLEL</div>
+        <div style="font-family:'Orbitron',sans-serif;font-size:16px;letter-spacing:.1em;color:#a78bfa;margin-bottom:10px">MODE 2 â€” PARALLEL</div>
         <div style="font-size:12px;font-family:'Share Tech Mono',monospace;letter-spacing:.15em;color:rgba(167,139,250,.65);margin-bottom:18px">ACCURACY OPTIMISED</div>
-        <p style="color:#c8ddf0;font-size:16px;line-height:1.8">All agents receive the same problem simultaneously. Each produces a Mermaid execution diagram. The controller compares plans — selecting the best, or merging complementary diagrams into a superior combined plan.</p>
+        <p style="color:#c8ddf0;font-size:16px;line-height:1.8">All agents receive the same problem simultaneously. Each produces a Mermaid execution diagram. The controller compares plans â€” selecting the best, or merging complementary diagrams into a superior combined plan.</p>
         <div style="margin-top:20px;display:flex;flex-direction:column;gap:10px">
-          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#a78bfa;font-size:16px">✓</span> Highest accuracy</div>
-          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#a78bfa;font-size:16px">✓</span> Plan comparison &amp; merging</div>
-          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#a78bfa;font-size:16px">✓</span> Best-of-all-worlds execution</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#a78bfa;font-size:16px">âœ“</span> Highest accuracy</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#a78bfa;font-size:16px">âœ“</span> Plan comparison &amp; merging</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#a78bfa;font-size:16px">âœ“</span> Best-of-all-worlds execution</div>
         </div>
       </div>
       <div class="w6-mode-card" style="background:var(--bg-card);border:1px solid rgba(253,216,53,.25);border-radius:16px;padding:36px">
-        <div style="font-family:'Orbitron',sans-serif;font-size:16px;letter-spacing:.1em;color:#fdd835;margin-bottom:10px">MODE 3 — DECOMPOSED</div>
+        <div style="font-family:'Orbitron',sans-serif;font-size:16px;letter-spacing:.1em;color:#fdd835;margin-bottom:10px">MODE 3 â€” DECOMPOSED</div>
         <div style="font-size:12px;font-family:'Share Tech Mono',monospace;letter-spacing:.15em;color:rgba(253,216,53,.65);margin-bottom:18px">COMPLEX PROBLEMS</div>
         <p style="color:#c8ddf0;font-size:16px;line-height:1.8">Large, complex problems are broken into sub-problems. Each is routed to the agent best matched to its category and speed profile. The resulting sub-diagrams are then combined by the controller into one unified execution plan.</p>
         <div style="margin-top:20px;display:flex;flex-direction:column;gap:10px">
-          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#fdd835;font-size:16px">✓</span> Handles unlimited complexity</div>
-          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#fdd835;font-size:16px">✓</span> Best-fit agent per sub-problem</div>
-          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#fdd835;font-size:16px">✓</span> Merged composite diagram</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#fdd835;font-size:16px">âœ“</span> Handles unlimited complexity</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#fdd835;font-size:16px">âœ“</span> Best-fit agent per sub-problem</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#fdd835;font-size:16px">âœ“</span> Merged composite diagram</div>
         </div>
       </div>
     </div>
 
     <div class="features-grid" style="margin-bottom:48px">
       <div class="feature-card">
-        <span class="feature-icon">🎛️</span>
+        <span class="feature-icon">ðŸŽ›ï¸</span>
         <div class="feature-title">CONTROLLER AGENT</div>
         <div class="feature-desc">A meta-level orchestrator sits above the reasoning network. It classifies problems, selects dispatch mode, ranks agents by composite score, monitors for timeout/stall, promotes fallback agents and assembles the final execution plan.</div>
       </div>
       <div class="feature-card">
-        <span class="feature-icon">📊</span>
+        <span class="feature-icon">ðŸ“Š</span>
         <div class="feature-title">COMPOSITE SCORING</div>
-        <div class="feature-desc">Every agent carries a full metadata object: category scores (mathematics, legal, architecture, code, writing, real-time…), speed_score, cost_score, loop_detection_score, failure_rate. The composite score formula blends all dimensions with user-configurable weights per mode.</div>
+        <div class="feature-desc">Every agent carries a full metadata object: category scores (mathematics, legal, architecture, code, writing, real-timeâ€¦), speed_score, cost_score, loop_detection_score, failure_rate. The composite score formula blends all dimensions with user-configurable weights per mode.</div>
       </div>
       <div class="feature-card">
-        <span class="feature-icon">🔁</span>
+        <span class="feature-icon">ðŸ”</span>
         <div class="feature-title">LOOP DETECTION</div>
         <div class="feature-desc">Four detection mechanisms run in parallel: output similarity hashing (repeated reasoning patterns), self-contradictory step detection, token budget monitoring, and circular DAG detection in the Mermaid output. Any trigger suspends the agent and escalates immediately.</div>
       </div>
       <div class="feature-card">
-        <span class="feature-icon">📐</span>
+        <span class="feature-icon">ðŸ“</span>
         <div class="feature-title">MERMAID EXECUTION PLANS</div>
-        <div class="feature-desc">Each agent produces a structured Mermaid diagram of its execution plan — machine-comparable, mergeable and human-readable. In parallel mode plans are compared and merged. In decomposed mode sub-diagrams are stitched into one coherent whole.</div>
+        <div class="feature-desc">Each agent produces a structured Mermaid diagram of its execution plan â€” machine-comparable, mergeable and human-readable. In parallel mode plans are compared and merged. In decomposed mode sub-diagrams are stitched into one coherent whole.</div>
       </div>
       <div class="feature-card">
-        <span class="feature-icon">📈</span>
+        <span class="feature-icon">ðŸ“ˆ</span>
         <div class="feature-title">CONTINUOUS LEARNING</div>
-        <div class="feature-desc">After every task, all agent scores update via EMA (Exponential Moving Average): category scores, speed, failure rate, loop stability. Updates are stored as holons in the Holonic BRAID hierarchy — the system routes better with every single interaction, forever.</div>
+        <div class="feature-desc">After every task, all agent scores update via EMA (Exponential Moving Average): category scores, speed, failure rate, loop stability. Updates are stored as holons in the Holonic BRAID hierarchy â€” the system routes better with every single interaction, forever.</div>
       </div>
       <div class="feature-card">
-        <span class="feature-icon">🛡️</span>
+        <span class="feature-icon">ðŸ›¡ï¸</span>
         <div class="feature-title">ANTI-FRAGILE BY DESIGN</div>
-        <div class="feature-desc">Every stall, timeout and failed plan updates agent metadata and improves future routing. No single-model bias — performance decides flow, not reputation. No provider lock-in — the system naturally migrates workloads toward consistently better agents. Each agent is itself a holon.</div>
+        <div class="feature-desc">Every stall, timeout and failed plan updates agent metadata and improves future routing. No single-model bias â€” performance decides flow, not reputation. No provider lock-in â€” the system naturally migrates workloads toward consistently better agents. Each agent is itself a holon.</div>
       </div>
     </div>
 
@@ -873,12 +877,12 @@ Authorization: Bearer &lt;your-oasis-avatar-key&gt;
       var layers=[
         {label:'USER / API INPUT',       sub:null,                                   color:'#c8ddf0',y:18, h:52,nW:360},
         {label:'CONTROLLER AGENT',        sub:'Meta-Orchestrator',                   color:'#e8f0ff',y:94, h:66,nW:500},
-        {label:'FAHRN',sub:'Fractal Adaptive Holonic Reasoning Network · Serial · Parallel · Decomposed',   color:'#a78bfa',y:184,h:68,nW:640},
-        {label:'REASONING AGENTS',        sub:'GPT-5 · Claude · Grok · Gemini · Custom',color:'#00e5ff',y:276,h:68,nW:680},
-        {label:'MERMAID EXECUTION GRAPHS',sub:'compared · merged · assembled',       color:'#00c8a8',y:368,h:66,nW:540},
+        {label:'FAHRN',sub:'Fractal Adaptive Holonic Reasoning Network Â· Serial Â· Parallel Â· Decomposed',   color:'#a78bfa',y:184,h:68,nW:640},
+        {label:'REASONING AGENTS',        sub:'GPT-5 Â· Claude Â· Grok Â· Gemini Â· Custom',color:'#00e5ff',y:276,h:68,nW:680},
+        {label:'MERMAID EXECUTION GRAPHS',sub:'compared Â· merged Â· assembled',       color:'#00c8a8',y:368,h:66,nW:540},
         {label:'EXECUTION / RUNTIME LAYER',sub:null,                                 color:'#8ab4d4',y:458,h:52,nW:440},
-        {label:'HOLONIC BRAID CORE',      sub:'shared graph library · fractal memory',color:'#e040fb',y:534,h:68,nW:580},
-        {label:'COSMIC ORM',              sub:'MongoDB · Solana · IPFS · 40+ providers',color:'#fdd835',y:626,h:76,nW:620}
+        {label:'HOLONIC BRAID CORE',      sub:'shared graph library Â· fractal memory',color:'#e040fb',y:534,h:68,nW:580},
+        {label:'COSMIC ORM',              sub:'MongoDB Â· Solana Â· IPFS Â· 40+ providers',color:'#fdd835',y:626,h:76,nW:620}
       ];
 
       function hexRgb(h){
@@ -996,97 +1000,97 @@ Authorization: Bearer &lt;your-oasis-avatar-key&gt;
     </script>
 
     <div style="text-align:center;display:flex;gap:16px;flex-wrap:wrap;justify-content:center">
-      <a href="/holonic-braid-whitepaper.html#reasoning-network" class="btn-primary">READ THE FULL WHITEPAPER →</a>
-      <a href="/holonic-braid-whitepaper.html#antifragile" class="btn-secondary">ANTI-FRAGILITY &amp; STACK →</a>
+      <a href="/holonic-braid-whitepaper.html#reasoning-network" class="btn-primary">READ THE FULL WHITEPAPER â†’</a>
+      <a href="/holonic-braid-whitepaper.html#antifragile" class="btn-secondary">ANTI-FRAGILITY &amp; STACK â†’</a>
     </div>
   </div>
 </section>
 
-<!-- ── OASIS MCP ── -->
+<!-- â”€â”€ OASIS MCP â”€â”€ -->
 <section class="section-full" id="mcp" style="background:rgba(255,255,255,.008)">
   <div class="section" style="padding-top:0;padding-bottom:0">
     <div class="section-kicker">MODEL CONTEXT PROTOCOL</div>
     <h2 class="section-title">OASIS MCP</h2>
     <span class="section-line"></span>
-    <p class="section-sub">Connect any MCP-compatible AI agent or tool directly to the full OASIS platform — avatar unification layer, karma, COSMIC ORM data and the entire WEB6 AI layer — through a single standardised Model Context Protocol interface.</p>
+    <p class="section-sub">Connect any MCP-compatible AI agent or tool directly to the full OASIS platform â€” avatar unification layer, karma, COSMIC ORM data and the entire WEB6 AI layer â€” through a single standardised Model Context Protocol interface.</p>
 
     <div class="features-grid" style="margin-bottom:56px">
       <div class="feature-card">
-        <span class="feature-icon">🔌</span>
+        <span class="feature-icon">ðŸ”Œ</span>
         <div class="feature-title">PLUG IN ANY AGENT</div>
-        <div class="feature-desc">Any MCP-compatible agent — Claude, Cursor, Continue, or your own — can call OASIS APIs natively. No custom integration code required.</div>
+        <div class="feature-desc">Any MCP-compatible agent â€” Claude, Cursor, Continue, or your own â€” can call OASIS APIs natively. No custom integration code required.</div>
       </div>
       <div class="feature-card">
-        <span class="feature-icon">👤</span>
+        <span class="feature-icon">ðŸ‘¤</span>
         <div class="feature-title">AVATAR CONTEXT</div>
-        <div class="feature-desc">Agents gain full access to OASIS avatar identity, karma scores and cross-world reputation — grounding every AI response in real user context.</div>
+        <div class="feature-desc">Agents gain full access to OASIS avatar identity, karma scores and cross-world reputation â€” grounding every AI response in real user context.</div>
       </div>
       <div class="feature-card">
-        <span class="feature-icon">🧬</span>
+        <span class="feature-icon">ðŸ§¬</span>
         <div class="feature-title">COSMIC ORM DATA</div>
-        <div class="feature-desc">Read and write to the universal COSMIC ORM layer — 40+ providers, unified schema — directly from your AI agent workflows via MCP tool calls.</div>
+        <div class="feature-desc">Read and write to the universal COSMIC ORM layer â€” 40+ providers, unified schema â€” directly from your AI agent workflows via MCP tool calls.</div>
       </div>
       <div class="feature-card">
-        <span class="feature-icon">🤖</span>
+        <span class="feature-icon">ðŸ¤–</span>
         <div class="feature-title">WEB6 AI ROUTING</div>
-        <div class="feature-desc">MCP tool calls route through the full WEB6 abstraction layer — intelligent model selection, failover and cost optimisation built in.</div>
+        <div class="feature-desc">MCP tool calls route through the full WEB6 abstraction layer â€” intelligent model selection, failover and cost optimisation built in.</div>
       </div>
       <div class="feature-card">
-        <span class="feature-icon">🔑</span>
+        <span class="feature-icon">ðŸ”‘</span>
         <div class="feature-title">SINGLE AUTH</div>
         <div class="feature-desc">One OASIS avatar key authenticates the MCP server against the entire platform. No per-provider credentials to manage or rotate.</div>
       </div>
       <div class="feature-card">
-        <span class="feature-icon">📡</span>
+        <span class="feature-icon">ðŸ“¡</span>
         <div class="feature-title">STANDARD PROTOCOL</div>
-        <div class="feature-desc">Built on Anthropic's open Model Context Protocol standard — interoperable with every MCP host and any agent framework that supports it.</div>
+        <div class="feature-desc">Built on Anthropic's open Model Context Protocol standard â€” interoperable with every MCP host and any agent framework that supports it.</div>
       </div>
     </div>
 
     <div style="text-align:center;margin-bottom:56px">
-      <a href="https://www.oasisweb4.com/products/mcp" class="btn-primary" target="_blank" rel="noopener">GET OASIS MCP →</a>
+      <a href="https://www.oasisweb4.com/products/mcp" class="btn-primary" target="_blank" rel="noopener">GET OASIS MCP â†’</a>
     </div>
   </div>
 </section>
 
-<!-- ── OASIS IDE ── -->
+<!-- â”€â”€ OASIS IDE â”€â”€ -->
 <section class="section-full" id="oide" style="background:rgba(255,255,255,.008)">
   <div class="section" style="padding-top:0;padding-bottom:0">
     <div class="section-kicker">AI-NATIVE DEVELOPMENT</div>
     <h2 class="section-title">OASIS IDE</h2>
     <span class="section-line"></span>
-    <p class="section-sub">A desktop coding environment built around the same WEB6 AI layer — agentic coding assistants (Claude, OpenServ and every model in the SERV catalog), MCP tool access and full OASIS/STAR project awareness, in one editor.</p>
+    <p class="section-sub">A desktop coding environment built around the same WEB6 AI layer â€” agentic coding assistants (Claude, OpenServ and every model in the SERV catalog), MCP tool access and full OASIS/STAR project awareness, in one editor.</p>
 
     <div class="features-grid" style="margin-bottom:56px">
       <div class="feature-card">
-        <span class="feature-icon">🤖</span>
+        <span class="feature-icon">ðŸ¤–</span>
         <div class="feature-title">AGENTIC CODING</div>
-        <div class="feature-desc">Run Claude Sonnet 4.6 or any OpenServ-catalog model as a tool-using coding agent directly against your open workspace — read, write, search and run commands with explicit confirmation.</div>
+        <div class="feature-desc">Run Claude Sonnet 4.6 or any OpenServ-catalog model as a tool-using coding agent directly against your open workspace â€” read, write, search and run commands with explicit confirmation.</div>
       </div>
       <div class="feature-card">
-        <span class="feature-icon">🔌</span>
+        <span class="feature-icon">ðŸ”Œ</span>
         <div class="feature-title">MCP-AWARE</div>
         <div class="feature-desc">Connects to the OASIS MCP server out of the box, giving every agent native access to avatar identity, karma and COSMIC ORM data while you code.</div>
       </div>
       <div class="feature-card">
-        <span class="feature-icon">🧬</span>
+        <span class="feature-icon">ðŸ§¬</span>
         <div class="feature-title">WEB6 ROUTING</div>
-        <div class="feature-desc">Agent mode runs through the same multi-provider WEB6 abstraction layer — switch between Claude and the full SERV catalog (OpenAI, Gemini, Grok, Qwen, DeepSeek) from one toggle.</div>
+        <div class="feature-desc">Agent mode runs through the same multi-provider WEB6 abstraction layer â€” switch between Claude and the full SERV catalog (OpenAI, Gemini, Grok, Qwen, DeepSeek) from one toggle.</div>
       </div>
       <div class="feature-card">
-        <span class="feature-icon">🗂️</span>
+        <span class="feature-icon">ðŸ—‚ï¸</span>
         <div class="feature-title">OASIS/STAR AWARE</div>
-        <div class="feature-desc">Built for working inside OASIS and STAR ODK workspaces — file search, terminal and project context tuned for this codebase's structure.</div>
+        <div class="feature-desc">Built for working inside OASIS and STAR ODK workspaces â€” file search, terminal and project context tuned for this codebase's structure.</div>
       </div>
     </div>
 
     <div style="text-align:center;margin-bottom:56px">
-      <a href="https://github.com/NextGenSoftwareUK/IDE" class="btn-primary" target="_blank" rel="noopener">GET OASIS IDE →</a>
+      <a href="https://github.com/NextGenSoftwareUK/IDE" class="btn-primary" target="_blank" rel="noopener">GET OASIS IDE â†’</a>
     </div>
   </div>
 </section>
 
-<!-- ── FOOTER ── -->
+<!-- â”€â”€ FOOTER â”€â”€ -->
 <footer>
   <div class="foot-inner">
     <div class="foot-brand-row">
@@ -1263,4 +1267,5 @@ document.querySelectorAll('.nav-links a').forEach(function(a){
 
 </body>
 </html>
+
 
