@@ -154,10 +154,14 @@ footer a:hover,.foot-col ul li a:hover{color:#fdd835;filter:drop-shadow(0 0 8px 
 
 /* â”€â”€ RESPONSIVE: CARDS / GRIDS / HERO SVG â”€â”€ */
 @media(max-width:900px){
-  nav{padding:16px 20px}
-  .section,.section-full .section{padding-left:1rem;padding-right:1rem}
-  .provider-grid,.features-grid{grid-template-columns:1fr 1fr!important;gap:18px}
+  nav{padding:16px 1rem}
+  .section{padding-left:1rem;padding-right:1rem}
+  .section-full{padding-left:1rem;padding-right:1rem}
+  .section-full .section{padding-left:0;padding-right:0}
+  .foot-inner{padding-left:1rem;padding-right:1rem}
+  .provider-grid,.features-grid{grid-template-columns:1fr!important;gap:16px}
   .hero-bg{max-width:100%}
+  .layer-label{letter-spacing:.06em}
 }
 @media(max-width:720px){
   .provider-grid,.features-grid{grid-template-columns:1fr!important;gap:16px}
