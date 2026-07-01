@@ -31,6 +31,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 40px;display:fl
 .nav-brand span{color:var(--purple)}
 .nav-links{display:flex;gap:28px;list-style:none}
 .nav-links a{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.14em;color:#a8bfd8;text-decoration:none;transition:color .2s;text-transform:uppercase}
+.nav-links-mobile-only{display:none}
 .nav-links a:hover{color:var(--purple)}
 .nav-cta{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--purple);border:1px solid rgba(253,216,53,.35);border-radius:999px;padding:8px 18px;text-decoration:none;transition:background .2s,border-color .2s;white-space:nowrap}
 .nav-cta:hover{background:rgba(253,216,53,.08);border-color:rgba(253,216,53,.6)}
@@ -50,6 +51,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 40px;display:fl
     transform:translateX(100%);transition:transform .3s ease;
   }
   .nav-links.open{transform:translateX(0)}
+  .nav-links-mobile-only{display:list-item}
   nav .nav-links li{margin:0;padding:0;width:100%}
   nav .nav-links a{display:block;padding:14px 0;font-size:.88rem;border-bottom:1px solid rgba(253,216,53,.1);width:100%}
   .nav-hamburger{display:flex}
@@ -215,6 +217,7 @@ footer a:hover,.foot-col ul li a:hover{color:#fdd835;filter:drop-shadow(0 0 8px 
     <li><a href="#reasoning-network">FAHRN</a></li>
     <li><a href="#mcp">MCP</a></li>
     <li><a href="#oide">OASIS IDE</a></li>
+    <li class="nav-links-mobile-only"><a href="https://oasisomniverse.one" target="_blank" rel="noopener">ECOSYSTEM</a></li>
   </ul>
   <a href="https://oasisomniverse.one" target="_blank" rel="noopener" class="nav-cta">ECOSYSTEM</a>
   <div class="nav-hamburger" onclick="toggleMenu()">
