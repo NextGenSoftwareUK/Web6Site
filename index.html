@@ -41,12 +41,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 40px;display:fl
   nav .nav-links li{margin:0;padding:0}
   nav .nav-links a{display:block;padding:.55rem 1.25rem;font-size:.88rem;border-bottom:1px solid rgba(253,216,53,.1)}
   .nav-hamburger{display:flex}
-  .nav-cta{display:none}
+  .nav-cta{display:none!important}
   .w6-two-col{grid-template-columns:1fr!important}
   .w6-braid-stage{grid-template-columns:1fr!important}
   .w6-braid-stage .w6-braid-arrow{display:none}
   .w6-stats-row{grid-template-columns:repeat(3,1fr)!important}
   .w6-modes-grid{grid-template-columns:1fr!important}
+  .layer-item{flex-wrap:wrap;gap:8px}
+  .layer-label{flex:1 1 100%;min-width:0}
+  .layer-tag{font-size:9px}
+  .w6-outer-card{padding:1rem!important}
+  .w6-mode-card{padding:1.25rem!important}
 }
 
 /* ── SECTIONS ── */
@@ -741,7 +746,7 @@ Authorization: Bearer &lt;your-oasis-avatar-key&gt;
     <p class="section-sub">FAHRN is the self-optimising reasoning mesh built on top of Holonic BRAID. A controller agent dispatches work to scored agents in serial, parallel or decomposed mode — using a composite score of category performance, speed, cost and loop-detection stability — and learns from every outcome via EMA score updates stored in the holonic memory hierarchy.</p>
 
     <!-- Agent scoring diagram -->
-    <div style="background:var(--bg-card);border:1px solid rgba(253,216,53,.15);border-radius:16px;padding:32px;max-width:900px;margin:0 auto 56px">
+    <div class="w6-outer-card" style="background:var(--bg-card);border:1px solid rgba(253,216,53,.15);border-radius:16px;padding:32px;max-width:900px;margin:0 auto 56px">
       <div style="font-family:'Orbitron',sans-serif;font-size:13px;letter-spacing:.15em;color:#fdd835;text-align:center;margin-bottom:28px">CONTROLLER AGENT — DISPATCH LOGIC</div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(180px,100%),1fr));gap:16px;margin-bottom:32px">
         <div style="background:rgba(0,229,255,.05);border:1px solid rgba(0,229,255,.2);border-radius:10px;padding:16px;text-align:center">
@@ -784,7 +789,7 @@ Authorization: Bearer &lt;your-oasis-avatar-key&gt;
 
     <!-- Three modes -->
     <div class="w6-modes-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:28px;max-width:1100px;margin:0 auto 56px">
-      <div style="background:var(--bg-card);border:1px solid rgba(0,229,255,.25);border-radius:16px;padding:36px">
+      <div class="w6-mode-card" style="background:var(--bg-card);border:1px solid rgba(0,229,255,.25);border-radius:16px;padding:36px">
         <div style="font-family:'Orbitron',sans-serif;font-size:16px;letter-spacing:.1em;color:#00e5ff;margin-bottom:10px">MODE 1 — SERIAL</div>
         <div style="font-size:12px;font-family:'Share Tech Mono',monospace;letter-spacing:.15em;color:rgba(0,229,255,.65);margin-bottom:18px">COST OPTIMISED</div>
         <p style="color:#c8ddf0;font-size:16px;line-height:1.8">The controller dispatches the problem to the highest-scoring agent for that category. If it stalls, the next best agent takes over. One agent works at a time — lowest token cost, still intelligent routing.</p>
@@ -794,7 +799,7 @@ Authorization: Bearer &lt;your-oasis-avatar-key&gt;
           <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00e5ff;font-size:16px">✓</span> Generates Mermaid execution plan</div>
         </div>
       </div>
-      <div style="background:var(--bg-card);border:1px solid rgba(167,139,250,.25);border-radius:16px;padding:36px">
+      <div class="w6-mode-card" style="background:var(--bg-card);border:1px solid rgba(167,139,250,.25);border-radius:16px;padding:36px">
         <div style="font-family:'Orbitron',sans-serif;font-size:16px;letter-spacing:.1em;color:#a78bfa;margin-bottom:10px">MODE 2 — PARALLEL</div>
         <div style="font-size:12px;font-family:'Share Tech Mono',monospace;letter-spacing:.15em;color:rgba(167,139,250,.65);margin-bottom:18px">ACCURACY OPTIMISED</div>
         <p style="color:#c8ddf0;font-size:16px;line-height:1.8">All agents receive the same problem simultaneously. Each produces a Mermaid execution diagram. The controller compares plans — selecting the best, or merging complementary diagrams into a superior combined plan.</p>
@@ -804,7 +809,7 @@ Authorization: Bearer &lt;your-oasis-avatar-key&gt;
           <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#a78bfa;font-size:16px">✓</span> Best-of-all-worlds execution</div>
         </div>
       </div>
-      <div style="background:var(--bg-card);border:1px solid rgba(253,216,53,.25);border-radius:16px;padding:36px">
+      <div class="w6-mode-card" style="background:var(--bg-card);border:1px solid rgba(253,216,53,.25);border-radius:16px;padding:36px">
         <div style="font-family:'Orbitron',sans-serif;font-size:16px;letter-spacing:.1em;color:#fdd835;margin-bottom:10px">MODE 3 — DECOMPOSED</div>
         <div style="font-size:12px;font-family:'Share Tech Mono',monospace;letter-spacing:.15em;color:rgba(253,216,53,.65);margin-bottom:18px">COMPLEX PROBLEMS</div>
         <p style="color:#c8ddf0;font-size:16px;line-height:1.8">Large, complex problems are broken into sub-problems. Each is routed to the agent best matched to its category and speed profile. The resulting sub-diagrams are then combined by the controller into one unified execution plan.</p>
