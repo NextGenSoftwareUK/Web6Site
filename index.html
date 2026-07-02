@@ -222,8 +222,10 @@ a:hover{filter:drop-shadow(0 0 8px rgba(253,216,53,1)) drop-shadow(0 0 20px rgba
     <li><a href="#oide">OASIS IDE</a></li>
     <li class="nav-links-mobile-only"><a href="https://oasisomniverse.one" target="_blank" rel="noopener">ECOSYSTEM</a></li>
     <li class="nav-links-mobile-only"><a href="https://github.com/NextGenSoftwareUK/OASIS" target="_blank" rel="noopener">GITHUB</a></li>
+    <li class="nav-links-mobile-only"><a href="https://www.npmjs.com/package/@oasisomniverse/web6-api" target="_blank" rel="noopener">NPM PACKAGE</a></li>
   </ul>
   <div style="display:flex;gap:8px;align-items:center">
+    <a href="https://www.npmjs.com/package/@oasisomniverse/web6-api" target="_blank" rel="noopener" class="nav-cta">NPM</a>
     <a href="https://github.com/NextGenSoftwareUK/OASIS" target="_blank" rel="noopener" class="nav-cta">GITHUB</a>
     <a href="https://oasisomniverse.one" target="_blank" rel="noopener" class="nav-cta">ECOSYSTEM</a>
   </div>
@@ -240,6 +242,7 @@ a:hover{filter:drop-shadow(0 0 8px rgba(253,216,53,1)) drop-shadow(0 0 20px rgba
   <p class="hero-desc">The unified AI abstraction and aggregation layer — built on top of WEB4 and WEB5. Route, orchestrate and normalise across every AI model, agent and protocol, with the world's richest cross-reality data foundation feeding directly into every request.</p>
   <div class="hero-ctas">
     <a href="https://api.web6.oasisomniverse.one" class="btn-primary" target="_blank" rel="noopener">EXPLORE THE API →</a>
+    <a href="https://www.npmjs.com/package/@oasisomniverse/web6-api" class="btn-primary" target="_blank" rel="noopener" style="background:linear-gradient(135deg,rgba(203,56,55,.25),rgba(203,56,55,.1));border-color:rgba(203,56,55,.5)">NPM PACKAGE →</a>
     <a href="/holonic-braid-whitepaper.html" class="btn-secondary">READ THE WHITEPAPER →</a>
     <a href="https://oasisomniverse.one" class="btn-secondary" target="_blank" rel="noopener">BACK TO ECOSYSTEM</a>
   </div>
@@ -593,6 +596,26 @@ Authorization: Bearer &lt;your-oasis-avatar-key&gt;
   },
   <span class="k">"avatarId"</span>: <span class="s">"your-avatar-id"</span>     <span class="c">// optional — injects WEB4 identity/karma context</span>
 }</pre>
+    </div>
+
+    <div class="code-wrap" style="margin-top:24px">
+      <pre><span class="c">// JavaScript / Node.js — install the npm package</span>
+npm install <span class="n">@oasisomniverse/web6-api</span>
+
+<span class="k">import</span> { Web6Client } <span class="k">from</span> <span class="s">'@oasisomniverse/web6-api'</span>;
+
+<span class="k">const</span> web6 = <span class="k">new</span> <span class="n">Web6Client</span>({ baseUrl: <span class="s">'https://api.web6.oasisomniverse.one'</span> });
+web6.setToken(<span class="s">'&lt;your-oasis-jwt&gt;'</span>);
+
+<span class="k">const</span> { result } = <span class="k">await</span> web6.completion.complete({
+  Provider: <span class="s">'auto'</span>,
+  Model:    <span class="s">'auto'</span>,
+  Messages: [{ Role: <span class="s">'user'</span>, Content: <span class="s">'Hello from the OASIS'</span> }],
+  UseFAHRN:        <span class="k">true</span>,   <span class="c">// optional: FAHRN reasoning pipeline</span>
+  UseHolonicBraid: <span class="k">true</span>,   <span class="c">// optional: shared graph injection</span>
+  Routing: { Fallback: <span class="k">true</span> },
+});
+console.log(result.Content);</pre>
     </div>
 
     <div class="code-wrap" style="margin-top:24px">
@@ -1151,6 +1174,7 @@ Authorization: Bearer &lt;your-oasis-avatar-key&gt;
           <li><a href="https://api.web4.oasisomniverse.one/swagger" target="_blank" rel="noopener">Web4 OASIS API</a></li>
           <li><a href="https://api.starnet.oasisomniverse.one/swagger" target="_blank" rel="noopener">Web5 STARNET API</a></li>
           <li><a href="https://api.web6.oasisomniverse.one" target="_blank" rel="noopener">Web6 API</a></li>
+          <li><a href="https://www.npmjs.com/package/@oasisomniverse/web6-api" target="_blank" rel="noopener">Web6 npm package</a></li>
           <li><a href="https://github.com/NextGenSoftwareUK/OASIS-IDE" target="_blank" rel="noopener">OASIS IDE</a></li>
           <li><a href="https://www.oasisweb4.com/products/mcp" target="_blank" rel="noopener">OASIS MCP Server</a></li>
           <li><a href="https://github.com/NextGenSoftwareUK/OASIS/releases/tag/STAR-ODK-Runtime-v3.5.0" target="_blank" rel="noopener">STAR CLI/ODK</a></li>
