@@ -1338,7 +1338,7 @@ AgentMetadata {<br>
     In both Debate and Voting modes, a lightweight natural language inference call checks whether agent outputs contradict each other: <em>"Does statement B contradict statement A? Reply with: ENTAIL, NEUTRAL, or CONTRADICT."</em> CONTRADICT responses trigger a deeper analysis pass — the controller examines which agent's premises are better supported by the Holonic BRAID graph for this task type. This mechanism is optional (off by default, enabled per-request via <code>EnableContradictionDetection: true</code>) and adds one model call per agent pair.
   </div>
 
-  <h3 id="enhanced-loop-detection">4.9 — Enhanced Loop Detection</h3>
+  <h3 id="enhanced-loop-detection" style="page-break-before:always;break-before:always">4.9 — Enhanced Loop Detection</h3>
 
   <p>Section 4.5 introduced the four baseline loop detection mechanisms. FAHRN extends these with two additional layers that address the most subtle failure modes:</p>
 
