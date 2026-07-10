@@ -297,8 +297,12 @@
     .wrap { padding:24px 0 !important; max-width:100% !important; }
     .wrap-wide { padding:20px 0 !important; max-width:100% !important; }
 
-    /* Border on the dark content body, not the white page margins */
-    body { border:1.5px solid rgba(100,140,220,0.5); }
+    /* Dark body fills the full page (margins moved to padding), border shows on every page */
+    body {
+      padding:18mm 15mm !important;
+      border:2px solid rgba(100,140,220,0.55) !important;
+      box-sizing:border-box;
+    }
   }
 </style>
 </head>
