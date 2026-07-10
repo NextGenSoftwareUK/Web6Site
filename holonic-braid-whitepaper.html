@@ -254,117 +254,29 @@
 
   /* ── PRINT / PDF ── */
   @media print {
-    /* Hide all web-only elements */
+    * { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+
+    /* Hide web-only chrome */
     #star-canvas, nav, footer, .cta-row { display:none !important; }
 
-    /* Reset page */
-    * { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-    html, body {
-      background:#ffffff !important;
-      color:#1a1a2e !important;
-      font-size:11pt;
-      line-height:1.6;
-    }
-
-    /* Page breaks */
-    .wrap, .wrap-wide { page-break-inside:avoid; break-inside:avoid; }
+    /* Section dividers force clean page breaks */
     hr.rule { page-break-after:always; break-after:always; border:none; margin:0; }
-    .feat-card, .agent-card, .callout, .toc, .holon-stack { page-break-inside:avoid; break-inside:avoid; }
-    h2 { page-break-before:always; break-before:always; }
-    h2:first-of-type { page-break-before:avoid; break-before:avoid; }
 
-    /* Cover */
-    .cover {
-      background:linear-gradient(135deg,#0a0f2e,#12185a) !important;
-      color:#ffffff !important;
-      min-height:auto !important;
-      padding:60px 40px !important;
-      page-break-after:always;
-      break-after:always;
-    }
-    .cover-title { color:#ffffff !important; }
-    .cover-title span { color:#fdd835 !important; }
-    .cover-kicker, .cover-meta { color:#c8d8f0 !important; }
-    .cover-sub { color:#c8d8f0 !important; }
-    .cover-line { background:#fdd835 !important; }
+    /* Cover gets its own page */
+    .cover { page-break-after:always; break-after:always; min-height:auto !important; }
 
-    /* Sections */
-    .wrap, .wrap-wide {
-      background:transparent !important;
-      padding:20px 0 !important;
-      max-width:100% !important;
-    }
-    .section-label { color:#6040a0 !important; }
-    h2 { color:#1a1a2e !important; font-size:18pt !important; }
-    h2 span { color:#4040c0 !important; }
-    h3 { color:#2a2a4e !important; font-size:13pt !important; }
-    h4 { color:#3a3a5e !important; font-size:11pt !important; }
-    p, li, td, th { color:#1a1a2e !important; }
-    a { color:#3050c0 !important; }
-    code { background:#f0f0f8 !important; color:#2a2a5e !important; border-radius:3px; padding:1px 4px; }
+    /* Keep headings glued to the content below them */
+    h2, h3, h4 { page-break-after:avoid; break-after:avoid; }
 
-    /* TOC */
-    .toc {
-      background:#f4f4fc !important;
-      border:1px solid #c0c0e0 !important;
-      color:#1a1a2e !important;
-    }
-    .toc-title { color:#3040a0 !important; }
-    .toc a { color:#3050c0 !important; }
+    /* Keep cards and callouts intact */
+    .feat-card, .agent-card, .callout, .toc { page-break-inside:avoid; break-inside:avoid; }
 
-    /* Feature cards */
-    .feat-grid { grid-template-columns:repeat(3,1fr) !important; gap:10px !important; }
-    .feat-card {
-      background:#f8f8ff !important;
-      border:1px solid #c0c0e0 !important;
-      padding:14px !important;
-      border-radius:8px !important;
-    }
-    .feat-title { color:#1a1a2e !important; font-size:8pt !important; }
-    .feat-desc { color:#2a2a4e !important; font-size:8.5pt !important; }
-    .feat-icon { font-size:1.2rem !important; }
+    /* The holonic hierarchy canvas is web-only — hide it, show the text stack instead */
+    #hierarchy-canvas, #stack-canvas { display:none !important; }
+    .wrap-wide { page-break-inside:auto; break-inside:auto; }
 
-    /* Agent cards */
-    .agent-grid { grid-template-columns:repeat(4,1fr) !important; gap:8px !important; }
-    .agent-card {
-      background:#f8f8ff !important;
-      border:1px solid #c0c0e0 !important;
-      padding:10px !important;
-    }
-    .agent-name { font-size:8pt !important; color:#3040a0 !important; }
-    .agent-scores { font-size:7.5pt !important; color:#1a1a2e !important; }
-
-    /* Callouts */
-    .callout {
-      background:#f0f0fc !important;
-      border-left:3px solid #6040c0 !important;
-      color:#1a1a2e !important;
-    }
-    .callout.cyan { border-left-color:#0080a0 !important; background:#f0f8fc !important; }
-    .callout.gold { border-left-color:#a06000 !important; background:#fdf8f0 !important; }
-    .callout.teal { border-left-color:#007060 !important; background:#f0faf8 !important; }
-
-    /* Holonic stack */
-    .holon-stack { background:#f4f4fc !important; border:1px solid #c0c0e0 !important; }
-    .holon-row { background:#e8e8f8 !important; color:#1a1a2e !important; border-bottom:1px solid #c0c0e0 !important; }
-    .holon-level { color:#1a1a2e !important; }
-    .holon-tag { background:#d0d0f0 !important; color:#2a2a6e !important; }
-    .holon-sub { color:#3a3a5e !important; }
-
-    /* Benchmark table */
-    table { border-collapse:collapse !important; width:100% !important; }
-    th { background:#e8e8f8 !important; color:#1a1a2e !important; border:1px solid #c0c0e0 !important; }
-    td { border:1px solid #d0d0e8 !important; color:#1a1a2e !important; }
-
-    /* Score bars */
-    .score-bar-outer { background:#e0e0f0 !important; }
-    .score-bar-inner { background:#6040c0 !important; }
-
-    /* Roadmap / phase boxes */
-    [style*="rgba(0,200,168"] { background:#f0faf8 !important; border-color:#007060 !important; }
-    [style*="rgba(253,216,53"] { background:#fdf8e8 !important; border-color:#a06000 !important; }
-    [style*="rgba(0,229,255"] { background:#f0f8fc !important; border-color:#0070a0 !important; }
-    [style*="rgba(160,139,250"] { background:#f4f0fc !important; border-color:#6040a0 !important; }
+    /* Tighten up section padding for print */
+    .wrap { padding:24px 0 !important; max-width:100% !important; }
   }
 </style>
 </head>
