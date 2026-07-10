@@ -1400,6 +1400,16 @@ AgentMetadata {<br>
       <div class="feat-title">PROTOCOL-NEUTRAL ORCHESTRATION</div>
       <div class="feat-desc">The <code>OrchestratorManager</code> abstracts over MCP (full Streamable HTTP handshake), A2A (Agent Card + task lifecycle), ACP (BeeAI/IBM async run protocol), ANP (decentralised agent discovery via DID documents), gRPC, GraphQL, AsyncAPI/Kafka, LangChain, AutoGen, CrewAI and Semantic Kernel — all behind a single <code>InvokeAsync</code> interface. New protocols are adapters, not rewrites.</div>
     </div>
+    <div class="feat-card">
+      <span class="feat-icon">📊</span>
+      <div class="feat-title">FULL OBSERVABILITY</div>
+      <div class="feat-desc">OpenTelemetry traces and Prometheus metrics on every FAHRN dispatch, memory operation and provider call. Structured JSON logging, cost-per-dispatch analytics, real-time alerting and Grafana dashboards out of the box. Every routing decision, agent score update and skill evolution epoch is auditable — production-grade telemetry from day one.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">♾️</span>
+      <div class="feat-title">SELF-REGISTRATION AS ORCHESTRATOR</div>
+      <div class="feat-desc">On startup the WEB6 API registers itself as its own MCP orchestrator, exposing every FAHRN agent, memory provider and protocol adapter as a callable MCP tool. External Claude Code sessions, IDE extensions and third-party agents can discover and invoke the full WEB6 capability surface via the standard MCP tool-call protocol — zero manual wiring required.</div>
+    </div>
   </div>
 </div>
 
