@@ -332,11 +332,14 @@
           <li><a href="#mlnet-section">4.11 ML.NET: In-Process Machine Learning</a> <span style="font-family:'Share Tech Mono',monospace;font-size:9px;color:#fdd835;letter-spacing:.12em">NEW v2.0</span></li>
         </ol>
       </li>
-      <li><a href="#integration">Integration: Holonic Braid + FAHRN</a></li>
-      <li><a href="#web6">Position Within OASIS WEB6</a> <span style="font-family:'Share Tech Mono',monospace;font-size:9px;color:#fdd835;letter-spacing:.12em">UPDATED v2.0</span></li>
-      <li><a href="#agi">A Path to AGI Through Unity Consciousness</a></li>
-      <li><a href="#conclusion">Conclusion</a></li>
-      <li><a href="#references">References</a></li>
+      <li><a href="#integration">5. Integration: Holonic Braid + FAHRN</a></li>
+      <li><a href="#web6">6. Position Within OASIS WEB6</a> <span style="font-family:'Share Tech Mono',monospace;font-size:9px;color:#fdd835;letter-spacing:.12em">UPDATED v2.0</span></li>
+      <li><a href="#oasis-mcp">7. OASIS MCP — Model Context Protocol Server</a> <span style="font-family:'Share Tech Mono',monospace;font-size:9px;color:#fdd835;letter-spacing:.12em">NEW v2.0</span></li>
+      <li><a href="#oasis-ide">8. OASIS IDE — AI-Native Development Environment</a> <span style="font-family:'Share Tech Mono',monospace;font-size:9px;color:#fdd835;letter-spacing:.12em">NEW v2.0</span></li>
+      <li><a href="#roadmap">9. Roadmap — Path to v2.0 and Beyond</a> <span style="font-family:'Share Tech Mono',monospace;font-size:9px;color:#fdd835;letter-spacing:.12em">NEW v2.0</span></li>
+      <li><a href="#agi">10. A Path to AGI Through Unity Consciousness</a></li>
+      <li><a href="#conclusion">11. Conclusion</a></li>
+      <li><a href="#references">12. References</a></li>
     </ol>
   </div>
 </div>
@@ -1501,9 +1504,171 @@ AgentMetadata {<br>
 
 <hr class="rule">
 
+<!-- ── OASIS MCP ── -->
+<div class="wrap" id="oasis-mcp">
+  <div class="section-label">07 · OASIS MCP</div>
+  <h2>OASIS MCP — <span>Model Context Protocol Server</span></h2>
+
+  <p>The <strong>OASIS MCP server</strong> exposes the full OASIS platform — WEB4 identity, COSMIC ORM data, WEB6 AI routing, Holonic BRAID memory and FAHRN orchestration — as a suite of callable MCP tools. Any MCP-compatible agent runtime (Claude Code, Cursor, Continue, Windsurf, VS Code Copilot) connects once and gains native access to the entire OASIS omniverse without custom integration work.</p>
+
+  <p>With over <strong>60 tools</strong> spanning WEB4 through WEB10, OASIS MCP is the broadest MCP server in the ecosystem. It runs in-process within the host application — no HTTP overhead, no auth token juggling, no separate service to maintain.</p>
+
+  <div class="feat-grid">
+    <div class="feat-card">
+      <span class="feat-icon">🔌</span>
+      <div class="feat-title">PLUG IN ANY AGENT</div>
+      <div class="feat-desc">Any MCP-compatible agent runtime connects to the full OASIS platform in a single configuration step. Claude Code, Cursor, Continue, Windsurf and VS Code Copilot all work out of the box — 60+ tools available immediately, covering identity, storage, AI routing, memory and cross-reality data.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">👤</span>
+      <div class="feat-title">AVATAR CONTEXT</div>
+      <div class="feat-desc">Every MCP tool call is enriched with the calling avatar's full context — karma tier, verified credentials, active holons, Web4 identity and Web5 XP history. Agents produce dramatically more relevant responses because they understand <em>who</em> is asking, not just <em>what</em> they asked.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🗄️</span>
+      <div class="feat-title">COSMIC ORM DATA</div>
+      <div class="feat-desc">The full COSMIC ORM — 40+ storage providers including MongoDB, Solana, IPFS, Neo4j, SQLite, ThreeFold and more — is exposed as MCP tools. Agents can read, write and query holons across any configured provider without knowing which backend is active.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🧠</span>
+      <div class="feat-title">WEB6 AI ROUTING</div>
+      <div class="feat-desc">FAHRN dispatch, semantic caching, agent scoring and provider selection are all callable as MCP tools. An IDE agent can request the best available model for a given task type, trigger a parallel dispatch across GPT-5, Claude and Gemini, and receive the synthesised result — all through standard MCP tool calls.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🔑</span>
+      <div class="feat-title">SINGLE AUTH</div>
+      <div class="feat-desc">One OASIS avatar key authenticates across all 60+ MCP tools, all WEB6 AI providers, all COSMIC ORM backends and all holonic memory operations. No per-provider API key management. DID / Verifiable Credential auth is also supported for enterprise deployments requiring cryptographic identity.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">📐</span>
+      <div class="feat-title">STANDARD PROTOCOL</div>
+      <div class="feat-desc">Built on the Model Context Protocol open standard — fully compatible with Anthropic's MCP specification. New OASIS capabilities are exposed as new MCP tools without requiring agent updates. The server self-registers its full tool manifest on connection so agents always see the current capability surface.</div>
+    </div>
+  </div>
+
+  <div class="callout cyan">
+    <strong>Self-registration:</strong> On startup, the WEB6 API registers itself as its own MCP orchestrator — exposing every FAHRN agent, memory provider and protocol adapter as a discoverable MCP tool. External Claude Code sessions, IDE extensions and third-party agents discover the full capability surface automatically via the standard MCP tool manifest. Zero manual wiring required.
+  </div>
+</div>
+
+<hr class="rule">
+
+<!-- ── OASIS IDE ── -->
+<div class="wrap" id="oasis-ide">
+  <div class="section-label">08 · OASIS IDE</div>
+  <h2>OASIS IDE — <span>AI-Native Development Environment</span></h2>
+
+  <p>OASIS IDE is a full AI-native development environment built on the WEB6 + OASIS MCP stack. Every coding session has native access to FAHRN-powered multi-model planning, Holonic BRAID persistent project memory, and the entire OASIS omniverse data layer — making it the only IDE that gets smarter with every project you build.</p>
+
+  <div class="feat-grid">
+    <div class="feat-card">
+      <span class="feat-icon">🤖</span>
+      <div class="feat-title">AGENTIC CODING</div>
+      <div class="feat-desc">Multi-step agentic workflows — plan, scaffold, implement, test, document — orchestrated by FAHRN across the optimal set of models for each sub-task. The IDE doesn't just autocomplete; it decomposes features into execution plans and carries them out end-to-end with human checkpoints.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🔌</span>
+      <div class="feat-title">MCP-AWARE</div>
+      <div class="feat-desc">Connects to the OASIS MCP server out of the box, giving every agent native access to avatar identity, karma tier and COSMIC ORM data while you code. Any third-party MCP server can be added alongside it — the IDE acts as an MCP orchestrator aggregating multiple servers into a single tool surface.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🧠</span>
+      <div class="feat-title">WEB6 ROUTING</div>
+      <div class="feat-desc">Routes coding tasks to the best available model for each sub-problem — GPT-5 for architecture reasoning, Claude for long-form documentation, DeepSeek for pure code generation, Gemini for multimodal asset analysis. FAHRN composite scores drive every routing decision; the developer never thinks about model selection.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🌐</span>
+      <div class="feat-title">OASIS / STAR AWARE</div>
+      <div class="feat-desc">Native integration with STAR ODK and STARNET — the IDE understands OAPPs, holon schemas and cross-world asset structures. Building on WEB4/WEB5 means the IDE can scaffold OAPP templates, validate holon schemas and query live STARNET graph data as a first-class development resource.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🗺️</span>
+      <div class="feat-title">FAHRN-POWERED PLANNING</div>
+      <div class="feat-desc">Before writing a line of code, the FAHRN controller generates a Mermaid execution plan for the feature — breaking it into subtasks, assigning the optimal agent to each node, and surfacing the plan for developer review. Plans are stored as holons so "what did we plan for this module?" is always answerable.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">💾</span>
+      <div class="feat-title">PERSISTENT PROJECT MEMORY</div>
+      <div class="feat-desc">Every session, decision, architecture choice and code review is stored in Holonic BRAID as a project holon tree. New sessions inherit the full project history — no more re-explaining context to a fresh AI window. Memory propagates upward through membrane rules: individual dev sessions feed team-level intelligence.</div>
+    </div>
+  </div>
+</div>
+
+<hr class="rule">
+
+<!-- ── ROADMAP ── -->
+<div class="wrap" id="roadmap">
+  <div class="section-label">09 · ROADMAP</div>
+  <h2>Roadmap — <span>Path to v2.0 and Beyond</span></h2>
+
+  <p>The WEB6 v2.0 architecture described in this whitepaper is being delivered across four phases. Phase 1 is complete; Phases 2 and 3 are in active development.</p>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin:32px 0">
+
+    <div style="background:rgba(0,200,168,.06);border:1px solid rgba(0,200,168,.25);border-radius:12px;padding:1.5rem">
+      <div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.2em;color:#00c8a8;margin-bottom:8px">PHASE 1 — COMPLETE</div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:13px;color:#e8f0ff;margin-bottom:12px">FOUNDATION</div>
+      <div style="color:#a8bfd8;font-size:.88rem;line-height:1.9">
+        <div>✓ &nbsp;WEB6 unified AI API — 20+ providers</div>
+        <div>✓ &nbsp;FAHRN Serial / Parallel / Decomposed modes</div>
+        <div>✓ &nbsp;Holonic BRAID shared graph library</div>
+        <div>✓ &nbsp;COSMIC ORM — 40+ storage providers</div>
+        <div>✓ &nbsp;OASIS MCP server — 60+ tools</div>
+        <div>✓ &nbsp;WEB4 + WEB5 deep integration</div>
+        <div>✓ &nbsp;Avatar karma system</div>
+      </div>
+    </div>
+
+    <div style="background:rgba(253,216,53,.06);border:1px solid rgba(253,216,53,.25);border-radius:12px;padding:1.5rem">
+      <div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.2em;color:#fdd835;margin-bottom:8px">PHASE 2 — IN PROGRESS</div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:13px;color:#e8f0ff;margin-bottom:12px">INTELLIGENCE LAYER</div>
+      <div style="color:#a8bfd8;font-size:.88rem;line-height:1.9">
+        <div>→ &nbsp;MCP Streamable HTTP transport</div>
+        <div>→ &nbsp;A2A Agent Card + task lifecycle</div>
+        <div>→ &nbsp;WebSocket bidirectional sessions</div>
+        <div>→ &nbsp;Debate &amp; Voting dispatch modes</div>
+        <div>→ &nbsp;Enhanced loop detection (6 mechanisms)</div>
+        <div>→ &nbsp;External memory provider integration</div>
+        <div>→ &nbsp;DID / Verifiable Credential auth</div>
+        <div>→ &nbsp;Full OpenTelemetry observability</div>
+      </div>
+    </div>
+
+    <div style="background:rgba(0,229,255,.05);border:1px solid rgba(0,229,255,.2);border-radius:12px;padding:1.5rem">
+      <div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.2em;color:#00e5ff;margin-bottom:8px">PHASE 3 — PLANNED</div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:13px;color:#e8f0ff;margin-bottom:12px">SELF-IMPROVEMENT</div>
+      <div style="color:#a8bfd8;font-size:.88rem;line-height:1.9">
+        <div>◇ &nbsp;SkillOpt self-evolving agent skills</div>
+        <div>◇ &nbsp;ML.NET in-process AutoML inference</div>
+        <div>◇ &nbsp;ACP / ANP / gRPC / GraphQL / AsyncAPI</div>
+        <div>◇ &nbsp;Karma-gated AI tier system</div>
+        <div>◇ &nbsp;StarNet context enrichment pipeline</div>
+        <div>◇ &nbsp;OASIS IDE v1.0 public release</div>
+        <div>◇ &nbsp;Cross-agent skill transfer marketplace</div>
+      </div>
+    </div>
+
+    <div style="background:rgba(160,139,250,.06);border:1px solid rgba(160,139,250,.2);border-radius:12px;padding:1.5rem">
+      <div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.2em;color:#a08bfa;margin-bottom:8px">PHASE 4 — VISION</div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:13px;color:#e8f0ff;margin-bottom:12px">THE AGI PATHWAY</div>
+      <div style="color:#a8bfd8;font-size:.88rem;line-height:1.9">
+        <div>◈ &nbsp;Planetary holonic memory fabric</div>
+        <div>◈ &nbsp;Cross-avatar collective intelligence</div>
+        <div>◈ &nbsp;AGI milestone tracking via WEB9</div>
+        <div>◈ &nbsp;Autonomous agent economy</div>
+        <div>◈ &nbsp;Unity consciousness substrate</div>
+        <div>◈ &nbsp;Open-source community governance</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<hr class="rule">
+
 <!-- ── AGI ── -->
 <div class="wrap" id="agi">
-  <div class="section-label">07 · PHILOSOPHY &amp; VISION</div>
+  <div class="section-label">10 · PHILOSOPHY &amp; VISION</div>
   <h2>A Path to AGI Through <span>Unity Consciousness</span></h2>
 
   <p>The deepest claim of this whitepaper is also the most ambitious: Holonic Braid, when combined with the FAHRN and the full OASIS WEB6 infrastructure, represents a <strong>principled path to Artificial General Intelligence</strong>.</p>
@@ -1557,7 +1722,7 @@ AgentMetadata {<br>
 
 <!-- ── CONCLUSION ── -->
 <div class="wrap" id="conclusion">
-  <div class="section-label">08 · CONCLUSION</div>
+  <div class="section-label">11 · CONCLUSION</div>
   <h2>Conclusion</h2>
 
   <p>This whitepaper has presented two architectures — <strong>Holonic Braid</strong> and the <strong>FAHRN</strong> — that together form a new foundation for AI intelligence within OASIS WEB6.</p>
@@ -1582,7 +1747,7 @@ AgentMetadata {<br>
 
 <!-- ── REFERENCES ── -->
 <div class="wrap" id="references">
-  <div class="section-label">09 · REFERENCES</div>
+  <div class="section-label">12 · REFERENCES</div>
   <h2>References</h2>
 
   <div class="feat-card" style="margin-bottom:16px">
