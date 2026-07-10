@@ -1226,6 +1226,82 @@ AgentMetadata {<br>
   <p>Combined, the six loop detection mechanisms (token budget, output similarity hash, self-report, self-contradiction, circular graph, output deduplication) make FAHRN uniquely robust against the failure modes that render single-model reasoning pipelines unreliable in production.</p>
 </div>
 
+<div class="wrap" id="skillopt">
+  <h3 id="skillopt-section">4.10 — SkillOpt: Self-Evolving Agent Skill Documents</h3>
+
+  <p>SkillOpt (Microsoft Research, arXiv:2605.23904) introduces a fourth learning signal into FAHRN — one that evolves the <em>natural-language procedure</em> each agent follows, rather than its numeric score or routing weight. The exported artifact is a portable <code>best_skill.md</code> markdown file stored as a holon in Holonic BRAID.</p>
+
+  <div class="callout" style="border-left-color:#fdd835">
+    <strong>Key result:</strong> +23.5% average gain on GPT-5.5 across SearchQA, SpreadsheetBench, OfficeQA, DocVQA, LiveMath and ALFWorld. Skills transfer cross-model (+15.2 pts GPT-5.4 → GPT-5.4-nano) and cross-harness (+31.8 pts Codex → Claude Code).
+  </div>
+
+  <h4 style="color:#a8bfd8;margin:1.5rem 0 .75rem">The Rollout → Reflect → Edit → Gate Loop</h4>
+
+  <ol style="color:#a8bfd8;line-height:2">
+    <li><strong>Rollout:</strong> FAHRN dispatches using the current <code>best_skill.md</code> injected into the agent's system message. Scored trajectories accumulate as child holons of the agent holon.</li>
+    <li><strong>Reflect:</strong> A frozen target model and a separate optimiser model analyse the failure minibatch. The optimiser proposes bounded textual edits (add / delete / replace lines) constrained by a "textual learning rate" (max N lines changed per epoch).</li>
+    <li><strong>Edit:</strong> Candidate edits are applied to produce a challenger skill document.</li>
+    <li><strong>Gate:</strong> The challenger is evaluated on a held-out validation set. It replaces <code>best_skill.md</code> only if held-out selection score improves. Rejected edits are stored as a negative-feedback buffer — the optimiser cannot re-propose the same change.</li>
+  </ol>
+
+  <h4 style="color:#a8bfd8;margin:1.5rem 0 .75rem">Synergy with FAHRN's Existing Learning</h4>
+
+  <table style="width:100%;border-collapse:collapse;color:#a8bfd8;font-size:.9rem">
+    <thead>
+      <tr style="border-bottom:1px solid rgba(168,191,216,.2)">
+        <th style="padding:.5rem 1rem;text-align:left">Learning axis</th>
+        <th style="padding:.5rem 1rem;text-align:left">What evolves</th>
+        <th style="padding:.5rem 1rem;text-align:left">Stored as</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid rgba(168,191,216,.1)">
+        <td style="padding:.5rem 1rem">EMA score update (§4.6)</td>
+        <td style="padding:.5rem 1rem">Agent composite score per task category</td>
+        <td style="padding:.5rem 1rem">Agent holon properties</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(168,191,216,.1)">
+        <td style="padding:.5rem 1rem">Mermaid plan memory (§4.4)</td>
+        <td style="padding:.5rem 1rem">Execution graph for a class of problems</td>
+        <td style="padding:.5rem 1rem">Plan holon</td>
+      </tr>
+      <tr>
+        <td style="padding:.5rem 1rem"><strong style="color:#fdd835">SkillOpt (§4.10)</strong></td>
+        <td style="padding:.5rem 1rem">Natural-language procedure document</td>
+        <td style="padding:.5rem 1rem"><code>SkillDocument</code> holon (child of agent)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p style="margin-top:1.5rem">Because skills transfer cross-model, a newly onboarded provider agent can seed its initial <code>best_skill.md</code> from any existing agent's evolved skill in the same task category — dramatically accelerating warm-up for new providers.</p>
+</div>
+
+<div class="wrap" id="mlnet">
+  <h3 id="mlnet-section">4.11 — ML.NET: In-Process Machine Learning</h3>
+
+  <p>ML.NET (Microsoft, <a href="https://dotnet.microsoft.com/en-us/apps/ai/ml-dotnet" style="color:#00e5ff">dotnet.microsoft.com</a>) is the open-source C# ML framework used in Power BI, Microsoft Defender and Bing. Because the entire OASIS stack is .NET, ML.NET runs <em>in-process</em> inside the OASIS API — zero additional network calls, microsecond inference latency.</p>
+
+  <div class="feat-grid" style="--cols:3">
+    <div class="feat-card">
+      <span class="feat-icon">🏷️</span>
+      <div class="feat-title">TASK TYPE CLASSIFICATION</div>
+      <div class="feat-desc"><code>FahrnTaskClassifier</code> replaces regex heuristics with an AutoML multi-class model trained on historical FAHRN dispatch outcomes stored as holons. Classifies incoming problems into mathematics / code / legal / architecture / writing / real-time / general.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🔬</span>
+      <div class="feat-title">LOOP ANOMALY SCORING</div>
+      <div class="feat-desc">Supplements the six structural loop-detection mechanisms with a continuous ML anomaly score trained on token-velocity, graph growth rate and self-similarity features. Catches novel loop patterns before they exhaust the token budget.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">💬</span>
+      <div class="feat-title">SENTIMENT &amp; ROUTING</div>
+      <div class="feat-desc">In-process sentiment analysis for avatar content moderation and OAPP review scoring. Agent routing recommendation model uses collaborative filtering on historical dispatch outcomes to suggest optimal agent subsets for unseen task types.</div>
+    </div>
+  </div>
+
+  <p>AutoML models are trained on OASIS holons, serialised as <code>.zip</code> artifacts and stored via COSMIC ORM — surviving restarts and replicating across deployments. Retraining triggers automatically when the accumulated holon count crosses a configurable threshold.</p>
+</div>
+
 <hr class="rule">
 
 <!-- ── INTEGRATION ── -->

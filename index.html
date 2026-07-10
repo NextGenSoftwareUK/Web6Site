@@ -629,6 +629,11 @@ a:hover{filter:drop-shadow(0 0 8px rgba(253,216,53,1)) drop-shadow(0 0 20px rgba
       <div class="feature-desc">Embedding-based prompt cache: if an incoming request is ≥95% similar to a cached prompt, the cached response is returned instantly at zero provider cost. Dramatic cost and latency reductions for repeated or near-identical queries.</div>
     </div>
     <div class="feature-card">
+      <span class="feature-icon">🔬</span>
+      <div class="feature-title">IN-PROCESS ML INFERENCE</div>
+      <div class="feature-desc">Powered by <strong style="color:#fdd835">ML.NET</strong> — Microsoft's open-source C# ML framework (used in Power BI, Defender, Bing). Runs sentiment analysis, anomaly detection, task classification and recommendation models in-process inside the OASIS API — zero additional API calls, microsecond latency, and full AutoML pipeline for training on OASIS usage data.</div>
+    </div>
+    <div class="feature-card">
       <span class="feature-icon">⚖️</span>
       <div class="feature-title">DEBATE &amp; VOTING MODES</div>
       <div class="feature-desc">Two additional FAHRN dispatch modes for high-stakes decisions: Debate pits agents against each other adversarially with NLI contradiction checking; Voting runs independent agents and selects by consensus. The only AI API with built-in multi-model adversarial reasoning.</div>
@@ -975,6 +980,11 @@ Authorization: Bearer &lt;your-oasis-avatar-key&gt;
         <span class="feature-icon">🛡️</span>
         <div class="feature-title">ANTI-FRAGILE BY DESIGN</div>
         <div class="feature-desc">Every stall, timeout and failed plan updates agent metadata and improves future routing. No single-model bias — performance decides flow, not reputation. No provider lock-in — the system naturally migrates workloads toward consistently better agents. Each agent is itself a holon.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">📄</span>
+        <div class="feature-title">SELF-EVOLVING SKILL DOCUMENTS</div>
+        <div class="feature-desc">Powered by Microsoft Research's <strong style="color:#fdd835">SkillOpt</strong> (arXiv:2605.23904). Each FAHRN agent carries a portable <code style="font-family:'Share Tech Mono',monospace">best_skill.md</code> artifact — a natural-language procedure document that evolves through a rollout → reflect → edit → gate loop, without touching model weights. Demonstrated +23.5% average gain across benchmarks. Skills transfer across models, harnesses and task categories — stored as holons in Holonic BRAID.</div>
       </div>
     </div>
 
@@ -1354,6 +1364,8 @@ Authorization: Bearer &lt;your-oasis-avatar-key&gt;
           <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00e5ff">◇</span> Decentralised AI — Bittensor (Corcel gateway), GaiaNet, Replicate as first-class providers</div>
           <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00e5ff">◇</span> StarnetContextManager — standalone <code style="font-family:'Share Tech Mono',monospace;color:#00e5ff">GET /v1/context/avatar/{id}</code> rich context block for any external system</div>
           <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00e5ff">◇</span> FAHRN Debate &amp; Voting dispatch modes — adversarial multi-agent reasoning for high-stakes decisions</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00e5ff">◇</span> <strong style="color:#e8f0ff">SkillOpt</strong> self-evolving agent skills — rollout → reflect → edit → gate loop produces portable <code style="font-family:'Share Tech Mono',monospace">best_skill.md</code> holons; demonstrated +23.5% avg gain (Microsoft Research, arXiv:2605.23904)</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00e5ff">◇</span> <strong style="color:#e8f0ff">ML.NET</strong> in-process inference — C#-native AutoML, sentiment analysis, anomaly detection, task classification and agent routing recommendations running at microsecond latency inside the OASIS API</div>
         </div>
       </div>
     </div>
