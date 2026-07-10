@@ -269,7 +269,17 @@
     h2, h3, h4 { page-break-after:avoid; break-after:avoid; }
 
     /* Keep cards and callouts intact */
-    .feat-card, .agent-card, .callout, .toc, .mode-card, .ref-card { page-break-inside:avoid; break-inside:avoid; }
+    .feat-card, .agent-card, .callout, .mode-card, .ref-card { page-break-inside:avoid; break-inside:avoid; }
+
+    /* TOC is too tall for one page — strip the box so splits don't look broken */
+    .toc {
+      background:none !important;
+      border:none !important;
+      box-shadow:none !important;
+      padding:0 !important;
+      page-break-inside:auto;
+      break-inside:auto;
+    }
 
     /* Canvas elements are web-only — hide them */
     #hierarchy-canvas, #stack-canvas { display:none !important; }
