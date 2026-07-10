@@ -220,6 +220,7 @@ a:hover{filter:drop-shadow(0 0 8px rgba(253,216,53,1)) drop-shadow(0 0 20px rgba
     <li><a href="#reasoning-network">FAHRN</a></li>
     <li><a href="#mcp">MCP</a></li>
     <li><a href="#oide">OASIS IDE</a></li>
+    <li><a href="#roadmap">ROADMAP</a></li>
     <li class="nav-links-mobile-only"><a href="https://oasisomniverse.one" target="_blank" rel="noopener">ECOSYSTEM</a></li>
     <li class="nav-links-mobile-only"><a href="https://github.com/NextGenSoftwareUK/OASIS" target="_blank" rel="noopener">GITHUB</a></li>
     <li class="nav-links-mobile-only"><a href="https://www.npmjs.com/package/@oasisomniverse/web6-api" target="_blank" rel="noopener">NPM PACKAGE</a></li>
@@ -501,10 +502,25 @@ a:hover{filter:drop-shadow(0 0 8px rgba(253,216,53,1)) drop-shadow(0 0 20px rgba
         <div class="provider-name">STABILITY AI</div>
         <div class="provider-type">SDXL · Stable Diffusion · SVD</div>
       </div>
-      <div class="provider-card" style="border-color:rgba(253,216,53,.08);opacity:.55;border-style:dashed">
-        <span class="provider-icon">+</span>
-        <div class="provider-name">MORE COMING</div>
-        <div class="provider-type">Continuously expanding</div>
+      <div class="provider-card" style="border-color:rgba(253,216,53,.3);background:rgba(253,216,53,.05)">
+        <span class="provider-icon">🌐</span>
+        <div class="provider-name">OPENSERV</div>
+        <div class="provider-type">One SERV key → GPT-5 · Claude · Gemini · Grok · Qwen · DeepSeek</div>
+      </div>
+      <div class="provider-card">
+        <span class="provider-icon">🔴</span>
+        <div class="provider-name">REPLICATE</div>
+        <div class="provider-type">Open-source model marketplace · Image · Audio · Video</div>
+      </div>
+      <div class="provider-card" style="opacity:.7;border-style:dashed">
+        <span class="provider-icon">🧬</span>
+        <div class="provider-name">BITTENSOR</div>
+        <div class="provider-type">Decentralised inference · Community owned · Coming soon</div>
+      </div>
+      <div class="provider-card" style="opacity:.7;border-style:dashed">
+        <span class="provider-icon">🌿</span>
+        <div class="provider-name">GAIANET</div>
+        <div class="provider-type">Decentralised community nodes · Coming soon</div>
       </div>
     </div>
   </div>
@@ -561,6 +577,46 @@ a:hover{filter:drop-shadow(0 0 8px rgba(253,216,53,1)) drop-shadow(0 0 20px rgba
       <span class="feature-icon">🔑</span>
       <div class="feature-title">SINGLE AUTH</div>
       <div class="feature-desc">One OASIS avatar key authenticates against every provider. No per-provider API key management. Permissions and quotas are governed at the WEB4 UNIFICATION LAYER.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">⚡</span>
+      <div class="feature-title">STREAMING SSE</div>
+      <div class="feature-desc">Real-time token-by-token streaming via Server-Sent Events across every provider — normalised to a single stream format regardless of the underlying model's native streaming protocol.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🧮</span>
+      <div class="feature-title">EMBEDDINGS &amp; VECTOR SEARCH</div>
+      <div class="feature-desc">Unified embeddings endpoint across OpenAI, Cohere, Hugging Face and local models. Powers semantic caching (95% similarity threshold), RAG pipelines and holonic memory search — all through the same normalised API.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🛠️</span>
+      <div class="feature-title">TOOL / FUNCTION CALLING</div>
+      <div class="feature-desc">Normalised tool-use interface across every provider that supports function calling. Define tools once — WEB6 translates the schema and result format to each provider's native format automatically.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔁</span>
+      <div class="feature-title">WEBSOCKET SESSIONS</div>
+      <div class="feature-desc">Persistent bidirectional agent sessions via WebSocket. Server-side conversation state, mid-session tool results, user interrupts and multi-turn FAHRN loops — all backed by Holonic Memory so sessions survive reconnects.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🏅</span>
+      <div class="feature-title">KARMA-GATED AI</div>
+      <div class="feature-desc">Avatar karma score gates AI access tier. Low-karma users get cost-efficient models; high-karma users unlock the best models with priority routing. Earn karma in the OurWorld game → unlock GPT-5 and Claude Opus. The world's first karma-gated AI API.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🪪</span>
+      <div class="feature-title">DID / VERIFIABLE CREDENTIALS</div>
+      <div class="feature-desc">W3C-standard decentralised identity auth (did:key, did:web, did:ethr). AI agents can act verifiably on behalf of avatars via Verifiable Credential capability grants — revocable, on-chain provenance, no centralised auth server needed.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🧠</span>
+      <div class="feature-title">EXTERNAL MEMORY PROVIDERS</div>
+      <div class="feature-desc">Plug in Mem0, Zep, Letta/MemGPT, LangMem, Graphiti or Redis Vector Memory alongside the fractal Holonic Memory hierarchy. Long-term agent memory that works with whatever memory layer you already use.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">⚡</span>
+      <div class="feature-title">SEMANTIC CACHING</div>
+      <div class="feature-desc">Embedding-based prompt cache: if an incoming request is ≥95% similar to a cached prompt, the cached response is returned instantly at zero provider cost. Dramatic cost and latency reductions for repeated or near-identical queries.</div>
     </div>
   </div>
 </section>
@@ -1136,6 +1192,173 @@ Authorization: Bearer &lt;your-oasis-avatar-key&gt;
     <div style="text-align:center;margin-bottom:56px">
       <a href="https://github.com/NextGenSoftwareUK/IDE" class="btn-primary" target="_blank" rel="noopener">GET OASIS IDE →</a>
     </div>
+  </div>
+</section>
+
+<!-- ── WHY NOW ── -->
+<section class="section-full" style="background:linear-gradient(180deg,rgba(253,216,53,.03) 0%,rgba(3,7,20,0) 100%)">
+  <div class="section" style="padding-top:0;padding-bottom:0">
+    <div class="section-kicker">THE OPPORTUNITY</div>
+    <h2 class="section-title">WHY WEB6. WHY NOW.</h2>
+    <span class="section-line"></span>
+    <p class="section-sub">The AI infrastructure market is fragmenting at exactly the moment enterprises need consolidation. WEB6 is the only platform that unifies the entire stack — from models to memory to identity — and already has 8 years of production infrastructure underneath it.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:24px;max-width:1100px;margin:0 auto 56px">
+
+      <div style="background:var(--bg-card);border:1px solid rgba(253,216,53,.18);border-radius:14px;padding:32px 26px">
+        <div style="font-family:'Share Tech Mono',monospace;font-size:28px;color:#fdd835;margin-bottom:8px">$1.8T</div>
+        <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.12em;color:#fff;margin-bottom:10px">AI MARKET BY 2030</div>
+        <div style="font-size:15px;color:#a8bfd8;line-height:1.7">Every enterprise building on AI needs a provider-neutral abstraction layer. WEB6 is that layer — already built, already running.</div>
+      </div>
+
+      <div style="background:var(--bg-card);border:1px solid rgba(0,229,255,.18);border-radius:14px;padding:32px 26px">
+        <div style="font-family:'Share Tech Mono',monospace;font-size:28px;color:#00e5ff;margin-bottom:8px">15+</div>
+        <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.12em;color:#fff;margin-bottom:10px">AI PROVIDERS, ONE API</div>
+        <div style="font-size:15px;color:#a8bfd8;line-height:1.7">No other platform normalises OpenAI, Anthropic, Gemini, Grok, Groq, Mistral, DeepSeek, Ollama, AWS Bedrock, Azure, OpenServ, Replicate and Hugging Face behind a single unified endpoint.</div>
+      </div>
+
+      <div style="background:var(--bg-card);border:1px solid rgba(167,139,250,.18);border-radius:14px;padding:32px 26px">
+        <div style="font-family:'Share Tech Mono',monospace;font-size:28px;color:#a78bfa;margin-bottom:8px">8 YRS</div>
+        <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.12em;color:#fff;margin-bottom:10px">PRODUCTION INFRASTRUCTURE</div>
+        <div style="font-size:15px;color:#a8bfd8;line-height:1.7">WEB4 and WEB5 underpin WEB6 — 40+ storage providers, real-time holon graph, cross-chain identity and karma, all production-hardened over 8 years of active development.</div>
+      </div>
+
+      <div style="background:var(--bg-card);border:1px solid rgba(224,64,251,.18);border-radius:14px;padding:32px 26px">
+        <div style="font-family:'Share Tech Mono',monospace;font-size:28px;color:#e040fb;margin-bottom:8px">74×</div>
+        <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.12em;color:#fff;margin-bottom:10px">PPD GAIN — HOLONIC BRAID</div>
+        <div style="font-size:15px;color:#a8bfd8;line-height:1.7">Peer-reviewed 74× performance-per-dollar improvement on GSM-Hard benchmarks. No other commercial AI API ships a shared reasoning graph library with provable compound gains.</div>
+      </div>
+
+      <div style="background:var(--bg-card);border:1px solid rgba(0,200,80,.18);border-radius:14px;padding:32px 26px">
+        <div style="font-family:'Share Tech Mono',monospace;font-size:28px;color:#00c850;margin-bottom:8px">∞</div>
+        <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.12em;color:#fff;margin-bottom:10px">UNIQUE DATA MOAT</div>
+        <div style="font-size:15px;color:#a8bfd8;line-height:1.7">Every AI call is grounded in real-world avatar identity, karma, cross-world quests and a live holon graph. No competitor can replicate this data foundation without rebuilding WEB4 and WEB5 from scratch.</div>
+      </div>
+
+      <div style="background:var(--bg-card);border:1px solid rgba(240,165,0,.18);border-radius:14px;padding:32px 26px">
+        <div style="font-family:'Share Tech Mono',monospace;font-size:28px;color:#f0a500;margin-bottom:8px">WEB4→10</div>
+        <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.12em;color:#fff;margin-bottom:10px">COMPLETE STACK OWNERSHIP</div>
+        <div style="font-size:15px;color:#a8bfd8;line-height:1.7">OASIS is the only platform that owns the entire stack from data unification (WEB4) through AI abstraction (WEB6), human-AI symbiosis (WEB7), galactic mesh (WEB8), singularity monitoring (WEB9) to root identity (WEB10).</div>
+      </div>
+
+    </div>
+
+    <div style="max-width:860px;margin:0 auto;background:linear-gradient(135deg,rgba(253,216,53,.06),rgba(10,21,53,.97));border:1px solid rgba(253,216,53,.25);border-radius:20px;padding:48px 44px;text-align:center">
+      <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.25em;color:#fdd835;margin-bottom:16px">THE MOAT</div>
+      <p style="font-size:18px;color:#e8f0ff;line-height:1.85;max-width:720px;margin:0 auto 28px">WEB6 is not a wrapper around OpenAI. It is an <strong style="color:#fdd835">intelligence operating system</strong> — with its own reasoning network (FAHRN), its own shared memory layer (Holonic BRAID), its own identity system (WEB4 karma + DID/VC), and a data moat built over 8 years that no new entrant can replicate. The protocol-neutral architecture means it gets stronger with every new AI model that launches — each new provider is another node in the network.</p>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center">
+        <a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/INVESTOR_EVALUATION_GUIDE.md" class="btn-primary" target="_blank" rel="noopener">INVESTOR GUIDE →</a>
+        <a href="https://founders.oasisomniverse.one" class="btn-secondary" target="_blank" rel="noopener">FOUNDERS NFT →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ROADMAP ── -->
+<section class="section" id="roadmap">
+  <div class="section-kicker">THE PLAN</div>
+  <h2 class="section-title">ROADMAP</h2>
+  <span class="section-line"></span>
+  <p class="section-sub">WEB6 is already operational. These phases represent the acceleration from production foundation to intelligence operating system — each phase compounding on the last.</p>
+
+  <div style="max-width:960px;margin:0 auto;display:flex;flex-direction:column;gap:0">
+
+    <!-- Phase 1 -->
+    <div style="display:grid;grid-template-columns:140px 1fr;gap:0;align-items:stretch">
+      <div style="display:flex;flex-direction:column;align-items:center;padding-top:6px">
+        <div style="background:rgba(0,200,80,.15);border:1px solid rgba(0,200,80,.5);border-radius:999px;padding:6px 14px;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.16em;color:#00c850;white-space:nowrap">✅ COMPLETE</div>
+        <div style="width:2px;flex:1;background:linear-gradient(180deg,rgba(0,200,80,.4),rgba(253,216,53,.3));margin-top:10px"></div>
+      </div>
+      <div style="background:rgba(0,200,80,.04);border:1px solid rgba(0,200,80,.18);border-radius:14px;padding:28px 32px;margin-left:20px;margin-bottom:24px">
+        <div style="font-family:'Orbitron',sans-serif;font-size:14px;letter-spacing:.1em;color:#00c850;margin-bottom:6px">PHASE 1 — FOUNDATIONS</div>
+        <div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.2em;color:rgba(0,200,80,.6);margin-bottom:18px">Q1–Q2 2026</div>
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> 15+ AI providers unified under one REST endpoint</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> FAHRN — controller agent, composite scoring, Serial / Parallel / Decomposed modes, EMA continuous learning</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> Holonic BRAID — shared reasoning graph library, fractal memory hierarchy, cross-chain persistence</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> OASIS MCP server — 60+ tools across WEB4–WEB10, in-process, zero HTTP overhead</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> OrchestratorManager — MCP, A2A, LangChain, AutoGen, CrewAI, Semantic Kernel behind one interface</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> OpenServ SERV gateway — one API key reaches GPT-5, Claude, Gemini, Grok, Qwen, DeepSeek</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> Image generation (StabilityAI + OpenAI), JWT auth, OASIS DNA config</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> WEB7–WEB10 APIs live — symbiosis, galactic mesh, singularity, source</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 2 -->
+    <div style="display:grid;grid-template-columns:140px 1fr;gap:0;align-items:stretch">
+      <div style="display:flex;flex-direction:column;align-items:center;padding-top:6px">
+        <div style="background:rgba(253,216,53,.12);border:1px solid rgba(253,216,53,.45);border-radius:999px;padding:6px 14px;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.16em;color:#fdd835;white-space:nowrap">🔨 IN PROGRESS</div>
+        <div style="width:2px;flex:1;background:linear-gradient(180deg,rgba(253,216,53,.35),rgba(0,229,255,.3));margin-top:10px"></div>
+      </div>
+      <div style="background:rgba(253,216,53,.04);border:1px solid rgba(253,216,53,.2);border-radius:14px;padding:28px 32px;margin-left:20px;margin-bottom:24px">
+        <div style="font-family:'Orbitron',sans-serif;font-size:14px;letter-spacing:.1em;color:#fdd835;margin-bottom:6px">PHASE 2 — DEVELOPER EXPERIENCE</div>
+        <div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.2em;color:rgba(253,216,53,.6);margin-bottom:18px">Q3 2026</div>
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#fdd835">→</span> MCP HTTP / Streamable HTTP transport — expose OASIS MCP to any cloud host or claude.ai connector</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#fdd835">→</span> Streaming SSE — real-time token streaming normalised across all 15+ providers</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#fdd835">→</span> Tool / function calling — unified schema, provider-native translation</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#fdd835">→</span> Embeddings endpoint — OpenAI, Cohere, HuggingFace + local; powers RAG and semantic cache</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#fdd835">→</span> <code style="font-family:'Share Tech Mono',monospace;color:#fdd835">POST /v1/fahrn/solve</code> — single hero endpoint: problem in, reasoned answer + Mermaid plan + telemetry out</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#fdd835">→</span> A2A proper protocol — Agent Card, task lifecycle, SSE stream; replace webhook shim</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#fdd835">→</span> WebSocket bidirectional sessions — persistent agent state, mid-session tool results, FAHRN interrupt</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#fdd835">→</span> Karma-gated AI access — earn karma → unlock better models and higher monthly budgets</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#fdd835">→</span> Per-avatar cost metering, monthly budgets and quota enforcement</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#fdd835">→</span> Auto-generated SDK — <code style="font-family:'Share Tech Mono',monospace;color:#fdd835">@oasisomniverse/web6-api</code> npm + <code style="font-family:'Share Tech Mono',monospace;color:#fdd835">oasis-web6</code> Python package</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 3 -->
+    <div style="display:grid;grid-template-columns:140px 1fr;gap:0;align-items:stretch">
+      <div style="display:flex;flex-direction:column;align-items:center;padding-top:6px">
+        <div style="background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.35);border-radius:999px;padding:6px 14px;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.16em;color:#00e5ff;white-space:nowrap">📅 Q4 2026</div>
+        <div style="width:2px;flex:1;background:linear-gradient(180deg,rgba(0,229,255,.3),rgba(167,139,250,.3));margin-top:10px"></div>
+      </div>
+      <div style="background:rgba(0,229,255,.03);border:1px solid rgba(0,229,255,.15);border-radius:14px;padding:28px 32px;margin-left:20px;margin-bottom:24px">
+        <div style="font-family:'Orbitron',sans-serif;font-size:14px;letter-spacing:.1em;color:#00e5ff;margin-bottom:6px">PHASE 3 — INTELLIGENCE EXPANSION</div>
+        <div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.2em;color:rgba(0,229,255,.6);margin-bottom:18px">Q4 2026</div>
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00e5ff">◇</span> DID / Verifiable Credentials — W3C decentralised identity auth, VC capability grants, AI acting verifiably on behalf of avatars</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00e5ff">◇</span> ACP (BeeAI/IBM), ANP (Agent Network Protocol), gRPC, GraphQL and AsyncAPI adapters</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00e5ff">◇</span> External memory providers — Mem0, Zep, Letta/MemGPT, LangMem, Graphiti, Redis Vector alongside Holonic BRAID</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00e5ff">◇</span> Semantic caching — embedding-based prompt deduplication at 95%+ similarity; near-zero cost on repeated queries</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00e5ff">◇</span> Enhanced FAHRN loop detection — output hashing, DAG cycle detection, NLI contradiction checking, token budget hard stops</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00e5ff">◇</span> Holonic Memory — multi-hop propagation, semantic search within holons, TTL retention policies</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00e5ff">◇</span> Real-time telemetry SSE stream — per-request traces: provider, latency, FAHRN path, BRAID hit/miss, cost</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00e5ff">◇</span> Decentralised AI — Bittensor (Corcel gateway), GaiaNet, Replicate as first-class providers</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00e5ff">◇</span> StarnetContextManager — standalone <code style="font-family:'Share Tech Mono',monospace;color:#00e5ff">GET /v1/context/avatar/{id}</code> rich context block for any external system</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00e5ff">◇</span> FAHRN Debate &amp; Voting dispatch modes — adversarial multi-agent reasoning for high-stakes decisions</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 4 -->
+    <div style="display:grid;grid-template-columns:140px 1fr;gap:0;align-items:stretch">
+      <div style="display:flex;flex-direction:column;align-items:center;padding-top:6px">
+        <div style="background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.35);border-radius:999px;padding:6px 14px;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.16em;color:#a78bfa;white-space:nowrap">🌌 2027</div>
+      </div>
+      <div style="background:rgba(167,139,250,.03);border:1px solid rgba(167,139,250,.15);border-radius:14px;padding:28px 32px;margin-left:20px;margin-bottom:24px">
+        <div style="font-family:'Orbitron',sans-serif;font-size:14px;letter-spacing:.1em;color:#a78bfa;margin-bottom:6px">PHASE 4 — THE AGI PATHWAY</div>
+        <div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.2em;color:rgba(167,139,250,.6);margin-bottom:18px">2027</div>
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#a78bfa">◈</span> Decentralised AI marketplace — open model registry, community-contributed inference, tokenised provider incentives</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#a78bfa">◈</span> WEB7 symbiosis deep integration — bio-signal context (EEG/HRV) feeding directly into FAHRN routing decisions</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#a78bfa">◈</span> WEB8 galactic mesh routing — AI tasks routed across interplanetary relay nodes with Dijkstra path optimisation</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#a78bfa">◈</span> Holonic BRAID at Earth scale — every session in the OASIS ecosystem contributes to a planetary reasoning graph</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#a78bfa">◈</span> Collective consciousness layer — group holons surface emergent intelligence from millions of individual agent sessions</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#a78bfa">◈</span> WEB9 SingularityAggregationManager — unified health, capability and intelligence score across WEB4–WEB8</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#a78bfa">◈</span> FAHRN self-improvement loop — reasoning network that rewrites its own agent scoring weights based on outcomes</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#a78bfa">◈</span> AGI milestone tracking via WEB9 — real-time dashboard of collective intelligence metrics across the OASIS omniverse</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="text-align:center;margin-top:16px;display:flex;gap:16px;flex-wrap:wrap;justify-content:center">
+    <a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/INVESTOR_EVALUATION_GUIDE.md" class="btn-primary" target="_blank" rel="noopener">INVESTOR EVALUATION GUIDE →</a>
+    <a href="https://founders.oasisomniverse.one" class="btn-secondary" target="_blank" rel="noopener">JOIN AS A FOUNDER →</a>
   </div>
 </section>
 
