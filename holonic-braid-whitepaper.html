@@ -583,6 +583,16 @@ GRAPH_HOLON(τ) {<br>
       <div class="feat-title">MEMBRANE GOVERNED</div>
       <div class="feat-desc">Library access is governed by membrane rules. Public graphs are globally readable. Private or proprietary graphs can be scoped to a user, group or organisation — with the same per-field granularity as all other holons in the system.</div>
     </div>
+    <div class="feat-card">
+      <span class="feat-icon">📦</span>
+      <div class="feat-title">VERSIONED GRAPHS</div>
+      <div class="feat-desc">Each update to a reasoning graph creates a new versioned holon child — previous versions remain queryable for reproducibility and rollback. When two agents independently produce graphs for the same task type, the FAHRN compares both and selects or merges the superior version.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">⚡</span>
+      <div class="feat-title">ZERO LATENCY RETRIEVAL</div>
+      <div class="feat-desc">Graph lookups hit the COSMIC ORM cache layer first — in-memory for hot task types, MongoDB for warm, IPFS for archival. Most common task types resolve in under 2ms, meaning the Solver stage begins almost immediately without waiting for any Generator call.</div>
+    </div>
   </div>
 
   <h3 id="cross-chain">3.2 — Cross-Chain Persistence</h3>
@@ -691,6 +701,16 @@ GRAPH_HOLON(τ) {<br>
       <div class="feat-title">MEMBRANE CONFIGURATION</div>
       <div class="feat-desc">Which parts of this session propagate to the parent agent holon? The user defines this per session, per field, with granular control.</div>
     </div>
+    <div class="feat-card">
+      <span class="feat-icon">🏷️</span>
+      <div class="feat-title">SEMANTIC TAGGING</div>
+      <div class="feat-desc">Every session holon is tagged with inferred topic categories, sentiment, domain and quality signals. Tags drive membrane filtering — "propagate only professional-topic memories to my work group holon" — and enable cross-session semantic search without exposing raw content.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🔄</span>
+      <div class="feat-title">CROSS-PROVIDER SYNC</div>
+      <div class="feat-desc">Session holons are persisted via COSMIC ORM across all configured providers simultaneously — MongoDB for fast retrieval, Solana for immutable provenance, IPFS for distributed backup. A single write operation fans out to every backend; reads resolve from the fastest available source.</div>
+    </div>
   </div>
 
   <h3 id="hierarchy">3.5 — The Full Holonic Hierarchy</h3>
@@ -796,6 +816,16 @@ GRAPH_HOLON(τ) {<br>
       <div class="feat-title">TRIGGER CONDITIONS</div>
       <div class="feat-desc">Rules can be conditional: "propagate this memory to my work group holon only if the topic is tagged as professional" or "share with my neighbourhood holon only anonymised aggregate patterns."</div>
     </div>
+    <div class="feat-card">
+      <span class="feat-icon">🔐</span>
+      <div class="feat-title">REVOCATION &amp; AUDIT</div>
+      <div class="feat-desc">Membrane permissions are fully revocable at any time. A revocation event propagates downward through all child holons, removing previously-shared data from parent aggregates. Every propagation event is logged as an immutable audit holon — a complete lineage trail of what was shared, when, and with whom.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🌐</span>
+      <div class="feat-title">CROSS-BOUNDARY ANONYMISATION</div>
+      <div class="feat-desc">When memory crosses from a user holon to a group or geographic holon, a configurable anonymisation pipeline strips or generalises PII before the data enters the shared aggregate. Raw personal data never leaves the user holon — only the derived, consented pattern does.</div>
+    </div>
   </div>
 
   <div class="callout gold">
@@ -824,6 +854,11 @@ GRAPH_HOLON(τ) {<br>
       <span class="feat-icon">🔗</span>
       <div class="feat-title">CONTEXT INJECTION PIPELINE</div>
       <div class="feat-desc">Before any FAHRN dispatch or completion call, the pipeline queries each configured external memory provider for semantically relevant past memories, injects the top-K results into the system context alongside Holonic BRAID graph data. The AI receives the richest possible grounding — from both the platform's own fractal memory and the developer's existing memory infrastructure.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🔄</span>
+      <div class="feat-title">BIDIRECTIONAL SYNC</div>
+      <div class="feat-desc">Memories written during a session flow back into external providers as well as into the Holonic BRAID hierarchy — keeping Mem0, Zep or LangMem in sync with the platform's own holon store. Developers get a single authoritative memory substrate without abandoning their existing infrastructure investment.</div>
     </div>
   </div>
 
@@ -1093,6 +1128,16 @@ AgentMetadata {<br>
       <div class="feat-title">CIRCULAR GRAPH DETECTION</div>
       <div class="feat-desc">The controller parses the Mermaid output in real time. If cycles are detected in what should be a directed acyclic reasoning graph (DAG), the output is flagged as structurally invalid and the agent is immediately suspended.</div>
     </div>
+    <div class="feat-card">
+      <span class="feat-icon">🗣️</span>
+      <div class="feat-title">SELF-REPORT DETECTION</div>
+      <div class="feat-desc">Agents that support introspection can explicitly signal stall: "I am not making progress on this problem." The controller treats this as an immediate loop flag — no hash check or DAG parse required — and routes to the next agent in the fallback queue instantly.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🧠</span>
+      <div class="feat-title">SELF-CONTRADICTION CHECK</div>
+      <div class="feat-desc">The controller monitors an agent's step graph for nodes that assert mutually exclusive conditions within the same session. A lightweight NLI pass detects CONTRADICT relationships between sequential reasoning steps, triggering confidence reduction and escalation before the agent wastes further tokens.</div>
+    </div>
   </div>
 
   <div class="callout">
@@ -1142,6 +1187,16 @@ AgentMetadata {<br>
       <div class="feat-title">CIRCUIT BREAKER RECOVERY</div>
       <div class="feat-desc">An agent temporarily penalised for stalls on a given category is not permanently excluded. Once it accumulates enough successful completions in that category, its score recovers and it re-enters the routing pool at an appropriate rank.</div>
     </div>
+    <div class="feat-card">
+      <span class="feat-icon">💸</span>
+      <div class="feat-title">COST-AWARE SCORE WEIGHTING</div>
+      <div class="feat-desc">Agent scores are weighted by cost efficiency as well as accuracy. An agent that achieves 95% accuracy at $0.002/task outranks one achieving 96% at $0.02/task for budget-sensitive dispatches. The controller applies a configurable cost weight α so teams can tune the accuracy/cost tradeoff per deployment.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">📉</span>
+      <div class="feat-title">SCORE DECAY &amp; FRESHNESS</div>
+      <div class="feat-desc">Historical scores decay exponentially via EMA — recent performance carries more weight than old results. An agent that improved its model or infrastructure in the past month is re-evaluated on current performance, not penalised indefinitely for prior failures. The system always reflects the current reality of the provider landscape.</div>
+    </div>
   </div>
 
   <h3 id="antifragile">4.7 — Anti-Fragility &amp; Conceptual Stack</h3>
@@ -1168,6 +1223,16 @@ AgentMetadata {<br>
       <span class="feat-icon">🧬</span>
       <div class="feat-title">AGENTS AS HOLONS</div>
       <div class="feat-desc">Each reasoning agent in the network is itself a holon — it has its own internal state, its own metadata, and it can contain sub-agents (child holons) for specialised sub-tasks. The holonic architecture scales fracally into the reasoning layer itself.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🌱</span>
+      <div class="feat-title">IMPROVES UNDER ADVERSITY</div>
+      <div class="feat-desc">Unlike static routing systems that degrade under novel failure modes, FAHRN treats every new failure type as a training signal. Unusual loop patterns, contradiction clusters and timeout spikes update routing heuristics in real time — the system becomes more robust precisely because of the edge cases it encounters in production.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🔌</span>
+      <div class="feat-title">ZERO-DOWNTIME PROVIDER SWAP</div>
+      <div class="feat-desc">New AI providers are added to the routing pool at runtime via DNA config — no restart required. They begin with a neutral prior score and earn their ranking through live task performance. Underperforming providers are demoted automatically; removal is a config change, not a code deployment.</div>
     </div>
   </div>
 
@@ -1209,6 +1274,11 @@ AgentMetadata {<br>
       <div class="feat-title">VOTING MODE</div>
       <div class="feat-desc">N agents independently analyse the same problem with no knowledge of each other's outputs. Each produces a Mermaid plan and a confidence score. The controller tallies votes — weighted by agent category scores — and selects the plan with the highest weighted consensus. Minority plans are stored as holons for audit. Best for: critical decisions, architectural choices, high-value recommendations where independent verification matters.</div>
     </div>
+    <div class="feat-card">
+      <span class="feat-icon">📋</span>
+      <div class="feat-title">MINORITY PLAN ARCHIVE</div>
+      <div class="feat-desc">Losing plans in both Debate and Voting modes are stored as child holons of the session — never discarded. Future sessions can query dissenting reasoning paths ("what was the strongest counter-argument?"), enabling richer audits, compliance reviews and post-hoc analysis of high-stakes decisions.</div>
+    </div>
   </div>
 
   <div class="callout">
@@ -1230,6 +1300,11 @@ AgentMetadata {<br>
       <span class="feat-icon">🔍</span>
       <div class="feat-title">DAG CYCLE DETECTION</div>
       <div class="feat-desc">The controller parses <code>A --&gt; B</code> edges from the agent's Mermaid output and runs a depth-first search cycle check on the resulting adjacency list. A back-edge (e.g. <code>A → B → A</code>) indicates a circular plan — structurally invalid for a directed acyclic execution graph. Detected immediately; agent suspended without waiting for the timeout.</div>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">📊</span>
+      <div class="feat-title">ML ANOMALY SCORING</div>
+      <div class="feat-desc">An ML.NET anomaly detection model trained on historical dispatch telemetry scores each in-flight session on token-velocity, graph growth rate and self-similarity features. Sessions scoring above threshold are flagged as likely loops before any structural check fires — catching subtle failure modes that rule-based detectors miss.</div>
     </div>
   </div>
 
