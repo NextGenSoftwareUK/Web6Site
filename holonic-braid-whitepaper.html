@@ -271,12 +271,21 @@
     /* Keep cards and callouts intact */
     .feat-card, .agent-card, .callout, .toc, .mode-card, .ref-card { page-break-inside:avoid; break-inside:avoid; }
 
-    /* The holonic hierarchy canvas is web-only — hide it, show the text stack instead */
+    /* Canvas elements are web-only — hide them */
     #hierarchy-canvas, #stack-canvas { display:none !important; }
-    .wrap-wide { page-break-inside:auto; break-inside:auto; }
+
+    /* Allow tall containers to flow across pages naturally */
+    .wrap-wide, .holon-stack, .feat-grid, .agent-grid { page-break-inside:auto !important; break-inside:auto !important; }
+
+    /* Individual cards still avoid splitting, but only if they fit on one page */
+    .feat-card, .agent-card, .mode-card, .ref-card, .callout {
+      page-break-inside:avoid; break-inside:avoid;
+      overflow:hidden;
+    }
 
     /* Tighten up section padding for print */
     .wrap { padding:24px 0 !important; max-width:100% !important; }
+    .wrap-wide { padding:20px 0 !important; max-width:100% !important; }
   }
 </style>
 </head>
