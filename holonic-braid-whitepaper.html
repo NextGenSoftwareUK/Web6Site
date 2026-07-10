@@ -298,14 +298,16 @@
     .wrap-wide { padding:20px 0 !important; max-width:100% !important; }
 
     /* Dark body fills the full page — margins moved to padding */
-    /* background-image gradient tiled at A4 height stamps a top border on every page */
-    body {
-      padding:12mm 14mm !important;
-      box-sizing:border-box;
-      background-image:
-        linear-gradient(to bottom, rgba(100,140,220,0.55) 0, rgba(100,140,220,0.55) 5px, #030714 5px) !important;
-      background-size: 100% 297mm !important;
-      background-repeat: repeat-y !important;
+    body { padding:12mm 14mm !important; box-sizing:border-box; }
+
+    /* Top border on html pseudo-element — different stacking context, not painted over by body */
+    html::before {
+      content:'';
+      position:fixed;
+      top:0; left:0;
+      width:100vw; height:5px;
+      background:rgba(100,140,220,0.55);
+      z-index:2147483647;
     }
 
     /* Per-page border: 4 separate strips so each edge renders independently */
