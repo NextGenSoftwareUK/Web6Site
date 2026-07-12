@@ -28,6 +28,7 @@
     font-family:'Rajdhani',sans-serif;
     font-size:16px;
     line-height:1.7;
+    overflow-x:hidden;
   }
   a { color:var(--cyan); text-decoration:none; }
   a:hover { text-decoration:underline; }
@@ -948,7 +949,8 @@ GRAPH_HOLON(τ) {<br>
     </div>
   </div>
 
-  <table style="width:100%;border-collapse:collapse;font-size:14px;margin:24px 0">
+  <div style="overflow-x:auto;margin:24px 0">
+  <table style="width:100%;border-collapse:collapse;font-size:14px">
     <thead>
       <tr style="border-bottom:1px solid rgba(253,216,53,.25)">
         <th style="text-align:left;padding:10px 14px;font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.12em;color:#fdd835">PROVIDER</th>
@@ -965,6 +967,7 @@ GRAPH_HOLON(τ) {<br>
       <tr><td style="padding:9px 14px">Redis Vector</td><td style="padding:9px 14px">Ultra-fast in-process vector search; Redis Stack + RediSearch</td><td style="padding:9px 14px"><code>REDIS_URL</code></td></tr>
     </tbody>
   </table>
+  </div>
 
   <p>This positions Holonic Braid not as a competing memory system but as a <strong>meta-memory orchestrator</strong> — one that can draw from multiple specialised providers while maintaining the fractal hierarchy's unique property of consent-governed upward propagation to collective intelligence.</p>
 </div>
@@ -1439,6 +1442,7 @@ AgentMetadata {<br>
 
   <h4 style="color:#a8bfd8;margin:1.5rem 0 .75rem">Synergy with FAHRN's Existing Learning</h4>
 
+  <div style="overflow-x:auto;margin:24px 0">
   <table style="width:100%;border-collapse:collapse;color:#a8bfd8;font-size:.9rem">
     <thead>
       <tr style="border-bottom:1px solid rgba(168,191,216,.2)">
@@ -1465,6 +1469,7 @@ AgentMetadata {<br>
       </tr>
     </tbody>
   </table>
+  </div>
 
   <p style="margin-top:1.5rem">Because skills transfer cross-model, a newly onboarded provider agent can seed its initial <code>best_skill.md</code> from any existing agent's evolved skill in the same task category — dramatically accelerating warm-up for new providers.</p>
 </div>
