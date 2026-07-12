@@ -248,7 +248,9 @@
 
   @media(max-width:640px) {
     .wrap,.wrap-wide,.cover { padding:60px 20px; }
-    nav { padding:14px 20px; }
+    nav { padding:14px 20px;flex-wrap:nowrap;align-items:center; }
+    .nav-links li:not(:last-child) { display:none !important; }
+    .nav-links { gap:0;margin-left:auto; }
     .cta-row { flex-direction:column; }
   }
 
