@@ -1270,6 +1270,16 @@ Authorization: Bearer &lt;your-oasis-avatar-key&gt;
       </div>
     </div>
 
+    <div style="background:rgba(167,139,250,.07);border:1px solid rgba(167,139,250,.2);border-radius:12px;padding:20px 28px;max-width:720px;margin:0 auto 48px;text-align:left">
+      <div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.18em;color:#a78bfa;margin-bottom:10px">HTTP MCP TRANSPORT — CLOUD & REMOTE ACCESS</div>
+      <p style="color:#a8bfd8;font-size:.85rem;line-height:1.7;margin:0 0 12px">The MCP server also runs as an HTTP endpoint built into the WEB6 REST API — for cloud-hosted agents, <code style="color:#e2e8f0;background:rgba(255,255,255,.08);padding:1px 5px;border-radius:4px">claude.ai</code> connectors, and any client that cannot use stdio:</p>
+      <pre style="background:rgba(0,0,0,.3);border-radius:8px;padding:14px;font-size:.8rem;color:#c8ddf0;overflow-x:auto;margin:0 0 12px">GET  /mcp                     — SSE stream (HTTP MCP transport)
+POST /mcp                     — MCP JSON-RPC tool calls
+GET  /.well-known/mcp.json    — auto-discovery document
+GET  /.well-known/agent.json  — A2A agent card</pre>
+      <p style="color:#a8bfd8;font-size:.82rem;margin:0">These endpoints are <strong style="color:#e2e8f0">not shown in the Swagger UI</strong> — they use SSE/streaming transports the interactive explorer cannot represent. Point your MCP client at the discovery URL and it configures itself automatically. Full details in the <a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/WEB6/NextGenSoftware.OASIS.MCP.Server/README.md" target="_blank" rel="noopener" style="color:#a78bfa">MCP Server README</a>.</p>
+    </div>
+
     <div style="text-align:center;margin-bottom:56px">
       <a href="https://www.oasisweb4.com/products/mcp" class="btn-primary" target="_blank" rel="noopener">GET OASIS MCP →</a>
     </div>
