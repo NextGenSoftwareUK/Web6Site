@@ -581,15 +581,15 @@ a:hover{filter:drop-shadow(0 0 8px rgba(253,216,53,1)) drop-shadow(0 0 20px rgba
         <div class="provider-name">REPLICATE</div>
         <div class="provider-type">Open-source model marketplace · Image · Audio · Video</div>
       </div>
-      <div class="provider-card" style="opacity:.7;border-style:dashed">
+      <div class="provider-card">
         <span class="provider-icon">🧬</span>
         <div class="provider-name">BITTENSOR</div>
-        <div class="provider-type">Decentralised inference · Community owned · Coming soon</div>
+        <div class="provider-type">Decentralised inference · Corcel gateway</div>
       </div>
-      <div class="provider-card" style="opacity:.7;border-style:dashed">
+      <div class="provider-card">
         <span class="provider-icon">🌿</span>
         <div class="provider-name">GAIANET</div>
-        <div class="provider-type">Decentralised community nodes · Coming soon</div>
+        <div class="provider-type">Community decentralised nodes · OpenAI-compatible</div>
       </div>
       <div class="provider-card" style="opacity:.7;border-style:dashed">
         <span class="provider-icon">⚙️</span>
@@ -1361,9 +1361,9 @@ GET  /.well-known/agent.json  — A2A agent card</pre>
       </div>
 
       <div style="background:var(--bg-card);border:1px solid rgba(0,229,255,.18);border-radius:14px;padding:32px 26px">
-        <div style="font-family:'Share Tech Mono',monospace;font-size:28px;color:#00e5ff;margin-bottom:8px">15+</div>
+        <div style="font-family:'Share Tech Mono',monospace;font-size:28px;color:#00e5ff;margin-bottom:8px">26+</div>
         <div style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:.12em;color:#fff;margin-bottom:10px">AI PROVIDERS, ONE API</div>
-        <div style="font-size:15px;color:#a8bfd8;line-height:1.7">No other platform normalises OpenAI, Anthropic, Gemini, Grok, Groq, Mistral, DeepSeek, Ollama, AWS Bedrock, Azure, OpenServ, Replicate and Hugging Face behind a single unified endpoint.</div>
+        <div style="font-size:15px;color:#a8bfd8;line-height:1.7">No other platform normalises OpenAI, Anthropic, Gemini, Grok, Groq, Mistral, DeepSeek, Ollama, AWS Bedrock, Azure, OpenServ, Replicate, Bittensor, GaiaNet, Cerebras, Together AI, Fireworks, Moonshot, Perplexity and Hugging Face behind a single unified endpoint with OpenAI-compatible <code style="color:#00e5ff">POST /v1/chat/completions</code>.</div>
       </div>
 
       <div style="background:var(--bg-card);border:1px solid rgba(167,139,250,.18);border-radius:14px;padding:32px 26px">
@@ -1475,6 +1475,9 @@ GET  /.well-known/agent.json  — A2A agent card</pre>
           <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> Enhanced FAHRN loop detection — output hashing, DAG cycle detection, NLI contradiction checking, token budget hard stops</div>
           <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> Holonic Memory — multi-hop propagation, semantic search within holons, TTL retention policies</div>
           <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> Real-time telemetry SSE stream — per-request traces: provider, latency, FAHRN path, BRAID hit/miss, cost</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> <strong style="color:#e8f0ff">Prometheus + OpenTelemetry</strong> — <code style="font-family:'Share Tech Mono',monospace;color:#00c850">GET /metrics</code> scrape endpoint and OTLP trace export; plug into Grafana, Datadog, Jaeger, Honeycomb</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> <strong style="color:#e8f0ff">OpenAI-compatible <code style="font-family:'Share Tech Mono',monospace;color:#00c850">POST /v1/chat/completions</code></strong> — drop-in for LangChain, AutoGen, CrewAI, Semantic Kernel; change base URL only</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> <strong style="color:#e8f0ff">Bulk document ingest with semantic deduplication</strong> — <code style="font-family:'Share Tech Mono',monospace;color:#00c850">POST /v1/holonic-memory/holons/{id}/documents</code> auto-chunks, embeds and deduplicates; shared paragraphs stored once across all docs</div>
           <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> Decentralised AI — Bittensor (Corcel gateway), GaiaNet, Replicate as first-class providers</div>
           <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> StarnetContextManager — standalone <code style="font-family:'Share Tech Mono',monospace;color:#00c850">GET /v1/context/avatar/{id}</code> rich context block for any external system</div>
           <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> FAHRN Debate &amp; Voting dispatch modes — adversarial multi-agent reasoning for high-stakes decisions</div>
