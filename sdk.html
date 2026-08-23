@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WEB6 SDK</title>
+<meta name="description" content="OASIS WEB6 SDK — npm package and Python package for the unified AI gateway. One API, every AI.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='44' fill='none' stroke='%23fdd835' stroke-width='6'/><circle cx='50' cy='50' r='10' fill='%23fdd835'/></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#fdd835;--gold-glow:rgba(253,216,53,.18);
+  --cyan:#00e5ff;--green:#00e676;--purple:#a78bfa;
+  --bg:#030714;--bg-card:#0a1535;--bg-card2:#071028;
+  --text:#d0e4ff;--dim:#a8bfd8;--heading:#ffffff;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden}
+a{color:var(--dim);text-decoration:none;transition:color .2s}
+a:hover{color:var(--gold)}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 40px;display:flex;align-items:center;justify-content:space-between;background:rgba(3,7,20,.9);backdrop-filter:blur(12px);border-bottom:1px solid rgba(253,216,53,.12)}
+.nav-brand{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;letter-spacing:.22em;color:#fff;text-decoration:none}
+.nav-brand span{color:var(--gold)}
+.nav-links{display:flex;gap:24px;list-style:none}
+.nav-links a{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--gold);border:1px solid rgba(253,216,53,.35);border-radius:999px;padding:8px 18px;transition:background .2s;white-space:nowrap}
+.nav-cta:hover{background:rgba(253,216,53,.08)}
+@media(max-width:900px){.nav-links{display:none}.nav-cta{display:none}}
+
+.page{max-width:960px;margin:0 auto;padding:110px 40px 80px}
+@media(max-width:600px){.page{padding:90px 20px 60px}}
+
+.kicker{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.28em;color:var(--gold);margin-bottom:14px}
+h1{font-family:'Orbitron',sans-serif;font-size:clamp(26px,4.5vw,48px);font-weight:900;color:#fff;margin-bottom:14px}
+.intro{font-size:17px;color:var(--dim);max-width:660px;line-height:1.7;margin-bottom:48px}
+.line{display:block;width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 0 48px}
+
+/* SDK tabs */
+.sdk-tabs{display:flex;gap:0;margin-bottom:0;border-bottom:1px solid rgba(253,216,53,.15)}
+.sdk-tab{font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:.14em;color:var(--dim);padding:12px 28px;cursor:pointer;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;text-transform:uppercase;background:none;border-top:none;border-left:none;border-right:none}
+.sdk-tab.active,.sdk-tab:hover{color:var(--gold);border-bottom-color:var(--gold)}
+.sdk-panel{display:none;padding-top:32px}
+.sdk-panel.active{display:block}
+
+/* Install badge */
+.install-block{background:var(--bg-card);border:1px solid rgba(253,216,53,.15);border-radius:12px;padding:20px 24px;margin-bottom:32px;display:flex;align-items:center;gap:16px}
+.install-block code{font-family:'Share Tech Mono',monospace;font-size:14px;color:var(--cyan);flex:1}
+.copy-btn{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.14em;color:var(--gold);border:1px solid rgba(253,216,53,.3);border-radius:6px;padding:6px 14px;cursor:pointer;background:none;transition:background .2s;white-space:nowrap}
+.copy-btn:hover{background:rgba(253,216,53,.08)}
+
+/* Section */
+.sdk-section{margin-bottom:48px}
+.sdk-section h2{font-family:'Orbitron',sans-serif;font-size:17px;font-weight:900;letter-spacing:.1em;color:#fff;margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid rgba(253,216,53,.12)}
+.sdk-section h3{font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:.18em;color:var(--gold);text-transform:uppercase;margin:24px 0 10px}
+pre{background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:18px 20px;overflow-x:auto;font-family:'Share Tech Mono',monospace;font-size:13px;color:#b0d4ff;line-height:1.65;margin-bottom:20px}
+p{color:var(--dim);font-size:15px;line-height:1.7;margin-bottom:14px}
+
+/* Method reference table */
+.method-table{width:100%;border-collapse:collapse;background:var(--bg-card);border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden;margin-bottom:24px}
+.method-table th{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.18em;color:var(--gold);background:rgba(253,216,53,.06);padding:12px 16px;text-align:left;border-bottom:1px solid rgba(253,216,53,.1)}
+.method-table td{font-size:13px;color:var(--dim);padding:10px 16px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top}
+.method-table td:first-child{font-family:'Share Tech Mono',monospace;color:#e8f0ff;white-space:nowrap}
+.method-table td:nth-child(2){color:var(--cyan);font-family:'Share Tech Mono',monospace;font-size:12px}
+.method-table tr:last-child td{border-bottom:none}
+
+/* Callout */
+.callout{background:rgba(0,229,255,.06);border:1px solid rgba(0,229,255,.2);border-radius:10px;padding:14px 18px;font-size:14px;color:var(--dim);margin-bottom:24px}
+.callout strong{color:var(--cyan)}
+
+/* NPM / PyPI badges */
+.pkg-badges{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:28px}
+.pkg-badge{font-family:'Share Tech Mono',monospace;font-size:11px;color:#000;background:var(--gold);border-radius:6px;padding:6px 14px;letter-spacing:.1em;font-weight:700}
+.pkg-badge.npm{background:var(--green)}
+.pkg-badge.pypi{background:var(--purple);color:#fff}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="/"><span>WEB</span>6</a>
+  <ul class="nav-links">
+    <li><a href="/">HOME</a></li>
+    <li><a href="/#providers">PROVIDERS</a></li>
+    <li><a href="/#features">FEATURES</a></li>
+    <li><a href="/api.html">API REFERENCE</a></li>
+    <li><a href="/sdk.html" style="color:var(--gold)">SDK</a></li>
+    <li><a href="/pricing.html">PRICING</a></li>
+  </ul>
+  <a class="nav-cta" href="https://oportal.oasisomniverse.one" target="_blank" rel="noopener">GET API KEY</a>
+</nav>
+
+<div class="page">
+
+  <div class="kicker">DEVELOPER</div>
+  <h1>WEB6 SDKs</h1>
+  <p class="intro">First-class clients for JavaScript/TypeScript and Python. One line of code to reach every AI provider in the OASIS ecosystem.</p>
+  <span class="line"></span>
+
+  <div class="pkg-badges">
+    <a href="https://www.npmjs.com/package/@oasisomniverse/web6-api" target="_blank" rel="noopener" class="pkg-badge npm">npm @oasisomniverse/web6-api</a>
+    <a href="https://pypi.org/project/oasis-web6/" target="_blank" rel="noopener" class="pkg-badge pypi">PyPI oasis-web6</a>
+  </div>
+
+  <!-- Tabs -->
+  <div class="sdk-tabs">
+    <button class="sdk-tab active" onclick="switchTab(event,'js')">JavaScript / TypeScript</button>
+    <button class="sdk-tab" onclick="switchTab(event,'py')">Python</button>
+    <button class="sdk-tab" onclick="switchTab(event,'pyasync')">Python Async</button>
+    <button class="sdk-tab" onclick="switchTab(event,'http')">Raw HTTP</button>
+  </div>
+
+  <!-- ───────── JS TAB ───────── -->
+  <div id="tab-js" class="sdk-panel active">
+
+    <div class="sdk-section">
+      <h2>Installation</h2>
+      <div class="install-block">
+        <code>npm install @oasisomniverse/web6-api</code>
+        <button class="copy-btn" onclick="copy(this,'npm install @oasisomniverse/web6-api')">COPY</button>
+      </div>
+      <div class="install-block">
+        <code>yarn add @oasisomniverse/web6-api</code>
+        <button class="copy-btn" onclick="copy(this,'yarn add @oasisomniverse/web6-api')">COPY</button>
+      </div>
+    </div>
+
+    <div class="sdk-section">
+      <h2>Quick Start</h2>
+<pre>import { Web6Client } from '@oasisomniverse/web6-api';
+
+const client = new Web6Client({ token: process.env.WEB6_JWT });
+
+// Chat completion
+const resp = await client.complete({
+  messages: [{ role: 'user', content: 'What is holonic memory?' }],
+  provider: 'auto',   // WEB6 picks the best model for your plan
+});
+console.log(resp.result.content);
+
+// Streaming
+for await (const chunk of client.completeStream({
+  messages: [{ role: 'user', content: 'Tell me a story' }],
+})) {
+  process.stdout.write(chunk);
+}</pre>
+    </div>
+
+    <div class="sdk-section">
+      <h2>Common Patterns</h2>
+
+      <h3>Cost preview before calling</h3>
+<pre>const est = await client.estimateCost({
+  provider: 'openai', model: 'gpt-4o',
+  promptTokens: 500, completionTokens: 200,
+});
+console.log(`Estimated: $${est.estimatedUSD.toFixed(6)}`);
+</pre>
+
+      <h3>Check your quota</h3>
+<pre>const usage = await client.getUsage({ plan: 'Silver', karma: 5000 });
+console.log(`${usage.dailyCallsUsed} / ${usage.dailyCallLimit} calls today`);
+console.log(`Karma multiplier: ${usage.karmaMultiplier}×`);
+</pre>
+
+      <h3>Browse available models</h3>
+<pre>const { models } = await client.listModels({ plan: 'Bronze' });
+models.forEach(m =>
+  console.log(m.id, m.minPlanLabel, `$${m.inputPer1kUSD}/1K in`)
+);
+</pre>
+
+      <h3>Webhook for async video generation</h3>
+<pre>const result = await client.generateVideo({
+  prompt: 'A glowing OASIS torus rotating in deep space',
+  callbackUrl: 'https://your-app.com/webhooks/video',
+});
+// WEB6 POSTs { jobId, jobType, status, result } to your endpoint when done
+</pre>
+
+      <h3>Multi-modal search + rerank</h3>
+<pre>const hits  = await client.search({ query: 'holonic consciousness', maxResults: 20 });
+const ranked = await client.rerank({
+  query: 'holonic consciousness',
+  documents: hits.result.map(h => h.snippet),
+  topN: 5,
+});
+</pre>
+    </div>
+
+    <div class="sdk-section">
+      <h2>All Methods</h2>
+      <table class="method-table">
+        <tr><th>Method</th><th>Endpoint</th><th>Description</th></tr>
+        <tr><td>complete(req)</td><td>POST /v1/complete</td><td>Chat completion</td></tr>
+        <tr><td>completeStream(req)</td><td>POST /v1/complete/stream</td><td>SSE streaming completion</td></tr>
+        <tr><td>embed(texts, opts)</td><td>POST /v1/embeddings</td><td>Vector embeddings</td></tr>
+        <tr><td>generateImage(prompt, opts)</td><td>POST /v1/images/generate</td><td>Image generation</td></tr>
+        <tr><td>generateVideo(prompt, opts)</td><td>POST /v1/video/generate</td><td>Video generation + webhook</td></tr>
+        <tr><td>synthesiseSpeech(text, opts)</td><td>POST /v1/audio/speech</td><td>Text-to-speech</td></tr>
+        <tr><td>transcribe(file, opts)</td><td>POST /v1/audio/transcriptions</td><td>Speech-to-text</td></tr>
+        <tr><td>search(query, opts)</td><td>POST /v1/search</td><td>Web search</td></tr>
+        <tr><td>rerank(query, docs, opts)</td><td>POST /v1/rerank</td><td>Semantic reranking</td></tr>
+        <tr><td>moderate(text, opts)</td><td>POST /v1/moderation</td><td>Content moderation</td></tr>
+        <tr><td>translate(text, lang, opts)</td><td>POST /v1/translate</td><td>Translation</td></tr>
+        <tr><td>classify(text, labels, opts)</td><td>POST /v1/classify</td><td>Zero-shot classification</td></tr>
+        <tr><td>extract(text, schema, opts)</td><td>POST /v1/extract</td><td>Structured extraction</td></tr>
+        <tr><td>parseDocument(file, opts)</td><td>POST /v1/documents/parse</td><td>Document parsing</td></tr>
+        <tr><td>executeCode(code, opts)</td><td>POST /v1/code/execute</td><td>Sandboxed code execution</td></tr>
+        <tr><td>submitBatch(requests, opts)</td><td>POST /v1/batch/submit</td><td>Batch submission + webhook</td></tr>
+        <tr><td>getBatchStatus(batchId, opts)</td><td>GET /v1/batch/{id}/status</td><td>Batch status polling</td></tr>
+        <tr><td>storeMemory(content, opts)</td><td>POST /v1/memory/store</td><td>Store memory fragment</td></tr>
+        <tr><td>queryMemory(query, opts)</td><td>POST /v1/memory/query</td><td>Semantic memory search</td></tr>
+        <tr><td>checkGuardrails(text, opts)</td><td>POST /v1/guardrails/check</td><td>Safety guardrails</td></tr>
+        <tr><td>createFinetune(model, data, opts)</td><td>POST /v1/fine-tuning/jobs</td><td>Fine-tuning job + webhook</td></tr>
+        <tr><td>getFinetuneStatus(jobId, opts)</td><td>GET /v1/fine-tuning/jobs/{id}</td><td>Fine-tuning status</td></tr>
+        <tr><td>graphragQuery(query, opts)</td><td>POST /v1/graphrag/query</td><td>GraphRAG</td></tr>
+        <tr><td>optimisePrompt(prompt, opts)</td><td>POST /v1/prompts/optimise</td><td>Prompt optimisation</td></tr>
+        <tr><td>fahrnDispatch(problem, opts)</td><td>POST /v1/reasoning-network/dispatch</td><td>FAHRN reasoning network</td></tr>
+        <tr><td>listModels(opts)</td><td>GET /v1/models</td><td>Model catalogue</td></tr>
+        <tr><td>getModel(modelId)</td><td>GET /v1/models/{id}</td><td>Model detail</td></tr>
+        <tr><td>listProviders()</td><td>GET /v1/providers</td><td>Provider status</td></tr>
+        <tr><td>estimateCost(req)</td><td>POST /v1/estimate</td><td>Cost preview</td></tr>
+        <tr><td>getUsage(opts)</td><td>GET /v1/usage</td><td>Quota & usage summary</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ───────── PYTHON TAB ───────── -->
+  <div id="tab-py" class="sdk-panel">
+
+    <div class="sdk-section">
+      <h2>Installation</h2>
+      <div class="install-block">
+        <code>pip install oasis-web6</code>
+        <button class="copy-btn" onclick="copy(this,'pip install oasis-web6')">COPY</button>
+      </div>
+    </div>
+
+    <div class="sdk-section">
+      <h2>Quick Start</h2>
+<pre>from web6 import Web6Client
+
+client = Web6Client(token="&lt;your-oasis-jwt&gt;")
+
+# Chat completion
+resp = client.complete(
+    messages=[{"role": "user", "content": "What is holonic memory?"}],
+    provider="auto",
+)
+print(resp["result"]["content"])
+
+# Streaming
+for chunk in client.complete_stream(
+    messages=[{"role": "user", "content": "Tell me a story"}]
+):
+    print(chunk, end="", flush=True)
+</pre>
+    </div>
+
+    <div class="sdk-section">
+      <h2>Common Patterns</h2>
+
+      <h3>Cost preview</h3>
+<pre>est = client.estimate_cost("openai", "gpt-4o", prompt_tokens=500, completion_tokens=200)
+print(f"Estimated: ${est['estimatedUSD']:.6f}")
+</pre>
+
+      <h3>Check quota</h3>
+<pre>usage = client.get_usage(plan="Silver", karma=5000)
+print(f"{usage['dailyCallsUsed']} / {usage['dailyCallLimit']} calls today")
+print(f"Karma multiplier: {usage['karmaMultiplier']}×")
+</pre>
+
+      <h3>Context manager</h3>
+<pre>with Web6Client(token="&lt;jwt&gt;") as client:
+    resp = client.complete(messages=[{"role":"user","content":"Hello"}])
+</pre>
+
+      <h3>Video with webhook</h3>
+<pre>result = client.generate_video(
+    prompt="A glowing OASIS torus rotating in deep space",
+    callback_url="https://your-app.com/webhooks/video",
+)
+</pre>
+
+      <h3>Search + rerank</h3>
+<pre>hits   = client.search("holonic consciousness", max_results=20)
+ranked = client.rerank(
+    "holonic consciousness",
+    [h["snippet"] for h in hits["result"]],
+    top_n=5,
+)
+</pre>
+    </div>
+
+    <div class="sdk-section">
+      <h2>All Methods</h2>
+      <table class="method-table">
+        <tr><th>Method</th><th>Endpoint</th></tr>
+        <tr><td>complete(messages, **kw)</td><td>POST /v1/complete</td></tr>
+        <tr><td>complete_stream(messages, **kw)</td><td>POST /v1/complete/stream</td></tr>
+        <tr><td>embed(texts, **kw)</td><td>POST /v1/embeddings</td></tr>
+        <tr><td>generate_image(prompt, **kw)</td><td>POST /v1/images/generate</td></tr>
+        <tr><td>generate_video(prompt, **kw)</td><td>POST /v1/video/generate</td></tr>
+        <tr><td>synthesise_speech(text, **kw)</td><td>POST /v1/audio/speech</td></tr>
+        <tr><td>transcribe(audio_bytes, **kw)</td><td>POST /v1/audio/transcriptions</td></tr>
+        <tr><td>search(query, **kw)</td><td>POST /v1/search</td></tr>
+        <tr><td>rerank(query, docs, **kw)</td><td>POST /v1/rerank</td></tr>
+        <tr><td>moderate(text, **kw)</td><td>POST /v1/moderation</td></tr>
+        <tr><td>translate(text, target_language, **kw)</td><td>POST /v1/translate</td></tr>
+        <tr><td>classify(text, labels, **kw)</td><td>POST /v1/classify</td></tr>
+        <tr><td>extract(text, schema, **kw)</td><td>POST /v1/extract</td></tr>
+        <tr><td>parse_document(file_bytes, filename)</td><td>POST /v1/documents/parse</td></tr>
+        <tr><td>execute_code(code, **kw)</td><td>POST /v1/code/execute</td></tr>
+        <tr><td>submit_batch(requests, **kw)</td><td>POST /v1/batch/submit</td></tr>
+        <tr><td>get_batch_status(batch_id, **kw)</td><td>GET /v1/batch/{id}/status</td></tr>
+        <tr><td>store_memory(content, **kw)</td><td>POST /v1/memory/store</td></tr>
+        <tr><td>query_memory(query, **kw)</td><td>POST /v1/memory/query</td></tr>
+        <tr><td>check_guardrails(text, **kw)</td><td>POST /v1/guardrails/check</td></tr>
+        <tr><td>create_finetune(base_model, data, **kw)</td><td>POST /v1/fine-tuning/jobs</td></tr>
+        <tr><td>get_finetune_status(job_id, **kw)</td><td>GET /v1/fine-tuning/jobs/{id}</td></tr>
+        <tr><td>graphrag_query(query, **kw)</td><td>POST /v1/graphrag/query</td></tr>
+        <tr><td>optimise_prompt(prompt, **kw)</td><td>POST /v1/prompts/optimise</td></tr>
+        <tr><td>fahrn_dispatch(problem, **kw)</td><td>POST /v1/reasoning-network/dispatch</td></tr>
+        <tr><td>list_models(plan=None)</td><td>GET /v1/models</td></tr>
+        <tr><td>get_model(model_id)</td><td>GET /v1/models/{id}</td></tr>
+        <tr><td>list_providers()</td><td>GET /v1/providers</td></tr>
+        <tr><td>estimate_cost(provider, model, tokens)</td><td>POST /v1/estimate</td></tr>
+        <tr><td>get_usage(plan=None, karma=0)</td><td>GET /v1/usage</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ───────── PYTHON ASYNC TAB ───────── -->
+  <div id="tab-pyasync" class="sdk-panel">
+
+    <div class="sdk-section">
+      <h2>Async Client</h2>
+      <div class="callout">
+        <strong>Use AsyncWeb6Client</strong> inside FastAPI, asyncio scripts, or any async context. Every method is the same as the sync client but <code>await</code>able.
+      </div>
+<pre>from web6 import AsyncWeb6Client
+
+async def main():
+    async with AsyncWeb6Client(token="&lt;jwt&gt;") as client:
+
+        # Completion
+        resp = await client.complete(
+            messages=[{"role": "user", "content": "Hello from async!"}]
+        )
+        print(resp["result"]["content"])
+
+        # Async streaming
+        async for chunk in client.complete_stream(
+            messages=[{"role": "user", "content": "Tell me a story"}]
+        ):
+            print(chunk, end="", flush=True)
+
+        # Cost preview
+        est = await client.estimate_cost("openai", "gpt-4o", prompt_tokens=500)
+        print(f"${est['estimatedUSD']:.6f}")
+</pre>
+    </div>
+
+    <div class="sdk-section">
+      <h2>FastAPI Example</h2>
+<pre>from fastapi import FastAPI
+from web6 import AsyncWeb6Client
+import os
+
+app    = FastAPI()
+client = AsyncWeb6Client(token=os.environ["WEB6_JWT"])
+
+@app.post("/chat")
+async def chat(message: str):
+    resp = await client.complete(
+        messages=[{"role": "user", "content": message}],
+        provider="auto",
+    )
+    return {"reply": resp["result"]["content"]}
+
+@app.get("/shutdown")
+async def shutdown():
+    await client.close()
+</pre>
+    </div>
+  </div>
+
+  <!-- ───────── HTTP TAB ───────── -->
+  <div id="tab-http" class="sdk-panel">
+
+    <div class="sdk-section">
+      <h2>Direct HTTP</h2>
+      <p>Every endpoint accepts JSON and returns an <code>OASISResult</code> envelope. Authenticate with a Bearer JWT or <code>X-Api-Key</code> header.</p>
+
+      <h3>Chat completion (curl)</h3>
+<pre>curl -X POST https://api.web6.oasisomniverse.one/v1/complete \
+  -H "Authorization: Bearer $WEB6_JWT" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "provider": "auto",
+    "messages": [{"role":"user","content":"Hello!"}]
+  }'</pre>
+
+      <h3>Streaming (curl)</h3>
+<pre>curl -N -X POST https://api.web6.oasisomniverse.one/v1/complete/stream \
+  -H "Authorization: Bearer $WEB6_JWT" \
+  -H "Content-Type: application/json" \
+  -d '{"messages":[{"role":"user","content":"Tell me a story"}]}'</pre>
+
+      <h3>Cost estimate</h3>
+<pre>curl -X POST https://api.web6.oasisomniverse.one/v1/estimate \
+  -H "Authorization: Bearer $WEB6_JWT" \
+  -H "Content-Type: application/json" \
+  -d '{"provider":"openai","model":"gpt-4o","promptTokens":500,"completionTokens":200}'</pre>
+
+      <h3>List models</h3>
+<pre>curl https://api.web6.oasisomniverse.one/v1/models?plan=Bronze \
+  -H "Authorization: Bearer $WEB6_JWT"</pre>
+
+      <h3>Check quota</h3>
+<pre>curl "https://api.web6.oasisomniverse.one/v1/usage?plan=Silver&karma=5000" \
+  -H "Authorization: Bearer $WEB6_JWT"</pre>
+
+      <h3>Response envelope</h3>
+<pre>{
+  "isError": false,
+  "message": null,
+  "result": { /* endpoint-specific data */ }
+}</pre>
+
+      <h3>Rate limit headers (every response)</h3>
+<pre>X-RateLimit-Limit: 1500
+X-RateLimit-Remaining: 1453
+X-RateLimit-Reset: 1756137600
+X-RateLimit-Plan: Silver
+X-Karma-Multiplier: 3</pre>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function switchTab(e, id) {
+  document.querySelectorAll('.sdk-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.sdk-panel').forEach(p => p.classList.remove('active'));
+  e.currentTarget.classList.add('active');
+  document.getElementById('tab-' + id).classList.add('active');
+}
+function copy(btn, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'COPIED';
+    setTimeout(() => btn.textContent = 'COPY', 1800);
+  });
+}
+</script>
+</body>
+</html>
