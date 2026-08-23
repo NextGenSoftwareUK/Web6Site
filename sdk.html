@@ -224,6 +224,9 @@ const ranked = await client.rerank({
         <tr><td>listProviders()</td><td>GET /v1/providers</td><td>Provider status</td></tr>
         <tr><td>estimateCost(req)</td><td>POST /v1/estimate</td><td>Cost preview</td></tr>
         <tr><td>getUsage(opts)</td><td>GET /v1/usage</td><td>Quota & usage summary</td></tr>
+        <tr><td>orchestrateCrewAI(req)</td><td>POST /v1/orchestrate/crewai</td><td>CrewAI task dispatch</td></tr>
+        <tr><td>orchestrateAutoGen(req)</td><td>POST /v1/orchestrate/autogen</td><td>AutoGen conversation</td></tr>
+        <tr><td>orchestrateLangGraph(req)</td><td>POST /v1/orchestrate/langgraph</td><td>LangGraph node execution</td></tr>
       </table>
     </div>
   </div>
@@ -330,6 +333,9 @@ ranked = client.rerank(
         <tr><td>list_providers()</td><td>GET /v1/providers</td></tr>
         <tr><td>estimate_cost(provider, model, tokens)</td><td>POST /v1/estimate</td></tr>
         <tr><td>get_usage(plan=None, karma=0)</td><td>GET /v1/usage</td></tr>
+        <tr><td>orchestrate_crewai(tasks, **kw)</td><td>POST /v1/orchestrate/crewai</td></tr>
+        <tr><td>orchestrate_autogen(initial_message, **kw)</td><td>POST /v1/orchestrate/autogen</td></tr>
+        <tr><td>orchestrate_langgraph(node_name, state, **kw)</td><td>POST /v1/orchestrate/langgraph</td></tr>
       </table>
     </div>
   </div>
