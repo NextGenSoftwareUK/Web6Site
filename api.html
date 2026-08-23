@@ -159,6 +159,11 @@ pre{background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.08);border-radi
       <a href="#orchestrate-autogen">AutoGen</a>
       <a href="#orchestrate-langgraph">LangGraph</a>
     </div>
+    <div class="sidebar-section">
+      <h3>MCP</h3>
+      <a href="#mcp-overview">Overview</a>
+      <a href="#mcp-tools">Tool Reference</a>
+    </div>
   </aside>
 
   <!-- Main content -->
@@ -911,6 +916,86 @@ data: {"content":"","done":true,"promptTokens":12,"completionTokens":47}</pre>
 }</pre>
         </div>
       </details>
+    </div>
+
+    <!-- ── MCP ───────────────────────────────────────────────────────────── -->
+    <div id="mcp-overview" class="api-group">
+      <h2>MCP — Model Context Protocol</h2>
+      <p style="color:var(--dim);font-size:15px;margin-bottom:20px">WEB6 exposes its full capability surface as an MCP server, making every tool callable directly from Claude Code, claude.ai connectors, OpenAI Responses API, and any other MCP-compatible client — with zero HTTP configuration required.</p>
+
+      <div class="base-url" style="margin-bottom:16px">
+        <span>MCP ENDPOINT</span>
+        https://api.web6.oasisomniverse.one/mcp
+      </div>
+      <div class="base-url" style="border-color:rgba(253,216,53,.2);margin-bottom:24px">
+        <span>DISCOVERY DOCUMENTS</span>
+        https://api.web6.oasisomniverse.one/.well-known/mcp.json<br>
+        https://api.web6.oasisomniverse.one/.well-known/agent.json
+      </div>
+
+      <p style="color:var(--dim);font-size:15px;margin-bottom:10px">Connect in Claude Code:</p>
+<pre>claude mcp add oasis-web6 \
+  --transport http \
+  --url https://api.web6.oasisomniverse.one/mcp \
+  --header "Authorization: Bearer &lt;your-jwt&gt;"</pre>
+
+      <p style="color:var(--dim);font-size:15px;margin:16px 0 10px">Or in <code>~/.claude/claude_desktop_config.json</code>:</p>
+<pre>{
+  "mcpServers": {
+    "oasis-web6": {
+      "transport": "http",
+      "url": "https://api.web6.oasisomniverse.one/mcp",
+      "headers": { "Authorization": "Bearer &lt;your-jwt&gt;" }
+    }
+  }
+}</pre>
+    </div>
+
+    <div id="mcp-tools" class="api-group">
+      <h2>MCP Tool Reference</h2>
+      <p style="color:var(--dim);font-size:15px;margin-bottom:20px">All 35+ tools exposed by the MCP server. Each tool is callable from any MCP client — Claude Code, claude.ai, OpenAI, or your own agent.</p>
+      <table class="field-table" style="background:var(--bg-card);border:1px solid rgba(255,255,255,.07);border-radius:10px;overflow:hidden">
+        <tr><th>Tool name</th><th>What it does</th></tr>
+        <tr><td>web6_complete</td><td>Chat completion across 20+ providers (auto-routes)</td></tr>
+        <tr><td>web6_fahrn_solve</td><td>Full FAHRN pipeline — classify, dispatch, BRAID, EMA, telemetry in one call</td></tr>
+        <tr><td>web6_fahrn_dispatch</td><td>Direct FAHRN dispatch with explicit mode (Serial/Parallel/Decomposed)</td></tr>
+        <tr><td>web6_fahrn_register_agent</td><td>Register a new reasoning agent with FAHRN</td></tr>
+        <tr><td>web6_fahrn_get_agents</td><td>List all FAHRN agents with live composite scoring</td></tr>
+        <tr><td>web6_fahrn_seed_openserv_agents</td><td>Seed FAHRN with one agent per OpenServ SERV model</td></tr>
+        <tr><td>web6_fahrn_get_agent_skill</td><td>Get the evolved best_skill.md for an agent + task category</td></tr>
+        <tr><td>web6_fahrn_evolve_agent_skill</td><td>Run one SkillOpt epoch — evolve the agent's skill document</td></tr>
+        <tr><td>web6_generate_image</td><td>Image generation via StabilityAI or OpenAI DALL·E</td></tr>
+        <tr><td>web6_embed</td><td>Generate embeddings via OpenAI, Cohere, or HuggingFace</td></tr>
+        <tr><td>web6_braid_find_graph</td><td>Look up shared BRAID reasoning graph for a task type</td></tr>
+        <tr><td>web6_braid_save_graph</td><td>Store a Mermaid reasoning graph in the BRAID library</td></tr>
+        <tr><td>web6_braid_record_outcome</td><td>Feed solver outcome back into graph quality metadata</td></tr>
+        <tr><td>web6_memory_get_earth_holon</td><td>Get/create the planetary Earth holon (top of fractal hierarchy)</td></tr>
+        <tr><td>web6_memory_get_or_create_holon</td><td>Find or create a holon at any level in the fractal hierarchy</td></tr>
+        <tr><td>web6_memory_set_membrane_rule</td><td>Set consent-governed upward-propagation rule on a holon</td></tr>
+        <tr><td>web6_memory_record</td><td>Record a memory item at a holon</td></tr>
+        <tr><td>web6_memory_propagate</td><td>Propagate permitted memories up one hop to parent holon</td></tr>
+        <tr><td>web6_memory_propagate_up</td><td>Propagate up N hops (or to Earth root)</td></tr>
+        <tr><td>web6_memory_search</td><td>Semantic search over memory items in a holon</td></tr>
+        <tr><td>web6_memory_external_search</td><td>Search Mem0, Zep, Letta, LangMem, Graphiti external providers</td></tr>
+        <tr><td>web6_memory_external_add</td><td>Add a memory to an external provider (Mem0, Zep, etc.)</td></tr>
+        <tr><td>web6_memory_external_list_providers</td><td>List registered external memory providers</td></tr>
+        <tr><td>web6_orchestrator_register</td><td>Register an external agent/orchestrator endpoint</td></tr>
+        <tr><td>web6_orchestrator_list</td><td>List all registered orchestrator adapters</td></tr>
+        <tr><td>web6_orchestrator_invoke</td><td>Invoke a registered orchestrator (MCP/A2A/LangChain/AutoGen/CrewAI)</td></tr>
+        <tr><td>web6_orchestrate_crewai</td><td>Dispatch a CrewAI task list through WEB6 routing</td></tr>
+        <tr><td>web6_orchestrate_autogen</td><td>Route an AutoGen conversation initiation through WEB6</td></tr>
+        <tr><td>web6_orchestrate_langgraph</td><td>Execute a LangGraph node via WEB6, return updated state</td></tr>
+        <tr><td>web6_list_models</td><td>Browse the full model catalogue, filter by plan or capability</td></tr>
+        <tr><td>web6_get_model</td><td>Full detail for a single model by ID</td></tr>
+        <tr><td>web6_list_providers</td><td>All 20+ providers with tier, endpoints, and status</td></tr>
+        <tr><td>web6_estimate_cost</td><td>USD cost estimate before executing a call</td></tr>
+        <tr><td>web6_get_usage</td><td>Avatar's daily call count, limit, and monthly spend</td></tr>
+        <tr><td>web6_get_avatar_context</td><td>Rich avatar context block — karma, quests, world memberships</td></tr>
+        <tr><td>web6_list_openserv_models</td><td>List every model in the OpenServ SERV catalog</td></tr>
+        <tr><td>web6_ml_classify_task</td><td>In-process ML.NET task classification (zero latency)</td></tr>
+        <tr><td>web6_ml_sentiment</td><td>In-process ML.NET sentiment analysis (zero latency)</td></tr>
+        <tr><td>web6_health</td><td>API status, version, and UTC timestamp (unauthenticated)</td></tr>
+      </table>
     </div>
 
     <!-- ── RATE LIMIT HEADERS ─────────────────────────────────────────── -->
