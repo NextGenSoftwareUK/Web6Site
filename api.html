@@ -153,6 +153,12 @@ pre{background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.08);border-radi
       <h3>OpenServ</h3>
       <a href="#openserv-models">OpenServ Models</a>
     </div>
+    <div class="sidebar-section">
+      <h3>Orchestrators</h3>
+      <a href="#orchestrate-crewai">CrewAI</a>
+      <a href="#orchestrate-autogen">AutoGen</a>
+      <a href="#orchestrate-langgraph">LangGraph</a>
+    </div>
   </aside>
 
   <!-- Main content -->
@@ -815,6 +821,94 @@ data: {"content":"","done":true,"promptTokens":12,"completionTokens":47}</pre>
   },
   ...
 ]</pre>
+        </div>
+      </details>
+    </div>
+
+    <!-- ── ORCHESTRATORS ────────────────────────────────────────────────── -->
+    <div id="orchestrate-crewai" class="api-group">
+      <h2>Orchestrators</h2>
+      <p style="color:var(--dim);font-size:15px;margin-bottom:20px">Route multi-agent orchestration frameworks through WEB6. Each endpoint translates a framework-native payload into WEB6 completions and returns results in the originating framework's expected shape — no framework SDK required.</p>
+
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method post">POST</span>
+          <span class="ep-path">/v1/orchestrate/crewai</span>
+        </summary>
+        <div class="ep-desc">Dispatches a CrewAI-style crew definition. WEB6 maps each agent's role to the best provider for that capability tier and runs tasks in the specified process order.</div>
+        <div class="ep-body">
+          <table class="field-table">
+            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+            <tr><td>tasks<span class="req-label">required</span></td><td>array</td><td>Array of task objects with <code>id</code>, <code>agent</code>, <code>description</code>, <code>expected_output</code></td></tr>
+            <tr><td>process</td><td>string</td><td><code>sequential</code> (default) or <code>hierarchical</code></td></tr>
+            <tr><td>provider</td><td>string</td><td>Force all agents to a specific WEB6 provider (default: <code>auto</code>)</td></tr>
+          </table>
+          <div class="sub-head">Example</div>
+<pre>{
+  "process": "sequential",
+  "tasks": [
+    {
+      "id": "research",
+      "agent": "Researcher",
+      "description": "Find the top 3 OASIS providers for video generation",
+      "expected_output": "A ranked list with reasons"
+    },
+    {
+      "id": "write",
+      "agent": "Writer",
+      "description": "Turn the research findings into a blog section",
+      "expected_output": "200-word blog paragraph"
+    }
+  ]
+}</pre>
+        </div>
+      </details>
+
+      <details id="orchestrate-autogen" class="ep">
+        <summary class="ep-head">
+          <span class="method post">POST</span>
+          <span class="ep-path">/v1/orchestrate/autogen</span>
+        </summary>
+        <div class="ep-desc">Accepts a Microsoft AutoGen conversation initiation payload. Routes the <code>initial_message</code> through WEB6 and returns a reply in AutoGen's expected assistant-message shape.</div>
+        <div class="ep-body">
+          <table class="field-table">
+            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+            <tr><td>initial_message<span class="req-label">required</span></td><td>string</td><td>The opening user message to start the AutoGen conversation</td></tr>
+            <tr><td>system_message</td><td>string</td><td>System/assistant persona to set for the WEB6 agent</td></tr>
+            <tr><td>provider</td><td>string</td><td>WEB6 provider to use (default: <code>auto</code>)</td></tr>
+            <tr><td>model</td><td>string</td><td>Model ID override (default: <code>auto</code>)</td></tr>
+            <tr><td>max_rounds</td><td>integer</td><td>Maximum conversation rounds (default: 10)</td></tr>
+          </table>
+        </div>
+      </details>
+
+      <details id="orchestrate-langgraph" class="ep">
+        <summary class="ep-head">
+          <span class="method post">POST</span>
+          <span class="ep-path">/v1/orchestrate/langgraph</span>
+        </summary>
+        <div class="ep-desc">Receives a LangGraph node invocation — the current graph state plus the node to execute. Runs the node's LLM step via WEB6 and returns the updated state for the next graph edge.</div>
+        <div class="ep-body">
+          <table class="field-table">
+            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+            <tr><td>node_name<span class="req-label">required</span></td><td>string</td><td>The LangGraph node identifier to execute</td></tr>
+            <tr><td>state</td><td>object</td><td>Current graph state (key-value pairs, passed through and augmented)</td></tr>
+            <tr><td>messages</td><td>array</td><td>Message history to pass to the LLM for this node</td></tr>
+            <tr><td>next_node</td><td>string</td><td>Next node to route to (returned in response for the graph executor)</td></tr>
+            <tr><td>provider</td><td>string</td><td>WEB6 provider (default: <code>auto</code>)</td></tr>
+          </table>
+          <div class="sub-head">Response</div>
+<pre>{
+  "isError": false,
+  "result": {
+    "state": {
+      "research_output": "...",
+      "__node__": "research",
+      "__timestamp__": "2026-08-23T10:00:00Z"
+    },
+    "nextNode": "summarise"
+  }
+}</pre>
         </div>
       </details>
     </div>
