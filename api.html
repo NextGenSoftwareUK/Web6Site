@@ -147,6 +147,11 @@ pre{background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.08);border-radi
       <a href="#providers-ep">Providers</a>
       <a href="#estimate">Cost Estimate</a>
       <a href="#usage">Usage</a>
+      <a href="#health">Health</a>
+    </div>
+    <div class="sidebar-section">
+      <h3>OpenServ</h3>
+      <a href="#openserv-models">OpenServ Models</a>
     </div>
   </aside>
 
@@ -769,6 +774,51 @@ data: {"content":"","done":true,"promptTokens":12,"completionTokens":47}</pre>
       </details>
     </div>
 
+    <!-- ── HEALTH ────────────────────────────────────────────────────── -->
+    <div id="health" class="api-group">
+      <h2>Health</h2>
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method get">GET</span>
+          <span class="ep-path">/v1/health</span>
+        </summary>
+        <div class="ep-desc">Unauthenticated status check. Returns API version and UTC timestamp. Used by load balancers and uptime monitors.</div>
+        <div class="ep-body">
+          <div class="sub-head">Response</div>
+<pre>{
+  "status": "ok",
+  "version": "2.0",
+  "timestamp": "2026-08-23T10:00:00.0000000Z"
+}</pre>
+        </div>
+      </details>
+    </div>
+
+    <!-- ── OPENSERV ───────────────────────────────────────────────────── -->
+    <div id="openserv-models" class="api-group">
+      <h2>OpenServ</h2>
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method get">GET</span>
+          <span class="ep-path">/v1/openserv/models</span>
+        </summary>
+        <div class="ep-desc">Returns all WEB6 models in OpenServ-compatible format. Use this when connecting WEB6 as an OpenServ AI provider — OpenServ fetches this endpoint to populate its model selector.</div>
+        <div class="ep-body">
+          <div class="sub-head">Response</div>
+<pre>[
+  {
+    "id": "oasis-web6/gpt-4o",
+    "name": "GPT-4o via WEB6",
+    "provider": "openai",
+    "contextWindow": 128000,
+    "capabilities": ["chat", "tools", "vision"]
+  },
+  ...
+]</pre>
+        </div>
+      </details>
+    </div>
+
     <!-- ── RATE LIMIT HEADERS ─────────────────────────────────────────── -->
     <div id="errors" class="api-group">
       <h2>Rate Limits &amp; Headers</h2>
@@ -789,6 +839,32 @@ data: {"content":"","done":true,"promptTokens":12,"completionTokens":47}</pre>
   "message": null,
   "result": { /* endpoint-specific data */ }
 }</pre>
+
+      <h3 style="font-family:'Orbitron',sans-serif;font-size:15px;color:#fff;margin:36px 0 14px;letter-spacing:.06em">Webhook Delivery &amp; HMAC Signing</h3>
+      <p style="color:var(--dim);font-size:15px;margin-bottom:14px">Async endpoints (video generation, batch jobs, fine-tuning) accept a <code>callbackUrl</code> field. When the job completes, WEB6 POSTs a signed <code>WebhookPayload</code> to that URL:</p>
+<pre>{
+  "jobId":          "abc123",
+  "jobType":        "video",
+  "status":         "completed",
+  "result":         { /* job-specific result */ },
+  "error":          null,
+  "completedAtUtc": "2026-08-23T10:05:22Z"
+}</pre>
+      <p style="color:var(--dim);font-size:15px;margin:16px 0 10px">When the <code>WEB6_WEBHOOK_SECRET</code> environment variable is set on the server, every delivery also includes:</p>
+      <table class="field-table" style="background:var(--bg-card);border:1px solid rgba(255,255,255,.07);border-radius:10px;overflow:hidden;margin-bottom:16px">
+        <tr><th>Header</th><th>Value</th></tr>
+        <tr><td>X-WEB6-Signature</td><td><code>sha256=&lt;hex&gt;</code> — HMAC-SHA256 of the raw JSON body, keyed with the shared secret</td></tr>
+        <tr><td>X-WEB6-Event</td><td>Job type string, e.g. <code>video</code>, <code>batch</code>, <code>finetune</code></td></tr>
+      </table>
+      <p style="color:var(--dim);font-size:15px;margin-bottom:8px">Verify the signature in your callback endpoint:</p>
+<pre># Python verification example
+import hmac, hashlib
+
+def verify_webhook(body: bytes, signature: str, secret: str) -> bool:
+    expected = "sha256=" + hmac.new(
+        secret.encode(), body, hashlib.sha256
+    ).hexdigest()
+    return hmac.compare_digest(expected, signature)</pre>
     </div>
 
   </main>
