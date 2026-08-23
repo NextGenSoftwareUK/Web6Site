@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WEB6 API Reference</title>
+<meta name="description" content="OASIS WEB6 complete API reference — every endpoint, request shape, and response type for the unified AI gateway.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='44' fill='none' stroke='%23fdd835' stroke-width='6'/><circle cx='50' cy='50' r='10' fill='%23fdd835'/></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#fdd835;--gold-glow:rgba(253,216,53,.18);
+  --cyan:#00e5ff;--green:#00e676;--red:#ff5252;--purple:#a78bfa;
+  --bg:#030714;--bg-card:#0a1535;--bg-card2:#071028;
+  --text:#d0e4ff;--dim:#a8bfd8;--heading:#ffffff;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden}
+a{color:var(--dim);text-decoration:none;transition:color .2s}
+a:hover{color:var(--gold)}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 40px;display:flex;align-items:center;justify-content:space-between;background:rgba(3,7,20,.9);backdrop-filter:blur(12px);border-bottom:1px solid rgba(253,216,53,.12)}
+.nav-brand{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;letter-spacing:.22em;color:#fff;text-decoration:none}
+.nav-brand span{color:var(--gold)}
+.nav-links{display:flex;gap:24px;list-style:none}
+.nav-links a{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--gold);border:1px solid rgba(253,216,53,.35);border-radius:999px;padding:8px 18px;transition:background .2s;white-space:nowrap}
+.nav-cta:hover{background:rgba(253,216,53,.08)}
+@media(max-width:900px){.nav-links{display:none}.nav-cta{display:none}}
+
+.layout{display:grid;grid-template-columns:240px 1fr;gap:0;max-width:1280px;margin:0 auto;padding-top:72px;min-height:100vh}
+
+/* Sidebar */
+.sidebar{position:sticky;top:72px;height:calc(100vh - 72px);overflow-y:auto;padding:32px 20px;border-right:1px solid rgba(253,216,53,.08);background:rgba(3,7,20,.6)}
+.sidebar-section{margin-bottom:28px}
+.sidebar-section h3{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid rgba(253,216,53,.12)}
+.sidebar-section a{display:block;font-size:13px;color:var(--dim);padding:4px 0 4px 10px;border-left:2px solid transparent;transition:color .2s,border-color .2s}
+.sidebar-section a:hover,.sidebar-section a.active{color:var(--gold);border-left-color:var(--gold)}
+@media(max-width:900px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{display:none}
+}
+
+/* Content */
+.content{padding:40px 48px 80px;max-width:900px}
+@media(max-width:600px){.content{padding:24px 20px 60px}}
+
+.kicker{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.28em;color:var(--gold);margin-bottom:12px}
+h1{font-family:'Orbitron',sans-serif;font-size:clamp(26px,4vw,44px);font-weight:900;color:#fff;margin-bottom:12px}
+.intro{font-size:17px;color:var(--dim);max-width:660px;line-height:1.7;margin-bottom:48px}
+.line{display:block;width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 0 40px}
+
+/* Section headers */
+.api-group{margin-bottom:60px}
+.api-group h2{font-family:'Orbitron',sans-serif;font-size:18px;font-weight:900;letter-spacing:.1em;color:#fff;margin-bottom:24px;padding-bottom:10px;border-bottom:1px solid rgba(253,216,53,.15)}
+
+/* Endpoint card */
+.ep{background:var(--bg-card);border:1px solid rgba(255,255,255,.07);border-radius:14px;margin-bottom:16px;overflow:hidden;transition:border-color .2s}
+.ep:hover{border-color:rgba(253,216,53,.18)}
+.ep-head{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;user-select:none}
+.ep-head::-webkit-details-marker{display:none}
+.method{font-family:'Share Tech Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.1em;padding:4px 10px;border-radius:6px;flex-shrink:0}
+.method.post{color:#000;background:var(--green)}
+.method.get{color:#000;background:var(--cyan)}
+.ep-path{font-family:'Share Tech Mono',monospace;font-size:14px;color:#e8f0ff;flex:1}
+.ep-desc{font-size:14px;color:var(--dim);padding:0 20px 18px}
+.ep-body{padding:0 20px 20px;border-top:1px solid rgba(255,255,255,.05);margin-top:0}
+.field-table{width:100%;border-collapse:collapse;margin-top:14px}
+.field-table th{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.18em;color:var(--gold);background:rgba(253,216,53,.06);padding:8px 12px;text-align:left;border-bottom:1px solid rgba(253,216,53,.1)}
+.field-table td{font-size:13px;color:var(--dim);padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top}
+.field-table td:first-child{font-family:'Share Tech Mono',monospace;color:#e8f0ff}
+.field-table td:nth-child(2){color:var(--purple);font-family:'Share Tech Mono',monospace;font-size:12px}
+.field-table tr:last-child td{border-bottom:none}
+.req-label{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--red);border:1px solid rgba(255,82,82,.3);border-radius:4px;padding:1px 6px;margin-left:6px}
+.opt-label{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--dim);border:1px solid rgba(168,191,216,.2);border-radius:4px;padding:1px 6px;margin-left:6px}
+.sub-head{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.18em;color:var(--gold);text-transform:uppercase;margin:16px 0 8px}
+pre{background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:14px 16px;overflow-x:auto;font-family:'Share Tech Mono',monospace;font-size:12px;color:#b0d4ff;line-height:1.6;margin-top:8px}
+
+/* Auth badge */
+.auth-note{display:inline-flex;align-items:center;gap:8px;background:rgba(253,216,53,.07);border:1px solid rgba(253,216,53,.2);border-radius:8px;padding:10px 16px;font-size:13px;color:var(--dim);margin-bottom:32px}
+.auth-note strong{color:#fff}
+
+/* Base URL bar */
+.base-url{background:var(--bg-card2);border:1px solid rgba(0,229,255,.2);border-radius:10px;padding:14px 20px;font-family:'Share Tech Mono',monospace;font-size:13px;color:var(--cyan);margin-bottom:40px}
+.base-url span{color:var(--dim);font-size:11px;display:block;margin-bottom:4px;letter-spacing:.12em}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="/"><span>WEB</span>6</a>
+  <ul class="nav-links">
+    <li><a href="/">HOME</a></li>
+    <li><a href="/#providers">PROVIDERS</a></li>
+    <li><a href="/#features">FEATURES</a></li>
+    <li><a href="/api.html" style="color:var(--gold)">API REFERENCE</a></li>
+    <li><a href="/sdk.html">SDK</a></li>
+    <li><a href="/pricing.html">PRICING</a></li>
+  </ul>
+  <a class="nav-cta" href="https://oportal.oasisomniverse.one" target="_blank" rel="noopener">GET API KEY</a>
+</nav>
+
+<div class="layout">
+
+  <!-- Sidebar TOC -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <h3>Getting Started</h3>
+      <a href="#overview">Overview</a>
+      <a href="#auth">Authentication</a>
+      <a href="#errors">Errors</a>
+    </div>
+    <div class="sidebar-section">
+      <h3>AI Core</h3>
+      <a href="#completions">Completions</a>
+      <a href="#embeddings">Embeddings</a>
+      <a href="#images">Images</a>
+      <a href="#video">Video</a>
+      <a href="#audio">Audio</a>
+    </div>
+    <div class="sidebar-section">
+      <h3>Search & Language</h3>
+      <a href="#search">Search</a>
+      <a href="#rerank">Rerank</a>
+      <a href="#moderation">Moderation</a>
+      <a href="#translation">Translation</a>
+      <a href="#classification">Classification</a>
+      <a href="#extraction">Extraction</a>
+    </div>
+    <div class="sidebar-section">
+      <h3>Advanced</h3>
+      <a href="#documents">Documents</a>
+      <a href="#code">Code Execution</a>
+      <a href="#batch">Batch</a>
+      <a href="#memory">Memory</a>
+      <a href="#guardrails">Guardrails</a>
+      <a href="#finetuning">Fine-Tuning</a>
+      <a href="#graphrag">GraphRAG</a>
+      <a href="#prompts">Prompts</a>
+      <a href="#fahrn">FAHRN</a>
+    </div>
+    <div class="sidebar-section">
+      <h3>Utilities</h3>
+      <a href="#models">Models</a>
+      <a href="#providers-ep">Providers</a>
+      <a href="#estimate">Cost Estimate</a>
+      <a href="#usage">Usage</a>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main class="content">
+
+    <div class="kicker">REFERENCE</div>
+    <h1>WEB6 API Reference</h1>
+    <p class="intro">One API, every AI. All 29 endpoints of the OASIS WEB6 unified AI gateway — request shapes, field types, and response structures.</p>
+    <span class="line"></span>
+
+    <div id="overview" class="base-url">
+      <span>BASE URL</span>
+      https://api.web6.oasisomniverse.one
+    </div>
+
+    <div class="auth-note">
+      <strong>Authentication:</strong>&nbsp;All endpoints require <code>Authorization: Bearer &lt;JWT&gt;</code> &nbsp;or&nbsp; <code>X-Api-Key: &lt;key&gt;</code>. Get yours at <a href="https://oportal.oasisomniverse.one" target="_blank" rel="noopener" style="color:var(--gold)">OPORTAL</a>.
+    </div>
+
+    <!-- ── COMPLETIONS ─────────────────────────────────────────────────── -->
+    <div id="completions" class="api-group">
+      <h2>Completions</h2>
+
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method post">POST</span>
+          <span class="ep-path">/v1/complete</span>
+        </summary>
+        <div class="ep-desc">Routes a chat completion to the best-fit AI provider for your plan. Optionally enhances the request with FAHRN reasoning dispatch and Holonic BRAID graph injection.</div>
+        <div class="ep-body">
+          <div class="sub-head">Request body</div>
+          <table class="field-table">
+            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+            <tr><td>messages<span class="req-label">required</span></td><td>array</td><td>Array of <code>{"role":"user|assistant|system","content":"..."}</code> objects</td></tr>
+            <tr><td>provider</td><td>string</td><td>Target provider: <code>openai</code>, <code>anthropic</code>, <code>gemini</code>, <code>groq</code>, <code>mistral</code>, <code>cohere</code>, <code>xai</code>, <code>deepseek</code>, <code>ollama</code>, <code>awsbedrock</code>, <code>azureopenai</code>, <code>auto</code> (default)</td></tr>
+            <tr><td>model</td><td>string</td><td>Model ID e.g. <code>gpt-4o</code>, <code>claude-sonnet-5</code>. Default: <code>auto</code></td></tr>
+            <tr><td>avatarId</td><td>string (uuid)</td><td>OASIS avatar ID for karma-gated access and usage metering</td></tr>
+            <tr><td>useFAHRN</td><td>boolean</td><td>Run the last user message through the FAHRN reasoning network and inject the plan into context</td></tr>
+            <tr><td>useHolonicBraid</td><td>boolean</td><td>Inject the shared Holonic BRAID reasoning graph for the detected task type</td></tr>
+            <tr><td>injectAvatarContext</td><td>boolean</td><td>Prepend this avatar's identity/karma context to the system prompt</td></tr>
+            <tr><td>tools</td><td>array</td><td>Tool definitions (OpenAI-compatible function calling schema)</td></tr>
+            <tr><td>temperature</td><td>number</td><td>0–2. Default provider-specific</td></tr>
+            <tr><td>maxTokens</td><td>integer</td><td>Max completion tokens</td></tr>
+            <tr><td>routing</td><td>object</td><td>Advanced routing overrides e.g. <code>{"useOpenServ":true}</code></td></tr>
+          </table>
+          <div class="sub-head">Example</div>
+<pre>{
+  "provider": "auto",
+  "model": "auto",
+  "messages": [
+    {"role": "system", "content": "You are a helpful OASIS guide."},
+    {"role": "user", "content": "What is holonic memory?"}
+  ]
+}</pre>
+        </div>
+      </details>
+
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method post">POST</span>
+          <span class="ep-path">/v1/complete/stream</span>
+        </summary>
+        <div class="ep-desc">Same as <code>/v1/complete</code> but returns a <code>text/event-stream</code> SSE response. Each <code>data:</code> line is a JSON completion chunk; the final chunk has <code>"done":true</code>.</div>
+        <div class="ep-body">
+          <div class="sub-head">Response format (SSE)</div>
+<pre>data: {"content":"Once ","done":false}
+data: {"content":"upon ","done":false}
+data: {"content":"a time...","done":false}
+data: {"content":"","done":true,"promptTokens":12,"completionTokens":47}</pre>
+        </div>
+      </details>
+
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method post">POST</span>
+          <span class="ep-path">/v1/complete/tool-result</span>
+        </summary>
+        <div class="ep-desc">Re-enters the completion pipeline with a message history that already contains <code>role:"tool"</code> result messages. Use this for agentic tool-calling loops.</div>
+      </details>
+    </div>
+
+    <!-- ── EMBEDDINGS ──────────────────────────────────────────────────── -->
+    <div id="embeddings" class="api-group">
+      <h2>Embeddings</h2>
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method post">POST</span>
+          <span class="ep-path">/v1/embeddings</span>
+        </summary>
+        <div class="ep-desc">Generates vector embeddings for one or more text strings.</div>
+        <div class="ep-body">
+          <table class="field-table">
+            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+            <tr><td>texts<span class="req-label">required</span></td><td>string[]</td><td>One or more strings to embed</td></tr>
+            <tr><td>provider</td><td>string</td><td>e.g. <code>openai</code>, <code>cohere</code>, <code>auto</code></td></tr>
+            <tr><td>model</td><td>string</td><td>e.g. <code>text-embedding-3-large</code></td></tr>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <!-- ── IMAGES ─────────────────────────────────────────────────────── -->
+    <div id="images" class="api-group">
+      <h2>Image Generation</h2>
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method post">POST</span>
+          <span class="ep-path">/v1/images/generate</span>
+        </summary>
+        <div class="ep-desc">Generates images from text prompts via DALL·E 3, Stable Diffusion, Midjourney and others.</div>
+        <div class="ep-body">
+          <table class="field-table">
+            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+            <tr><td>prompt<span class="req-label">required</span></td><td>string</td><td>Image description</td></tr>
+            <tr><td>provider</td><td>string</td><td>e.g. <code>openai</code>, <code>stability</code>, <code>auto</code></td></tr>
+            <tr><td>width</td><td>integer</td><td>Output width in pixels</td></tr>
+            <tr><td>height</td><td>integer</td><td>Output height in pixels</td></tr>
+            <tr><td>n</td><td>integer</td><td>Number of images (default 1)</td></tr>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <!-- ── VIDEO ──────────────────────────────────────────────────────── -->
+    <div id="video" class="api-group">
+      <h2>Video Generation</h2>
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method post">POST</span>
+          <span class="ep-path">/v1/video/generate</span>
+        </summary>
+        <div class="ep-desc">Generates video from text or image via RunwayML, Luma AI, Pika Labs, Kling AI, HailuoAI (MiniMax), Vidu, Wan Video. Long-running — supply <code>callbackUrl</code> for webhook notification.</div>
+        <div class="ep-body">
+          <table class="field-table">
+            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+            <tr><td>prompt<span class="req-label">required</span></td><td>string</td><td>Video description</td></tr>
+            <tr><td>provider</td><td>string</td><td>e.g. <code>runwayml</code>, <code>lumaai</code>, <code>auto</code></td></tr>
+            <tr><td>imageUrl</td><td>string</td><td>Seed image URL for image-to-video</td></tr>
+            <tr><td>duration</td><td>integer</td><td>Duration in seconds</td></tr>
+            <tr><td>aspectRatio</td><td>string</td><td>e.g. <code>16:9</code>, <code>9:16</code>, <code>1:1</code></td></tr>
+            <tr><td>callbackUrl</td><td>string</td><td>Webhook URL to receive completion POST when rendering finishes</td></tr>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <!-- ── AUDIO ──────────────────────────────────────────────────────── -->
+    <div id="audio" class="api-group">
+      <h2>Audio</h2>
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method post">POST</span>
+          <span class="ep-path">/v1/audio/speech</span>
+        </summary>
+        <div class="ep-desc">Synthesises speech from text (TTS). Returns audio bytes.</div>
+        <div class="ep-body">
+          <table class="field-table">
+            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+            <tr><td>text<span class="req-label">required</span></td><td>string</td><td>Text to synthesise</td></tr>
+            <tr><td>voice</td><td>string</td><td>Voice ID e.g. <code>alloy</code>, <code>nova</code>, <code>shimmer</code></td></tr>
+            <tr><td>provider</td><td>string</td><td>e.g. <code>openai</code>, <code>elevenlabs</code>, <code>auto</code></td></tr>
+          </table>
+        </div>
+      </details>
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method post">POST</span>
+          <span class="ep-path">/v1/audio/transcriptions</span>
+        </summary>
+        <div class="ep-desc">Transcribes audio to text (STT) via Whisper or compatible providers. Accepts multipart form with an audio file.</div>
+        <div class="ep-body">
+          <table class="field-table">
+            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+            <tr><td>file<span class="req-label">required</span></td><td>multipart file</td><td>Audio file (.mp3, .wav, .m4a, etc.)</td></tr>
+            <tr><td>language</td><td>string</td><td>ISO-639-1 code e.g. <code>en</code>, <code>fr</code></td></tr>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <!-- ── SEARCH ─────────────────────────────────────────────────────── -->
+    <div id="search" class="api-group">
+      <h2>Search</h2>
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method post">POST</span>
+          <span class="ep-path">/v1/search</span>
+        </summary>
+        <div class="ep-desc">Web search via Tavily, Serper, Exa, Perplexity and others.</div>
+        <div class="ep-body">
+          <table class="field-table">
+            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+            <tr><td>query<span class="req-label">required</span></td><td>string</td><td>Search query</td></tr>
+            <tr><td>provider</td><td>string</td><td>e.g. <code>tavily</code>, <code>serper</code>, <code>exa</code>, <code>auto</code></td></tr>
+            <tr><td>maxResults</td><td>integer</td><td>Max results to return (default 10)</td></tr>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <!-- ── RERANK ─────────────────────────────────────────────────────── -->
+    <div id="rerank" class="api-group">
+      <h2>Reranking</h2>
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method post">POST</span>
+          <span class="ep-path">/v1/rerank</span>
+        </summary>
+        <div class="ep-desc">Reranks a list of documents by relevance to a query via Cohere Rerank or compatible providers.</div>
+        <div class="ep-body">
+          <table class="field-table">
+            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+            <tr><td>query<span class="req-label">required</span></td><td>string</td><td>Query to rank against</td></tr>
+            <tr><td>documents<span class="req-label">required</span></td><td>string[]</td><td>Documents to rerank</td></tr>
+            <tr><td>topN</td><td>integer</td><td>Number of top results to return (default 5)</td></tr>
+            <tr><td>provider</td><td>string</td><td>e.g. <code>cohere</code>, <code>auto</code></td></tr>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <!-- ── MODERATION ─────────────────────────────────────────────────── -->
+    <div id="moderation" class="api-group">
+      <h2>Moderation</h2>
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method post">POST</span>
+          <span class="ep-path">/v1/moderation</span>
+        </summary>
+        <div class="ep-desc">Checks text for harmful, unsafe or policy-violating content.</div>
+        <div class="ep-body">
+          <table class="field-table">
+            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+            <tr><td>text<span class="req-label">required</span></td><td>string</td><td>Text to check</td></tr>
+            <tr><td>provider</td><td>string</td><td>e.g. <code>openai</code>, <code>llamaguard</code>, <code>auto</code></td></tr>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <!-- ── TRANSLATION ────────────────────────────────────────────────── -->
+    <div id="translation" class="api-group">
+      <h2>Translation</h2>
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method post">POST</span>
+          <span class="ep-path">/v1/translate</span>
+        </summary>
+        <div class="ep-desc">Translates text to a target language via DeepL, Google Translate, or LLM-backed providers.</div>
+        <div class="ep-body">
+          <table class="field-table">
+            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+            <tr><td>text<span class="req-label">required</span></td><td>string</td><td>Source text</td></tr>
+            <tr><td>targetLanguage<span class="req-label">required</span></td><td>string</td><td>ISO-639-1 e.g. <code>fr</code>, <code>de</code>, <code>ja</code></td></tr>
+            <tr><td>sourceLanguage</td><td>string</td><td>Auto-detected if omitted</td></tr>
+            <tr><td>provider</td><td>string</td><td>e.g. <code>deepl</code>, <code>googletranslate</code>, <code>auto</code></td></tr>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <!-- ── CLASSIFICATION ─────────────────────────────────────────────── -->
+    <div id="classification" class="api-group">
+      <h2>Classification</h2>
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method post">POST</span>
+          <span class="ep-path">/v1/classify</span>
+        </summary>
+        <div class="ep-desc">Zero-shot text classification against a user-supplied label set.</div>
+        <div class="ep-body">
+          <table class="field-table">
+            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+            <tr><td>text<span class="req-label">required</span></td><td>string</td><td>Text to classify</td></tr>
+            <tr><td>labels<span class="req-label">required</span></td><td>string[]</td><td>Candidate labels e.g. <code>["positive","negative","neutral"]</code></td></tr>
+            <tr><td>provider</td><td>string</td><td>e.g. <code>cohere</code>, <code>auto</code></td></tr>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <!-- ── EXTRACTION ─────────────────────────────────────────────────── -->
+    <div id="extraction" class="api-group">
+      <h2>Structured Extraction</h2>
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method post">POST</span>
+          <span class="ep-path">/v1/extract</span>
+        </summary>
+        <div class="ep-desc">Extracts structured data from unstructured text according to a JSON schema.</div>
+        <div class="ep-body">
+          <table class="field-table">
+            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+            <tr><td>text<span class="req-label">required</span></td><td>string</td><td>Source text</td></tr>
+            <tr><td>schema<span class="req-label">required</span></td><td>object</td><td>JSON schema describing the target structure</td></tr>
+            <tr><td>provider</td><td>string</td><td>e.g. <code>openai</code>, <code>auto</code></td></tr>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <!-- ── DOCUMENTS ─────────────────────────────────────────────────── -->
+    <div id="documents" class="api-group">
+      <h2>Document Processing</h2>
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method post">POST</span>
+          <span class="ep-path">/v1/documents/parse</span>
+        </summary>
+        <div class="ep-desc">Parses PDFs, Word docs, and other document formats into structured text. Accepts multipart form.</div>
+        <div class="ep-body">
+          <table class="field-table">
+            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+            <tr><td>file<span class="req-label">required</span></td><td>multipart file</td><td>Document file (.pdf, .docx, .txt, etc.)</td></tr>
+            <tr><td>provider</td><td>string</td><td>e.g. <code>llamaparse</code>, <code>auto</code></td></tr>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <!-- ── CODE ──────────────────────────────────────────────────────── -->
+    <div id="code" class="api-group">
+      <h2>Code Execution</h2>
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method post">POST</span>
+          <span class="ep-path">/v1/code/execute</span>
+        </summary>
+        <div class="ep-desc">Executes code in a sandboxed environment and returns output.</div>
+        <div class="ep-body">
+          <table class="field-table">
+            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+            <tr><td>code<span class="req-label">required</span></td><td>string</td><td>Code to execute</td></tr>
+            <tr><td>language</td><td>string</td><td><code>python</code>, <code>javascript</code>, <code>bash</code> (default: python)</td></tr>
+            <tr><td>provider</td><td>string</td><td>Execution sandbox provider</td></tr>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <!-- ── BATCH ──────────────────────────────────────────────────────── -->
+    <div id="batch" class="api-group">
+      <h2>Batch Processing</h2>
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method post">POST</span>
+          <span class="ep-path">/v1/batch/submit</span>
+        </summary>
+        <div class="ep-desc">Submits a batch of completion requests at up to 50% cost reduction via OpenAI Batch API or Anthropic Message Batches. Supply <code>callbackUrl</code> for webhook notification when complete.</div>
+        <div class="ep-body">
+          <table class="field-table">
+            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+            <tr><td>requests<span class="req-label">required</span></td><td>array</td><td>Array of completion request objects</td></tr>
+            <tr><td>provider</td><td>string</td><td>e.g. <code>openai</code>, <code>anthropic</code>, <code>auto</code></td></tr>
+            <tr><td>callbackUrl</td><td>string</td><td>Webhook URL for completion notification</td></tr>
+          </table>
+        </div>
+      </details>
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method get">GET</span>
+          <span class="ep-path">/v1/batch/{batchId}/status</span>
+        </summary>
+        <div class="ep-desc">Polls a previously submitted batch job for status and results.</div>
+        <div class="ep-body">
+          <table class="field-table">
+            <tr><th>Param</th><th>Type</th><th>Description</th></tr>
+            <tr><td>batchId</td><td>path string</td><td>Batch ID returned by <code>/v1/batch/submit</code></td></tr>
+            <tr><td>provider</td><td>query string</td><td>Provider that owns the batch job</td></tr>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <!-- ── MEMORY ─────────────────────────────────────────────────────── -->
+    <div id="memory" class="api-group">
+      <h2>Memory</h2>
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method post">POST</span>
+          <span class="ep-path">/v1/memory/store</span>
+        </summary>
+        <div class="ep-desc">Stores a memory fragment for later retrieval via Mem0, Zep, or built-in OASIS holonic memory.</div>
+        <div class="ep-body">
+          <table class="field-table">
+            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+            <tr><td>content<span class="req-label">required</span></td><td>string</td><td>Content to store</td></tr>
+            <tr><td>userId</td><td>string</td><td>User/avatar identifier</td></tr>
+            <tr><td>provider</td><td>string</td><td>e.g. <code>mem0</code>, <code>zep</code>, <code>auto</code></td></tr>
+          </table>
+        </div>
+      </details>
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method post">POST</span>
+          <span class="ep-path">/v1/memory/query</span>
+        </summary>
+        <div class="ep-desc">Semantic search over stored memories for a given user.</div>
+        <div class="ep-body">
+          <table class="field-table">
+            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+            <tr><td>query<span class="req-label">required</span></td><td>string</td><td>Query to search</td></tr>
+            <tr><td>userId</td><td>string</td><td>Scope to a specific user</td></tr>
+            <tr><td>provider</td><td>string</td><td>Memory provider</td></tr>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <!-- ── GUARDRAILS ─────────────────────────────────────────────────── -->
+    <div id="guardrails" class="api-group">
+      <h2>Guardrails</h2>
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method post">POST</span>
+          <span class="ep-path">/v1/guardrails/check</span>
+        </summary>
+        <div class="ep-desc">Checks text against safety and policy guardrails via NeMo Guardrails or compatible providers.</div>
+        <div class="ep-body">
+          <table class="field-table">
+            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+            <tr><td>text<span class="req-label">required</span></td><td>string</td><td>Input to check</td></tr>
+            <tr><td>provider</td><td>string</td><td>e.g. <code>nemo</code>, <code>auto</code></td></tr>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <!-- ── FINE-TUNING ────────────────────────────────────────────────── -->
+    <div id="finetuning" class="api-group">
+      <h2>Fine-Tuning</h2>
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method post">POST</span>
+          <span class="ep-path">/v1/fine-tuning/jobs</span>
+        </summary>
+        <div class="ep-desc">Creates a fine-tuning job. Supply <code>callbackUrl</code> to receive a webhook when training completes.</div>
+        <div class="ep-body">
+          <table class="field-table">
+            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+            <tr><td>baseModel<span class="req-label">required</span></td><td>string</td><td>Base model ID to fine-tune</td></tr>
+            <tr><td>trainingData<span class="req-label">required</span></td><td>array</td><td>Array of training examples</td></tr>
+            <tr><td>provider</td><td>string</td><td>e.g. <code>openai</code>, <code>togetherai</code>, <code>mistral</code></td></tr>
+            <tr><td>callbackUrl</td><td>string</td><td>Webhook URL for training completion</td></tr>
+          </table>
+        </div>
+      </details>
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method get">GET</span>
+          <span class="ep-path">/v1/fine-tuning/jobs/{jobId}</span>
+        </summary>
+        <div class="ep-desc">Gets the status of a fine-tuning job.</div>
+      </details>
+    </div>
+
+    <!-- ── GRAPHRAG ────────────────────────────────────────────────────── -->
+    <div id="graphrag" class="api-group">
+      <h2>GraphRAG</h2>
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method post">POST</span>
+          <span class="ep-path">/v1/graphrag/query</span>
+        </summary>
+        <div class="ep-desc">Graph-based retrieval-augmented generation — answers complex multi-hop questions using a knowledge graph.</div>
+        <div class="ep-body">
+          <table class="field-table">
+            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+            <tr><td>query<span class="req-label">required</span></td><td>string</td><td>Natural language query</td></tr>
+            <tr><td>provider</td><td>string</td><td>e.g. <code>thegraph</code>, <code>neo4j</code>, <code>auto</code></td></tr>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <!-- ── PROMPTS ────────────────────────────────────────────────────── -->
+    <div id="prompts" class="api-group">
+      <h2>Prompt Optimisation</h2>
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method post">POST</span>
+          <span class="ep-path">/v1/prompts/optimise</span>
+        </summary>
+        <div class="ep-desc">Automatically rewrites and improves a prompt using SkillOpt or LLM-based optimisation.</div>
+        <div class="ep-body">
+          <table class="field-table">
+            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+            <tr><td>prompt<span class="req-label">required</span></td><td>string</td><td>Original prompt</td></tr>
+            <tr><td>provider</td><td>string</td><td>Optimisation provider</td></tr>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <!-- ── FAHRN ──────────────────────────────────────────────────────── -->
+    <div id="fahrn" class="api-group">
+      <h2>FAHRN — Reasoning Network</h2>
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method post">POST</span>
+          <span class="ep-path">/v1/reasoning-network/dispatch</span>
+        </summary>
+        <div class="ep-desc">Dispatches a problem through the Fractal Adaptive Holonic Reasoning Network — classifies the task, scores agents, assembles the optimal sub-network, and returns a final answer with a Mermaid execution plan.</div>
+        <div class="ep-body">
+          <table class="field-table">
+            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+            <tr><td>problem<span class="req-label">required</span></td><td>string</td><td>The problem or question to solve</td></tr>
+            <tr><td>taskType</td><td>string</td><td>Task hint e.g. <code>general</code>, <code>code</code>, <code>research</code>, <code>creative</code></td></tr>
+            <tr><td>mode</td><td>string</td><td><code>Serial</code> (default), <code>Parallel</code>, <code>Hybrid</code></td></tr>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <!-- ── MODELS ─────────────────────────────────────────────────────── -->
+    <div id="models" class="api-group">
+      <h2>Model Catalogue</h2>
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method get">GET</span>
+          <span class="ep-path">/v1/models</span>
+        </summary>
+        <div class="ep-desc">Lists all 23+ models in the WEB6 catalogue with pricing, context window, and minimum plan requirement.</div>
+        <div class="ep-body">
+          <table class="field-table">
+            <tr><th>Param</th><th>Type</th><th>Description</th></tr>
+            <tr><td>plan</td><td>query string</td><td>Filter to models accessible on this plan: <code>Free</code>, <code>Bronze</code>, <code>Silver</code>, <code>Gold</code></td></tr>
+          </table>
+          <div class="sub-head">Example response</div>
+<pre>{
+  "total": 23,
+  "models": [
+    {
+      "id": "gpt-4o",
+      "name": "GPT-4o",
+      "providerName": "OpenAI",
+      "minPlanLabel": "Bronze",
+      "inputPer1kUSD": 0.0025,
+      "outputPer1kUSD": 0.01,
+      "contextWindow": 128000,
+      "supportsVision": true,
+      "supportsFunctions": true
+    }
+  ]
+}</pre>
+        </div>
+      </details>
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method get">GET</span>
+          <span class="ep-path">/v1/models/{modelId}</span>
+        </summary>
+        <div class="ep-desc">Returns full detail for a single model.</div>
+      </details>
+    </div>
+
+    <!-- ── PROVIDERS ──────────────────────────────────────────────────── -->
+    <div id="providers-ep" class="api-group">
+      <h2>Provider Status</h2>
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method get">GET</span>
+          <span class="ep-path">/v1/providers</span>
+        </summary>
+        <div class="ep-desc">Returns all 17+ providers with their minimum plan requirement, supported endpoint types, and live status.</div>
+      </details>
+    </div>
+
+    <!-- ── ESTIMATE ───────────────────────────────────────────────────── -->
+    <div id="estimate" class="api-group">
+      <h2>Cost Estimate</h2>
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method post">POST</span>
+          <span class="ep-path">/v1/estimate</span>
+        </summary>
+        <div class="ep-desc">Previews the estimated USD cost of a call before executing it, based on token counts and the provider's current pricing.</div>
+        <div class="ep-body">
+          <table class="field-table">
+            <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+            <tr><td>provider<span class="req-label">required</span></td><td>string</td><td>Provider ID e.g. <code>openai</code></td></tr>
+            <tr><td>model<span class="req-label">required</span></td><td>string</td><td>Model ID e.g. <code>gpt-4o</code></td></tr>
+            <tr><td>promptTokens<span class="req-label">required</span></td><td>integer</td><td>Expected prompt token count</td></tr>
+            <tr><td>completionTokens</td><td>integer</td><td>Expected completion token count (default 0)</td></tr>
+          </table>
+          <div class="sub-head">Response</div>
+<pre>{ "estimatedUSD": 0.001250, "note": "Based on gpt-4o pricing at $0.0025/1K in + $0.01/1K out" }</pre>
+        </div>
+      </details>
+    </div>
+
+    <!-- ── USAGE ──────────────────────────────────────────────────────── -->
+    <div id="usage" class="api-group">
+      <h2>Usage</h2>
+      <details class="ep">
+        <summary class="ep-head">
+          <span class="method get">GET</span>
+          <span class="ep-path">/v1/usage</span>
+        </summary>
+        <div class="ep-desc">Returns this avatar's usage summary — daily calls used, effective call limit (plan × karma multiplier), monthly token spend, and remaining quota today.</div>
+        <div class="ep-body">
+          <table class="field-table">
+            <tr><th>Param</th><th>Type</th><th>Description</th></tr>
+            <tr><td>plan</td><td>query string</td><td>Subscription plan for limit calculation: <code>Free</code>, <code>Bronze</code>, <code>Silver</code>, <code>Gold</code>, <code>Enterprise</code></td></tr>
+            <tr><td>karma</td><td>query integer</td><td>Avatar karma score for multiplier calculation</td></tr>
+          </table>
+          <div class="sub-head">Response</div>
+<pre>{
+  "dailyCallsUsed": 47,
+  "dailyCallLimit": 1500,
+  "remainingCallsToday": 1453,
+  "karmaMultiplier": 3.0,
+  "monthlySpendUSD": 0.042,
+  "dailyTokensUsed": 185000,
+  "periodMonth": "2026-08",
+  "periodDay": "2026-08-23"
+}</pre>
+        </div>
+      </details>
+    </div>
+
+    <!-- ── RATE LIMIT HEADERS ─────────────────────────────────────────── -->
+    <div id="errors" class="api-group">
+      <h2>Rate Limits &amp; Headers</h2>
+      <p style="color:var(--dim);font-size:15px;margin-bottom:20px">Every response includes rate-limit context headers:</p>
+      <table class="field-table" style="background:var(--bg-card);border:1px solid rgba(255,255,255,.07);border-radius:10px;overflow:hidden">
+        <tr><th>Header</th><th>Description</th></tr>
+        <tr><td>X-RateLimit-Limit</td><td>Effective daily call limit for this avatar (plan × karma multiplier)</td></tr>
+        <tr><td>X-RateLimit-Remaining</td><td>Calls remaining today</td></tr>
+        <tr><td>X-RateLimit-Reset</td><td>Unix timestamp of next quota reset (UTC midnight)</td></tr>
+        <tr><td>X-RateLimit-Plan</td><td>Current subscription plan</td></tr>
+        <tr><td>X-Karma-Multiplier</td><td>Karma multiplier applied to base quota (1.0–10.0)</td></tr>
+      </table>
+
+      <p style="color:var(--dim);font-size:15px;margin:28px 0 12px">Quota exceeded returns <code style="color:var(--red)">HTTP 429</code> with <code>Retry-After</code> seconds until midnight UTC.</p>
+      <p style="color:var(--dim);font-size:15px;margin-bottom:8px">All responses use the <code>OASISResult</code> envelope:</p>
+<pre style="margin-top:0">{
+  "isError": false,
+  "message": null,
+  "result": { /* endpoint-specific data */ }
+}</pre>
+    </div>
+
+  </main>
+</div>
+
+<script>
+// Highlight active sidebar link on scroll
+const anchors = document.querySelectorAll('.api-group[id]');
+const links   = document.querySelectorAll('.sidebar-section a[href^="#"]');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      links.forEach(l => l.classList.remove('active'));
+      const a = document.querySelector(`.sidebar-section a[href="#${e.target.id}"]`);
+      if (a) a.classList.add('active');
+    }
+  });
+}, {rootMargin:'-20% 0px -70% 0px'});
+anchors.forEach(a => obs.observe(a));
+</script>
+</body>
+</html>
