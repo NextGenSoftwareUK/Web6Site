@@ -929,7 +929,7 @@ GRAPH_HOLON(τ) {<br>
 
   <h3 id="external-memory">3.8 — External Memory Provider Integration</h3>
 
-  <p>The fractal holon hierarchy is the primary memory substrate of Holonic Braid, but the platform is designed to be <strong>memory-provider-neutral</strong>. Developers who already run Mem0, Zep, Letta/MemGPT, LangMem, Graphiti or Redis Vector Memory can plug these directly into the same pipeline — they sit alongside the holon hierarchy rather than replacing it.</p>
+  <p>The fractal holon hierarchy is the primary memory substrate of Holonic Braid, but the platform is designed to be <strong>memory-provider-neutral</strong>. Developers who already run Mem0, Zep, Letta/MemGPT, LangMem, Graphiti, Qdrant, or Weaviate can plug these directly into the same pipeline — they sit alongside the holon hierarchy rather than replacing it.</p>
 
   <div class="feat-grid">
     <div class="feat-card">
@@ -1586,7 +1586,7 @@ AgentMetadata {<br>
     <div class="feat-card">
       <span class="feat-icon">📡</span>
       <div class="feat-title">PROTOCOL-NEUTRAL ORCHESTRATION</div>
-      <div class="feat-desc">The <code>OrchestratorManager</code> abstracts over MCP (full Streamable HTTP handshake), A2A (Agent Card + task lifecycle), ACP (BeeAI/IBM async run protocol), ANP (decentralised agent discovery via DID documents), gRPC, GraphQL, AsyncAPI/Kafka, LangChain, AutoGen, CrewAI and Semantic Kernel — all behind a single <code>InvokeAsync</code> interface. New protocols are adapters, not rewrites.</div>
+      <div class="feat-desc">The <code>OrchestratorManager</code> abstracts over MCP (full Streamable HTTP handshake), A2A (Agent Card + task lifecycle), ACP (BeeAI/IBM async run protocol), ANP (decentralised agent discovery via DID documents), LangGraph (stateful graph-based workflows), OpenAI Agents SDK / Swarm (structured agent-handoff protocol), Nostr NIP-90 (decentralised Data Vending Machine job requests), gRPC, GraphQL, AsyncAPI/Kafka, AMQP, MQTT, LangChain, AutoGen, CrewAI and Semantic Kernel — all behind a single <code>InvokeAsync</code> interface. New protocols are adapters, not rewrites.</div>
     </div>
     <div class="feat-card">
       <span class="feat-icon">📊</span>
