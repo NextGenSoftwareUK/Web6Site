@@ -585,7 +585,7 @@ GRAPH_HOLON(τ) { Parent: LIBRARY_HOLON.Id; Metadata: { task_type, usage_count, 
 
   <h3>3.8 — External Memory Provider Integration <span class="new-tag">NEW v2.0</span></h3>
 
-  <p>Holonic Braid is <strong>memory-provider-neutral</strong>. Developers running Mem0, Zep, Letta/MemGPT, LangMem, Graphiti or Redis Vector Memory can plug these in directly — they sit alongside the holon hierarchy rather than replacing it.</p>
+  <p>Holonic Braid is <strong>memory-provider-neutral</strong>. Developers running Mem0, Zep, Letta/MemGPT, LangMem, Graphiti, Qdrant, or Weaviate can plug these in directly — they sit alongside the holon hierarchy rather than replacing it.</p>
 
   <div class="grid3">
     <div class="card">
@@ -616,7 +616,8 @@ GRAPH_HOLON(τ) { Parent: LIBRARY_HOLON.Id; Metadata: { task_type, usage_count, 
       <tr><td class="h">Letta / MemGPT</td><td>Stateful agent memory with self-editing context</td><td><code>LETTA_API_KEY</code></td></tr>
       <tr><td class="h">LangMem</td><td>LangGraph-native; cloud REST or in-process</td><td><code>LANGMEM_API_KEY</code></td></tr>
       <tr><td class="h">Graphiti</td><td>Temporal knowledge graph; episode-based memory</td><td><code>GRAPHITI_BASE_URL</code></td></tr>
-      <tr><td class="h">Redis Vector</td><td>Ultra-fast in-process vector search; Redis Stack</td><td><code>REDIS_URL</code></td></tr>
+      <tr><td class="h">Qdrant</td><td>High-performance vector DB; dense cosine search; auto collection creation</td><td><code>QDRANT_URL</code></td></tr>
+      <tr><td class="h">Weaviate</td><td>Vector DB with built-in text2vec; near-text or near-vector search</td><td><code>WEAVIATE_URL</code></td></tr>
     </tbody>
   </table>
 
@@ -1115,7 +1116,7 @@ User / API Input → Controller Agent (Meta-Orchestrator)<br>
     </div>
     <div class="card">
       <div class="card-title">📡 PROTOCOL-NEUTRAL ORCHESTRATION</div>
-      <div class="card-body"><code>OrchestratorManager</code> abstracts over MCP, A2A, ACP, ANP, gRPC, GraphQL, AsyncAPI, LangChain, AutoGen, CrewAI and Semantic Kernel — behind a single <code>InvokeAsync</code> interface.</div>
+      <div class="card-body"><code>OrchestratorManager</code> abstracts over 17 protocols: MCP, A2A, ACP, ANP, LangGraph, OpenAI Agents SDK / Swarm, Nostr NIP-90, gRPC, GraphQL, Kafka, AMQP, MQTT, LangChain, AutoGen, CrewAI, SemanticKernel, Webhook — all behind a single <code>InvokeAsync</code> interface.</div>
     </div>
     <div class="card">
       <div class="card-title">📊 FULL OBSERVABILITY</div>
@@ -1246,7 +1247,7 @@ User / API Input → Controller Agent (Meta-Orchestrator)<br>
       <div class="rcard-phase" style="color:#00c8a8">PHASE 1 — COMPLETE</div>
       <div class="rcard-title">FOUNDATION</div>
       <div class="rcard-items">
-        <div>✓ &nbsp;WEB6 unified AI API — 20+ providers</div>
+        <div>✓ &nbsp;WEB6 unified AI API — 97 providers</div>
         <div>✓ &nbsp;FAHRN Serial / Parallel / Decomposed modes</div>
         <div>✓ &nbsp;Holonic BRAID shared graph library</div>
         <div>✓ &nbsp;COSMIC ORM — 40+ storage providers</div>
@@ -1275,7 +1276,7 @@ User / API Input → Controller Agent (Meta-Orchestrator)<br>
       <div class="rcard-items">
         <div>✓ &nbsp;SkillOpt self-evolving agent skills</div>
         <div>✓ &nbsp;ML.NET in-process AutoML inference</div>
-        <div>✓ &nbsp;ACP / ANP / gRPC / GraphQL / AsyncAPI</div>
+        <div>✓ &nbsp;ACP / ANP / LangGraph / OpenAI Agents SDK / Nostr NIP-90 / gRPC / GraphQL / Kafka / AMQP / MQTT</div>
         <div>✓ &nbsp;Karma-gated AI tier system</div>
         <div>✓ &nbsp;StarNet context enrichment pipeline</div>
         <div>✓ &nbsp;BudgetGuard — per-dispatch cost &amp; token caps</div>
