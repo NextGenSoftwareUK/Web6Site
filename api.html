@@ -728,7 +728,7 @@ data: {"content":"","done":true,"promptTokens":12,"completionTokens":47}</pre>
           <span class="method get">GET</span>
           <span class="ep-path">/v1/providers</span>
         </summary>
-        <div class="ep-desc">Returns all 20+ providers with their minimum plan requirement, supported endpoint types, and live status.</div>
+        <div class="ep-desc">Returns all 97 providers with their minimum plan requirement, supported endpoint types, and live status.</div>
       </details>
     </div>
 
@@ -956,7 +956,7 @@ data: {"content":"","done":true,"promptTokens":12,"completionTokens":47}</pre>
       <p style="color:var(--dim);font-size:15px;margin-bottom:20px">All 35+ tools exposed by the MCP server. Each tool is callable from any MCP client — Claude Code, claude.ai, OpenAI, or your own agent.</p>
       <table class="field-table" style="background:var(--bg-card);border:1px solid rgba(255,255,255,.07);border-radius:10px;overflow:hidden">
         <tr><th>Tool name</th><th>What it does</th></tr>
-        <tr><td>web6_complete</td><td>Chat completion across 20+ providers (auto-routes)</td></tr>
+        <tr><td>web6_complete</td><td>Chat completion across 97 providers (auto-routes)</td></tr>
         <tr><td>web6_fahrn_solve</td><td>Full FAHRN pipeline — classify, dispatch, BRAID, EMA, telemetry in one call</td></tr>
         <tr><td>web6_fahrn_dispatch</td><td>Direct FAHRN dispatch with explicit mode (Serial/Parallel/Decomposed)</td></tr>
         <tr><td>web6_fahrn_register_agent</td><td>Register a new reasoning agent with FAHRN</td></tr>
@@ -981,13 +981,13 @@ data: {"content":"","done":true,"promptTokens":12,"completionTokens":47}</pre>
         <tr><td>web6_memory_external_list_providers</td><td>List registered external memory providers</td></tr>
         <tr><td>web6_orchestrator_register</td><td>Register an external agent/orchestrator endpoint</td></tr>
         <tr><td>web6_orchestrator_list</td><td>List all registered orchestrator adapters</td></tr>
-        <tr><td>web6_orchestrator_invoke</td><td>Invoke a registered orchestrator (MCP/A2A/LangChain/AutoGen/CrewAI)</td></tr>
+        <tr><td>web6_orchestrator_invoke</td><td>Invoke a registered orchestrator (MCP, A2A, ACP, ANP, LangGraph, OpenAI Agents SDK, Nostr NIP-90, LangChain, AutoGen, CrewAI, SemanticKernel, gRPC, GraphQL, Kafka, AMQP, MQTT, Webhook)</td></tr>
         <tr><td>web6_orchestrate_crewai</td><td>Dispatch a CrewAI task list through WEB6 routing</td></tr>
         <tr><td>web6_orchestrate_autogen</td><td>Route an AutoGen conversation initiation through WEB6</td></tr>
         <tr><td>web6_orchestrate_langgraph</td><td>Execute a LangGraph node via WEB6, return updated state</td></tr>
         <tr><td>web6_list_models</td><td>Browse the full model catalogue, filter by plan or capability</td></tr>
         <tr><td>web6_get_model</td><td>Full detail for a single model by ID</td></tr>
-        <tr><td>web6_list_providers</td><td>All 20+ providers with tier, endpoints, and status</td></tr>
+        <tr><td>web6_list_providers</td><td>All 97 providers with tier, endpoints, and status</td></tr>
         <tr><td>web6_estimate_cost</td><td>USD cost estimate before executing a call</td></tr>
         <tr><td>web6_get_usage</td><td>Avatar's daily call count, limit, and monthly spend</td></tr>
         <tr><td>web6_get_avatar_context</td><td>Rich avatar context block — karma, quests, world memberships</td></tr>

@@ -261,7 +261,7 @@ a:hover{filter:drop-shadow(0 0 8px rgba(253,216,53,1)) drop-shadow(0 0 20px rgba
   </div>
   <div style="font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.15em;color:#a8bfd8;text-align:center;margin-bottom:18px">AUGUST 2026</div>
   <div class="hero-tagline">ONE API. EVERY AI.</div>
-  <p class="hero-desc">The unified AI abstraction and aggregation layer — now with self-evolving agent skills (SkillOpt), in-process ML inference (ML.NET), DID/Verifiable Credential identity, karma-gated AI and full ACP/ANP/gRPC/GraphQL protocol support. Built on WEB4 and WEB5, routing intelligently across 100+ providers.</p>
+  <p class="hero-desc">The unified AI abstraction and aggregation layer — self-evolving agent skills (SkillOpt), in-process ML inference (ML.NET), DID/Verifiable Credential identity, karma-gated AI, and 17 orchestrator protocols (MCP, A2A, LangGraph, OpenAI Agents SDK, Nostr NIP-90, ACP, ANP, gRPC, GraphQL, Kafka, AMQP, MQTT, and more). Built on WEB4 and WEB5, routing intelligently across 97 providers.</p>
   <div class="hero-ctas">
     <a href="https://api.web6.oasisomniverse.one" class="btn-primary" target="_blank" rel="noopener">EXPLORE THE API →</a>
     <a href="https://api.web6.oasisomniverse.one/graphql" class="btn-primary" target="_blank" rel="noopener" style="background:linear-gradient(135deg,rgba(0,229,255,.2),rgba(0,229,255,.07));border-color:rgba(0,229,255,.4)">GRAPHQL →</a>
@@ -464,7 +464,7 @@ a:hover{filter:drop-shadow(0 0 8px rgba(253,216,53,1)) drop-shadow(0 0 20px rgba
     <div style="background:linear-gradient(135deg,rgba(0,229,255,.08),rgba(0,229,255,.02));border:1px solid rgba(0,229,255,.25);border-radius:12px;padding:1.5rem">
       <div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.2em;color:#00e5ff;margin-bottom:10px">NEW</div>
       <div style="font-family:'Orbitron',sans-serif;font-size:14px;color:#fff;margin-bottom:10px">MULTI-PROTOCOL ORCHESTRATION</div>
-      <p style="color:#a8bfd8;font-size:.9rem;line-height:1.7">ACP (BeeAI/IBM), ANP (DID-based discovery), gRPC bidirectional streaming, GraphQL subscriptions, and AsyncAPI/Kafka event mesh — all behind a single unified endpoint. FAHRN agents can now be discovered, invoked and coordinated across any agent runtime on the internet.</p>
+      <p style="color:#a8bfd8;font-size:.9rem;line-height:1.7">17 orchestrator protocols — MCP, A2A, ACP (BeeAI/IBM), ANP (DID-based), <strong>LangGraph</strong> (stateful graph workflows), <strong>OpenAI Agents SDK / Swarm</strong> (structured agent handoff), <strong>Nostr NIP-90</strong> (decentralised DVMs), LangChain, AutoGen, CrewAI, SemanticKernel, gRPC, GraphQL, Kafka, AMQP, MQTT, Webhook — all behind a single unified endpoint.</p>
     </div>
 
     <div style="background:linear-gradient(135deg,rgba(160,139,250,.1),rgba(160,139,250,.02));border:1px solid rgba(160,139,250,.25);border-radius:12px;padding:1.5rem">
@@ -530,7 +530,7 @@ a:hover{filter:drop-shadow(0 0 8px rgba(253,216,53,1)) drop-shadow(0 0 20px rgba
     </div>
     <div class="layer-item" style="opacity:.65">
       <div class="layer-dot" style="background:#5050a0;opacity:.6"></div>
-      <div class="layer-label">LangChain &nbsp;·&nbsp; AutoGen &nbsp;·&nbsp; CrewAI &nbsp;·&nbsp; MCP &nbsp;·&nbsp; A2A Protocol &nbsp;·&nbsp; Semantic Kernel</div>
+      <div class="layer-label">LangChain &nbsp;·&nbsp; AutoGen &nbsp;·&nbsp; CrewAI &nbsp;·&nbsp; MCP &nbsp;·&nbsp; A2A &nbsp;·&nbsp; LangGraph &nbsp;·&nbsp; OpenAI Agents SDK &nbsp;·&nbsp; Nostr NIP-90 &nbsp;·&nbsp; Semantic Kernel</div>
       <div class="layer-tag">AGENT FRAMEWORKS</div>
     </div>
   </div>
@@ -748,7 +748,7 @@ a:hover{filter:drop-shadow(0 0 8px rgba(253,216,53,1)) drop-shadow(0 0 20px rgba
     <div class="feature-card">
       <span class="feature-icon">📡</span>
       <div class="feature-title">PROTOCOL NORMALISATION</div>
-      <div class="feature-desc">Abstracts over MCP, A2A, LangChain, AutoGen, CrewAI and Semantic Kernel. Write once against the WEB6 protocol and reach every agent framework.</div>
+      <div class="feature-desc">Abstracts over 17 protocols: MCP, A2A, ACP, ANP, LangGraph, OpenAI Agents SDK, Nostr NIP-90, LangChain, AutoGen, CrewAI, SemanticKernel, gRPC, GraphQL, Kafka, AMQP, MQTT, Webhook. Write once and reach every agent framework.</div>
     </div>
     <div class="feature-card">
       <span class="feature-icon">🛡️</span>
@@ -1563,7 +1563,7 @@ GET  /.well-known/agent.json  — A2A agent card</pre>
         <div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.2em;color:rgba(0,200,80,.6);margin-bottom:18px">COMPLETE · AUGUST 2026</div>
         <div style="display:flex;flex-direction:column;gap:9px">
           <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> MCP HTTP / Streamable HTTP transport — expose OASIS MCP to any cloud host or claude.ai connector</div>
-          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> Streaming SSE — real-time token streaming normalised across all 20+ providers</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> Streaming SSE — real-time token streaming normalised across all 97 providers</div>
           <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> Tool / function calling — unified schema, provider-native translation</div>
           <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> Embeddings endpoint — OpenAI, Cohere, HuggingFace + local; powers RAG and semantic cache</div>
           <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> <code style="font-family:'Share Tech Mono',monospace;color:#00c850">POST /v1/fahrn/solve</code> — single hero endpoint: problem in, reasoned answer + Mermaid plan + telemetry out</div>
