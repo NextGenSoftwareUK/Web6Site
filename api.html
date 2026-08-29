@@ -546,7 +546,7 @@ data: {"content":"","done":true,"promptTokens":12,"completionTokens":47}</pre>
           <span class="method post">POST</span>
           <span class="ep-path">/v1/memory/store</span>
         </summary>
-        <div class="ep-desc">Stores a memory fragment for later retrieval via Mem0, Zep, or built-in OASIS holonic memory.</div>
+        <div class="ep-desc">Stores a memory fragment for later retrieval via Mem0, Zep, Qdrant, Weaviate, or built-in OASIS holonic memory.</div>
         <div class="ep-body">
           <table class="field-table">
             <tr><th>Field</th><th>Type</th><th>Description</th></tr>
@@ -976,7 +976,7 @@ data: {"content":"","done":true,"promptTokens":12,"completionTokens":47}</pre>
         <tr><td>web6_memory_propagate</td><td>Propagate permitted memories up one hop to parent holon</td></tr>
         <tr><td>web6_memory_propagate_up</td><td>Propagate up N hops (or to Earth root)</td></tr>
         <tr><td>web6_memory_search</td><td>Semantic search over memory items in a holon</td></tr>
-        <tr><td>web6_memory_external_search</td><td>Search Mem0, Zep, Letta, LangMem, Graphiti external providers</td></tr>
+        <tr><td>web6_memory_external_search</td><td>Search Mem0, Zep, Letta, LangMem, Graphiti, Qdrant, Weaviate external providers</td></tr>
         <tr><td>web6_memory_external_add</td><td>Add a memory to an external provider (Mem0, Zep, etc.)</td></tr>
         <tr><td>web6_memory_external_list_providers</td><td>List registered external memory providers</td></tr>
         <tr><td>web6_orchestrator_register</td><td>Register an external agent/orchestrator endpoint</td></tr>
