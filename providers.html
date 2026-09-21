@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OASIS WEB6 — 100 AI Providers</title>
+<meta name="description" content="Complete reference for all 100 AI providers supported by OASIS WEB6. Enum keys, environment variables, example models for every provider.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='44' fill='none' stroke='%23fdd835' stroke-width='6'/><circle cx='50' cy='50' r='10' fill='%23fdd835'/><line x1='50' y1='6' x2='50' y2='94' stroke='%23fdd835' stroke-width='2.5' opacity='.4'/><line x1='6' y1='50' x2='94' y2='50' stroke='%23fdd835' stroke-width='2.5' opacity='.4'/></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --purple:#fdd835;--purple-glow:rgba(253,216,53,.18);
+  --cyan:#00e5ff;--gold:#f0a500;
+  --bg-deep:#030714;--bg-card:#0a1535;--bg-card2:#071028;
+  --text:#d0e4ff;--text-dim:#6a80a8;--heading:#ffffff;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg-deep);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 40px;display:flex;align-items:center;justify-content:space-between;background:rgba(3,7,20,.88);backdrop-filter:blur(12px);border-bottom:1px solid rgba(253,216,53,.12)}
+.nav-brand{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;letter-spacing:.22em;color:#fff;text-decoration:none}
+.nav-brand span{color:var(--purple)}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.14em;color:#a8bfd8;text-decoration:none;transition:color .2s;text-transform:uppercase}
+.nav-links a:hover{color:var(--purple)}
+.nav-cta{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--purple);border:1px solid rgba(253,216,53,.35);border-radius:999px;padding:8px 18px;text-decoration:none;transition:background .2s,border-color .2s;white-space:nowrap}
+.nav-cta:hover{background:rgba(253,216,53,.08);border-color:rgba(253,216,53,.6)}
+@media(max-width:768px){
+  nav{padding:16px 20px}
+  .nav-links{display:none}
+  .nav-cta{font-size:10px;padding:6px 14px}
+}
+
+.page-header{padding:140px 40px 56px;text-align:center;position:relative;z-index:1}
+.page-kicker{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.28em;color:var(--purple);margin-bottom:16px}
+.page-title{font-family:'Orbitron',sans-serif;font-size:clamp(28px,5vw,52px);font-weight:900;letter-spacing:.06em;color:#fff;margin-bottom:16px;line-height:1.1}
+.page-sub{font-size:17px;color:#a8bfd8;max-width:680px;margin:0 auto 40px;line-height:1.7}
+
+.stats-row{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-bottom:56px}
+.stat-pill{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.14em;padding:10px 22px;border-radius:999px;border:1px solid;white-space:nowrap}
+.stat-pill.gold{color:var(--purple);border-color:rgba(253,216,53,.4);background:rgba(253,216,53,.07)}
+.stat-pill.cyan{color:var(--cyan);border-color:rgba(0,229,255,.35);background:rgba(0,229,255,.06)}
+.stat-pill.purple{color:#a78bfa;border-color:rgba(167,139,250,.35);background:rgba(167,139,250,.06)}
+
+.filter-bar{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:48px;padding:0 40px}
+.filter-btn{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.16em;color:#a8bfd8;background:transparent;border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:7px 16px;cursor:pointer;transition:all .2s;text-transform:uppercase}
+.filter-btn:hover,.filter-btn.active{color:var(--purple);border-color:rgba(253,216,53,.45);background:rgba(253,216,53,.07)}
+
+.content{max-width:1200px;margin:0 auto;padding:0 40px 120px}
+
+.category-header{display:flex;align-items:center;gap:16px;margin:56px 0 20px}
+.category-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.category-title{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;letter-spacing:.18em;color:#fff}
+.category-count{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.16em;color:var(--text-dim);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:3px 10px}
+.category-line{flex:1;height:1px;background:rgba(255,255,255,.07)}
+
+.provider-table{width:100%;border-collapse:collapse;margin-bottom:8px}
+.provider-table th{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:.2em;color:var(--text-dim);text-transform:uppercase;text-align:left;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
+.provider-table td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle;font-size:15px}
+.provider-table tr:hover td{background:rgba(253,216,53,.03)}
+.provider-table tr:last-child td{border-bottom:none}
+
+.pname{font-weight:600;color:#fff}
+.penum{font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--purple);background:rgba(253,216,53,.07);border:1px solid rgba(253,216,53,.18);border-radius:4px;padding:2px 8px;white-space:nowrap}
+.penv{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--cyan)}
+.pnotes{color:#a8bfd8;font-size:14px}
+
+.usage-section{background:linear-gradient(135deg,rgba(253,216,53,.07),rgba(253,216,53,.02));border:1px solid rgba(253,216,53,.18);border-radius:12px;padding:28px 32px;margin:56px 0 0}
+.usage-title{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;letter-spacing:.16em;color:#fff;margin-bottom:16px}
+pre{background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:18px 20px;overflow-x:auto;font-size:13px;line-height:1.7}
+code{font-family:'Share Tech Mono',monospace;color:#a8bfd8}
+.hl{color:var(--purple)}
+.hl2{color:var(--cyan)}
+.hl3{color:#a78bfa}
+
+footer{text-align:center;padding:48px 20px;color:var(--text-dim);font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.14em;border-top:1px solid rgba(255,255,255,.06)}
+footer a{color:var(--purple);text-decoration:none}
+
+@media(max-width:768px){
+  .page-header{padding:100px 20px 40px}
+  .content{padding:0 16px 80px}
+  .filter-bar{padding:0 16px}
+  .category-header{margin-top:40px}
+  .provider-table td,.provider-table th{padding:8px 10px}
+  .penv{font-size:10px}
+  .usage-section{padding:20px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-brand">OASIS <span>WEB6</span></a>
+  <ul class="nav-links">
+    <li><a href="/">HOME</a></li>
+    <li><a href="/api.html">API DOCS</a></li>
+    <li><a href="/providers.html" style="color:var(--purple)">PROVIDERS</a></li>
+    <li><a href="/sdk.html">SDKS</a></li>
+    <li><a href="/pricing.html">PRICING</a></li>
+  </ul>
+  <a href="https://api.web6.oasisomniverse.one" class="nav-cta" target="_blank" rel="noopener">TRY THE API →</a>
+</nav>
+
+<div class="page-header">
+  <div class="page-kicker">PROVIDER REFERENCE</div>
+  <h1 class="page-title">100 AI <span style="color:var(--purple)">Providers</span></h1>
+  <p class="page-sub">Every provider OASIS WEB6 routes to. Pass any <code style="font-family:'Share Tech Mono',monospace;color:var(--cyan)">AIProviderType</code> enum value as <code style="font-family:'Share Tech Mono',monospace;color:var(--cyan)">"provider"</code> in your request, or use <code style="font-family:'Share Tech Mono',monospace;color:var(--purple)">"Auto"</code> for intelligent routing.</p>
+  <div class="stats-row">
+    <span class="stat-pill gold">100 AI PROVIDERS</span>
+    <span class="stat-pill cyan">22 ORCHESTRATOR PROTOCOLS</span>
+    <span class="stat-pill purple">AUTO ROUTING &amp; FAILOVER</span>
+  </div>
+</div>
+
+<div class="filter-bar">
+  <button class="filter-btn active" data-filter="all">ALL (100)</button>
+  <button class="filter-btn" data-filter="core">CORE CLOUD (10)</button>
+  <button class="filter-btn" data-filter="fast">FAST / SPECIALIST (18)</button>
+  <button class="filter-btn" data-filter="aggregator">AGGREGATORS (4)</button>
+  <button class="filter-btn" data-filter="enterprise">ENTERPRISE (11)</button>
+  <button class="filter-btn" data-filter="local">SELF-HOSTED (10)</button>
+  <button class="filter-btn" data-filter="community">COMMUNITY (9)</button>
+  <button class="filter-btn" data-filter="decentralised">DECENTRALISED (3)</button>
+  <button class="filter-btn" data-filter="apac">CHINESE / APAC (13)</button>
+  <button class="filter-btn" data-filter="image">IMAGE (5)</button>
+  <button class="filter-btn" data-filter="video">VIDEO (7)</button>
+  <button class="filter-btn" data-filter="voice">VOICE (4)</button>
+  <button class="filter-btn" data-filter="european">EUROPEAN (2)</button>
+</div>
+
+<div class="content">
+
+<!-- CORE CLOUD -->
+<div class="category-header" data-category="core">
+  <div class="category-dot" style="background:#fdd835"></div>
+  <div class="category-title">CORE CLOUD LLMs</div>
+  <div class="category-count">10 providers</div>
+  <div class="category-line"></div>
+</div>
+<table class="provider-table" data-category="core">
+  <tr><th>Provider</th><th>Enum</th><th>Env Var</th><th>Models / Notes</th></tr>
+  <tr><td class="pname">OpenAI</td><td><span class="penum">OpenAI</span></td><td class="penv">OPENAI_API_KEY</td><td class="pnotes">gpt-4o, gpt-4o-mini, o3, o4-mini</td></tr>
+  <tr><td class="pname">Anthropic</td><td><span class="penum">Anthropic</span></td><td class="penv">ANTHROPIC_API_KEY</td><td class="pnotes">claude-opus-5, claude-sonnet-5, claude-haiku-4-5</td></tr>
+  <tr><td class="pname">Google Gemini</td><td><span class="penum">Gemini</span></td><td class="penv">GEMINI_API_KEY</td><td class="pnotes">gemini-2.5-pro, gemini-2.5-flash</td></tr>
+  <tr><td class="pname">xAI (Grok)</td><td><span class="penum">XAI</span></td><td class="penv">XAI_API_KEY</td><td class="pnotes">grok-3, grok-3-mini</td></tr>
+  <tr><td class="pname">DeepSeek</td><td><span class="penum">DeepSeek</span></td><td class="penv">DEEPSEEK_API_KEY</td><td class="pnotes">deepseek-chat, deepseek-reasoner</td></tr>
+  <tr><td class="pname">Mistral</td><td><span class="penum">Mistral</span></td><td class="penv">MISTRAL_API_KEY</td><td class="pnotes">mistral-large-latest, mistral-small</td></tr>
+  <tr><td class="pname">Cohere</td><td><span class="penum">Cohere</span></td><td class="penv">COHERE_API_KEY</td><td class="pnotes">command-r-plus, command-r</td></tr>
+  <tr><td class="pname">Meta Llama API</td><td><span class="penum">MetaLlamaAPI</span></td><td class="penv">META_LLAMA_API_KEY</td><td class="pnotes">Llama-4-Scout, Llama-3.3-70B</td></tr>
+  <tr><td class="pname">Groq</td><td><span class="penum">Groq</span></td><td class="penv">GROQ_API_KEY</td><td class="pnotes">llama-3.3-70b-versatile, deepseek-r1</td></tr>
+  <tr><td class="pname">Perplexity</td><td><span class="penum">Perplexity</span></td><td class="penv">PERPLEXITY_API_KEY</td><td class="pnotes">sonar-pro, sonar-reasoning</td></tr>
+</table>
+
+<!-- FAST / SPECIALIST -->
+<div class="category-header" data-category="fast">
+  <div class="category-dot" style="background:#00e5ff"></div>
+  <div class="category-title">FAST / SPECIALIST INFERENCE</div>
+  <div class="category-count">18 providers</div>
+  <div class="category-line"></div>
+</div>
+<table class="provider-table" data-category="fast">
+  <tr><th>Provider</th><th>Enum</th><th>Env Var</th><th>Notes</th></tr>
+  <tr><td class="pname">Cerebras</td><td><span class="penum">Cerebras</span></td><td class="penv">CEREBRAS_API_KEY</td><td class="pnotes">~3000 tok/s, fastest available</td></tr>
+  <tr><td class="pname">SambaNova</td><td><span class="penum">SambaNova</span></td><td class="penv">SAMBANOVA_API_KEY</td><td class="pnotes">Full-precision Llama 405B</td></tr>
+  <tr><td class="pname">Together AI</td><td><span class="penum">TogetherAI</span></td><td class="penv">TOGETHER_API_KEY</td><td class="pnotes">100+ open models</td></tr>
+  <tr><td class="pname">Fireworks AI</td><td><span class="penum">FireworksAI</span></td><td class="penv">FIREWORKS_API_KEY</td><td class="pnotes">Fast open model inference</td></tr>
+  <tr><td class="pname">Lepton AI</td><td><span class="penum">LeptonAI</span></td><td class="penv">LEPTON_API_KEY</td><td class="pnotes">Fast, cheap open models</td></tr>
+  <tr><td class="pname">Hyperbolic</td><td><span class="penum">Hyperbolic</span></td><td class="penv">HYPERBOLIC_API_KEY</td><td class="pnotes">GPU cloud, throughput-optimised</td></tr>
+  <tr><td class="pname">DeepInfra</td><td><span class="penum">DeepInfra</span></td><td class="penv">DEEPINFRA_API_KEY</td><td class="pnotes">Serverless, 50+ models</td></tr>
+  <tr><td class="pname">Lambda Labs</td><td><span class="penum">LambdaLabs</span></td><td class="penv">LAMBDA_API_KEY</td><td class="pnotes">GPU cloud inference</td></tr>
+  <tr><td class="pname">Modal</td><td><span class="penum">Modal</span></td><td class="penv">MODAL_TOKEN_ID + MODAL_TOKEN_SECRET</td><td class="pnotes">Serverless Python-native</td></tr>
+  <tr><td class="pname">OctoAI</td><td><span class="penum">OctoAI</span></td><td class="penv">OCTOAI_API_KEY</td><td class="pnotes">Llama, Mistral, Qwen, image</td></tr>
+  <tr><td class="pname">Replicate</td><td><span class="penum">Replicate</span></td><td class="penv">REPLICATE_API_KEY</td><td class="pnotes">Open-source model marketplace</td></tr>
+  <tr><td class="pname">Moonshot AI</td><td><span class="penum">MoonshotAI</span></td><td class="penv">MOONSHOT_API_KEY</td><td class="pnotes">128k context (Kimi)</td></tr>
+  <tr><td class="pname">Predibase</td><td><span class="penum">Predibase</span></td><td class="penv">PREDIBASE_API_KEY</td><td class="pnotes">LoRA fine-tuned model inference</td></tr>
+  <tr><td class="pname">OpenPipe</td><td><span class="penum">OpenPipe</span></td><td class="penv">OPENPIPE_API_KEY</td><td class="pnotes">Fine-tuned model hosting</td></tr>
+  <tr><td class="pname">FriendliAI</td><td><span class="penum">FriendliAI</span></td><td class="penv">FRIENDLI_API_KEY</td><td class="pnotes">Enterprise-grade inference</td></tr>
+  <tr><td class="pname">RunPod</td><td><span class="penum">RunPod</span></td><td class="penv">RUNPOD_API_KEY + RUNPOD_ENDPOINT_ID</td><td class="pnotes">GPU cloud serverless endpoints</td></tr>
+  <tr><td class="pname">Baseten</td><td><span class="penum">Baseten</span></td><td class="penv">BASETEN_API_KEY + BASETEN_MODEL_ID</td><td class="pnotes">Deploy any HuggingFace model</td></tr>
+  <tr><td class="pname">NLP Cloud</td><td><span class="penum">NLPCloud</span></td><td class="penv">NLPCLOUD_API_KEY</td><td class="pnotes">Affordable multi-model API</td></tr>
+</table>
+
+<!-- AGGREGATOR GATEWAYS -->
+<div class="category-header" data-category="aggregator">
+  <div class="category-dot" style="background:#a78bfa"></div>
+  <div class="category-title">AGGREGATOR GATEWAYS</div>
+  <div class="category-count">4 providers</div>
+  <div class="category-line"></div>
+</div>
+<table class="provider-table" data-category="aggregator">
+  <tr><th>Provider</th><th>Enum</th><th>Env Var</th><th>Notes</th></tr>
+  <tr><td class="pname">OpenRouter</td><td><span class="penum">OpenRouter</span></td><td class="penv">OPENROUTER_API_KEY</td><td class="pnotes">300+ models via one key</td></tr>
+  <tr><td class="pname">OrcaRouter</td><td><span class="penum">OrcaRouter</span></td><td class="penv">ORCAROUTER_API_KEY</td><td class="pnotes">Privacy-focused, uncensored</td></tr>
+  <tr><td class="pname">OpenServ</td><td><span class="penum">OpenServ</span></td><td class="penv">SERV_API_KEY</td><td class="pnotes">SERV catalog via OpenAI-compat</td></tr>
+  <tr><td class="pname">HuggingFace</td><td><span class="penum">HuggingFace</span></td><td class="penv">HUGGINGFACE_API_KEY</td><td class="pnotes">Inference Endpoints</td></tr>
+</table>
+
+<!-- ENTERPRISE -->
+<div class="category-header" data-category="enterprise">
+  <div class="category-dot" style="background:#f0a500"></div>
+  <div class="category-title">ENTERPRISE</div>
+  <div class="category-count">11 providers</div>
+  <div class="category-line"></div>
+</div>
+<table class="provider-table" data-category="enterprise">
+  <tr><th>Provider</th><th>Enum</th><th>Env Var</th><th>Notes</th></tr>
+  <tr><td class="pname">AWS Bedrock</td><td><span class="penum">AWSBedrock</span></td><td class="penv">AWS_ACCESS_KEY_ID + AWS_SECRET_ACCESS_KEY</td><td class="pnotes">Claude, Llama, Titan, Nova</td></tr>
+  <tr><td class="pname">Azure OpenAI</td><td><span class="penum">AzureOpenAI</span></td><td class="penv">AZURE_OPENAI_API_KEY</td><td class="pnotes">OpenAI models on Azure</td></tr>
+  <tr><td class="pname">Google Vertex AI</td><td><span class="penum">GoogleVertexAI</span></td><td class="penv">GOOGLE_APPLICATION_CREDENTIALS</td><td class="pnotes">Gemini + PaLM + third-party</td></tr>
+  <tr><td class="pname">IBM WatsonX.ai</td><td><span class="penum">IBMWatsonX</span></td><td class="penv">WATSONX_API_KEY + WATSONX_PROJECT_ID</td><td class="pnotes">Granite, Llama, Mistral</td></tr>
+  <tr><td class="pname">Snowflake Cortex</td><td><span class="penum">SnowflakeCortex</span></td><td class="penv">SNOWFLAKE_ACCOUNT + credentials</td><td class="pnotes">SQL-native LLM functions</td></tr>
+  <tr><td class="pname">Databricks Serving</td><td><span class="penum">DatabricksServing</span></td><td class="penv">DATABRICKS_HOST + DATABRICKS_TOKEN</td><td class="pnotes">DBRX and custom models</td></tr>
+  <tr><td class="pname">Cloudflare Workers AI</td><td><span class="penum">CloudflareWorkersAI</span></td><td class="penv">CLOUDFLARE_ACCOUNT_ID + CLOUDFLARE_API_KEY</td><td class="pnotes">Edge inference, ~100ms cold start</td></tr>
+  <tr><td class="pname">Writer</td><td><span class="penum">Writer</span></td><td class="penv">WRITER_API_KEY</td><td class="pnotes">Palmyra enterprise LLMs</td></tr>
+  <tr><td class="pname">AI21 Labs</td><td><span class="penum">AI21Labs</span></td><td class="penv">AI21_API_KEY</td><td class="pnotes">Jamba (SSM) + Jurassic</td></tr>
+  <tr><td class="pname">Reka AI</td><td><span class="penum">RekaAI</span></td><td class="penv">REKA_API_KEY</td><td class="pnotes">Reka Core/Flash/Edge multimodal</td></tr>
+  <tr><td class="pname">Inflection AI</td><td><span class="penum">InflectionAI</span></td><td class="penv">INFLECTION_API_KEY</td><td class="pnotes">Inflection-3 / Pi conversational</td></tr>
+</table>
+
+<!-- SELF-HOSTED / LOCAL -->
+<div class="category-header" data-category="local">
+  <div class="category-dot" style="background:#4ade80"></div>
+  <div class="category-title">SELF-HOSTED / LOCAL</div>
+  <div class="category-count">10 providers</div>
+  <div class="category-line"></div>
+</div>
+<table class="provider-table" data-category="local">
+  <tr><th>Provider</th><th>Enum</th><th>Env Var / URL</th><th>Default Endpoint</th></tr>
+  <tr><td class="pname">Ollama</td><td><span class="penum">Ollama</span></td><td class="penv">—</td><td class="pnotes">http://localhost:11434</td></tr>
+  <tr><td class="pname">LM Studio</td><td><span class="penum">LMStudio</span></td><td class="penv">LM_STUDIO_BASE_URL</td><td class="pnotes">http://localhost:1234</td></tr>
+  <tr><td class="pname">vLLM</td><td><span class="penum">VLLM</span></td><td class="penv">VLLM_BASE_URL</td><td class="pnotes">http://localhost:8000</td></tr>
+  <tr><td class="pname">HuggingFace TGI</td><td><span class="penum">TGI</span></td><td class="penv">TGI_BASE_URL</td><td class="pnotes">http://localhost:8080</td></tr>
+  <tr><td class="pname">Jan</td><td><span class="penum">Jan</span></td><td class="penv">JAN_BASE_URL</td><td class="pnotes">http://localhost:1337</td></tr>
+  <tr><td class="pname">Llamafile</td><td><span class="penum">Llamafile</span></td><td class="penv">LLAMAFILE_BASE_URL</td><td class="pnotes">http://localhost:8080</td></tr>
+  <tr><td class="pname">GPT4All</td><td><span class="penum">GPT4All</span></td><td class="penv">GPT4ALL_BASE_URL</td><td class="pnotes">http://localhost:4891</td></tr>
+  <tr><td class="pname">EXO</td><td><span class="penum">EXO</span></td><td class="penv">EXO_BASE_URL</td><td class="pnotes">http://localhost:52415 — distributed cluster</td></tr>
+  <tr><td class="pname">ComfyUI</td><td><span class="penum">ComfyUI</span></td><td class="penv">COMFYUI_BASE_URL</td><td class="pnotes">http://localhost:8188 — image generation</td></tr>
+  <tr><td class="pname">Custom</td><td><span class="penum">Custom</span></td><td class="penv">CUSTOM_AI_API_KEY</td><td class="pnotes">Set BaseUrl in OASIS_DNA.json CustomProviders</td></tr>
+</table>
+
+<!-- AFFORDABLE / COMMUNITY -->
+<div class="category-header" data-category="community">
+  <div class="category-dot" style="background:#fb923c"></div>
+  <div class="category-title">AFFORDABLE / COMMUNITY</div>
+  <div class="category-count">9 providers</div>
+  <div class="category-line"></div>
+</div>
+<table class="provider-table" data-category="community">
+  <tr><th>Provider</th><th>Enum</th><th>Env Var</th><th>Notes</th></tr>
+  <tr><td class="pname">Venice AI</td><td><span class="penum">VeniceAI</span></td><td class="penv">VENICE_API_KEY</td><td class="pnotes">Privacy-first, uncensored, zero logging</td></tr>
+  <tr><td class="pname">Kluster.ai</td><td><span class="penum">KlusterAI</span></td><td class="penv">KLUSTER_API_KEY</td><td class="pnotes">OpenAI-compat aggregator</td></tr>
+  <tr><td class="pname">Novita AI</td><td><span class="penum">NovitaAI</span></td><td class="penv">NOVITA_API_KEY</td><td class="pnotes">Affordable GPU inference</td></tr>
+  <tr><td class="pname">Featherless</td><td><span class="penum">Featherless</span></td><td class="penv">FEATHERLESS_API_KEY</td><td class="pnotes">Hundreds of HuggingFace models</td></tr>
+  <tr><td class="pname">Inference.net</td><td><span class="penum">InferenceNet</span></td><td class="penv">INFERENCENET_API_KEY</td><td class="pnotes">Low-latency serverless</td></tr>
+  <tr><td class="pname">Chutes AI</td><td><span class="penum">ChutesAI</span></td><td class="penv">CHUTES_API_KEY</td><td class="pnotes">Low-cost open model inference</td></tr>
+  <tr><td class="pname">Mancer AI</td><td><span class="penum">MancerAI</span></td><td class="penv">MANCER_API_KEY</td><td class="pnotes">Uncensored open models</td></tr>
+  <tr><td class="pname">AI Horde</td><td><span class="penum">AIHorde</span></td><td class="penv">AIHORDE_API_KEY (optional)</td><td class="pnotes">Free volunteer-powered, decentralised</td></tr>
+  <tr><td class="pname">TensorArt</td><td><span class="penum">TensorArt</span></td><td class="penv">TENSORART_API_KEY</td><td class="pnotes">Image + LLM inference</td></tr>
+</table>
+
+<!-- DECENTRALISED -->
+<div class="category-header" data-category="decentralised">
+  <div class="category-dot" style="background:#e879f9"></div>
+  <div class="category-title">DECENTRALISED</div>
+  <div class="category-count">3 providers</div>
+  <div class="category-line"></div>
+</div>
+<table class="provider-table" data-category="decentralised">
+  <tr><th>Provider</th><th>Enum</th><th>Env Var</th><th>Notes</th></tr>
+  <tr><td class="pname">Bittensor</td><td><span class="penum">Bittensor</span></td><td class="penv">BITTENSOR_API_KEY</td><td class="pnotes">Corcel API or direct subnet</td></tr>
+  <tr><td class="pname">GaiaNet</td><td><span class="penum">GaiaNet</span></td><td class="penv">GAIANET_NODE_URL</td><td class="pnotes">Community-run model nodes</td></tr>
+  <tr><td class="pname">Leela AI</td><td><span class="penum">LeelaAI</span></td><td class="penv">LEELA_API_KEY + LEELA_BASE_URL</td><td class="pnotes">Spiritual/karmic-pattern reasoning</td></tr>
+</table>
+
+<!-- CHINESE / APAC -->
+<div class="category-header" data-category="apac">
+  <div class="category-dot" style="background:#38bdf8"></div>
+  <div class="category-title">CHINESE / ASIA-PACIFIC LLMs</div>
+  <div class="category-count">13 providers</div>
+  <div class="category-line"></div>
+</div>
+<table class="provider-table" data-category="apac">
+  <tr><th>Provider</th><th>Enum</th><th>Env Var</th><th>Example Models</th></tr>
+  <tr><td class="pname">Alibaba Qwen</td><td><span class="penum">AlibabaQwen</span></td><td class="penv">DASHSCOPE_API_KEY</td><td class="pnotes">Qwen-Max, Qwen2.5, QwQ</td></tr>
+  <tr><td class="pname">Doubao (ByteDance)</td><td><span class="penum">Doubao</span></td><td class="penv">DOUBAO_API_KEY</td><td class="pnotes">Doubao-Pro, Seed-Thinking</td></tr>
+  <tr><td class="pname">MiniMax</td><td><span class="penum">MiniMax</span></td><td class="penv">MINIMAX_API_KEY + MINIMAX_GROUP_ID</td><td class="pnotes">abab7, 1M-context</td></tr>
+  <tr><td class="pname">Zhipu AI</td><td><span class="penum">ZhipuAI</span></td><td class="penv">ZHIPU_API_KEY</td><td class="pnotes">GLM-4, CogVideo, CogView</td></tr>
+  <tr><td class="pname">Stepfun</td><td><span class="penum">Stepfun</span></td><td class="penv">STEPFUN_API_KEY</td><td class="pnotes">Step-1o, Step-2 reasoning</td></tr>
+  <tr><td class="pname">Baidu ERNIE</td><td><span class="penum">BaiduERNIE</span></td><td class="penv">BAIDU_API_KEY + BAIDU_SECRET_KEY</td><td class="pnotes">ERNIE-4.5, ERNIE-Speed</td></tr>
+  <tr><td class="pname">01.AI (Yi)</td><td><span class="penum">YiAI</span></td><td class="penv">YIAI_API_KEY</td><td class="pnotes">Yi-Lightning, Yi-Large</td></tr>
+  <tr><td class="pname">Tencent Hunyuan</td><td><span class="penum">TencentHunyuan</span></td><td class="penv">HUNYUAN_SECRET_ID + HUNYUAN_SECRET_KEY</td><td class="pnotes">Hunyuan-Pro, Hunyuan-Vision</td></tr>
+  <tr><td class="pname">IFLYTEK Spark</td><td><span class="penum">SparkAI</span></td><td class="penv">SPARK_APP_ID + SPARK_API_KEY</td><td class="pnotes">Spark4.0 Ultra</td></tr>
+  <tr><td class="pname">Naver HyperCLOVA X</td><td><span class="penum">HyperCLOVAX</span></td><td class="penv">CLOVA_API_KEY + CLOVA_APIGW_KEY</td><td class="pnotes">HCX-003 Korean/English</td></tr>
+  <tr><td class="pname">LG EXAONE</td><td><span class="penum">EXAONE</span></td><td class="penv">EXAONE_API_KEY + EXAONE_BASE_URL</td><td class="pnotes">EXAONE-3.5-32B bilingual</td></tr>
+  <tr><td class="pname">JAIS</td><td><span class="penum">JAIS</span></td><td class="penv">JAIS_API_KEY + JAIS_BASE_URL</td><td class="pnotes">JAIS-Adapted-70B Arabic/English</td></tr>
+  <tr><td class="pname">AI71 / Falcon</td><td><span class="penum">AI71</span></td><td class="penv">AI71_API_KEY</td><td class="pnotes">Falcon-180B, Falcon-2-11B</td></tr>
+</table>
+
+<!-- IMAGE GENERATION -->
+<div class="category-header" data-category="image">
+  <div class="category-dot" style="background:#f472b6"></div>
+  <div class="category-title">IMAGE GENERATION</div>
+  <div class="category-count">5 providers</div>
+  <div class="category-line"></div>
+</div>
+<table class="provider-table" data-category="image">
+  <tr><th>Provider</th><th>Enum</th><th>Env Var</th><th>Notes</th></tr>
+  <tr><td class="pname">StabilityAI</td><td><span class="penum">StabilityAI</span></td><td class="penv">STABILITY_API_KEY</td><td class="pnotes">Stable Diffusion, SDXL</td></tr>
+  <tr><td class="pname">Black Forest Labs</td><td><span class="penum">BlackForestLabs</span></td><td class="penv">BFL_API_KEY</td><td class="pnotes">Flux.1 Pro/Dev/Schnell</td></tr>
+  <tr><td class="pname">Ideogram</td><td><span class="penum">Ideogram</span></td><td class="penv">IDEOGRAM_API_KEY</td><td class="pnotes">Accurate text rendering</td></tr>
+  <tr><td class="pname">Leonardo AI</td><td><span class="penum">LeonardoAI</span></td><td class="penv">LEONARDOAI_API_KEY</td><td class="pnotes">Creative fine-tuned models</td></tr>
+  <tr><td class="pname">xAI Aurora</td><td><span class="penum">XAIAurora</span></td><td class="penv">XAI_API_KEY (shared)</td><td class="pnotes">Aurora image generation</td></tr>
+</table>
+
+<!-- VIDEO GENERATION -->
+<div class="category-header" data-category="video">
+  <div class="category-dot" style="background:#c084fc"></div>
+  <div class="category-title">VIDEO GENERATION</div>
+  <div class="category-count">7 providers</div>
+  <div class="category-line"></div>
+</div>
+<table class="provider-table" data-category="video">
+  <tr><th>Provider</th><th>Enum</th><th>Env Var</th><th>Notes</th></tr>
+  <tr><td class="pname">Runway ML</td><td><span class="penum">RunwayML</span></td><td class="penv">RUNWAY_API_KEY</td><td class="pnotes">Gen-3 Alpha/Turbo</td></tr>
+  <tr><td class="pname">Luma AI</td><td><span class="penum">LumaAI</span></td><td class="penv">LUMA_API_KEY</td><td class="pnotes">Dream Machine text/image-to-video</td></tr>
+  <tr><td class="pname">Pika Labs</td><td><span class="penum">PikaLabs</span></td><td class="penv">PIKA_API_KEY</td><td class="pnotes">Pika 2.1</td></tr>
+  <tr><td class="pname">Kling AI</td><td><span class="penum">KlingAI</span></td><td class="penv">KLING_API_KEY</td><td class="pnotes">Kling 1.6 (Kuaishou)</td></tr>
+  <tr><td class="pname">Hailuo AI</td><td><span class="penum">HailuoAI</span></td><td class="penv">MINIMAX_API_KEY + MINIMAX_GROUP_ID</td><td class="pnotes">MiniMax Video</td></tr>
+  <tr><td class="pname">Vidu</td><td><span class="penum">Vidu</span></td><td class="penv">VIDU_API_KEY</td><td class="pnotes">Shengshu Technology</td></tr>
+  <tr><td class="pname">Wan Video</td><td><span class="penum">WanVideo</span></td><td class="penv">DASHSCOPE_API_KEY</td><td class="pnotes">Wan 2.1 (Alibaba)</td></tr>
+</table>
+
+<!-- VOICE & SPEECH -->
+<div class="category-header" data-category="voice">
+  <div class="category-dot" style="background:#34d399"></div>
+  <div class="category-title">VOICE &amp; SPEECH</div>
+  <div class="category-count">4 providers</div>
+  <div class="category-line"></div>
+</div>
+<table class="provider-table" data-category="voice">
+  <tr><th>Provider</th><th>Enum</th><th>Env Var</th><th>Notes</th></tr>
+  <tr><td class="pname">ElevenLabs</td><td><span class="penum">ElevenLabs</span></td><td class="penv">ELEVENLABS_API_KEY</td><td class="pnotes">TTS, voice cloning, speech-to-speech</td></tr>
+  <tr><td class="pname">AssemblyAI</td><td><span class="penum">AssemblyAI</span></td><td class="penv">ASSEMBLYAI_API_KEY</td><td class="pnotes">STT, diarisation, LeMUR</td></tr>
+  <tr><td class="pname">Deepgram</td><td><span class="penum">Deepgram</span></td><td class="penv">DEEPGRAM_API_KEY</td><td class="pnotes">Real-time STT, Nova-3, Aura TTS</td></tr>
+  <tr><td class="pname">PlayHT</td><td><span class="penum">PlayHT</span></td><td class="penv">PLAYHT_USER_ID + PLAYHT_API_KEY</td><td class="pnotes">High-quality TTS and voice cloning</td></tr>
+</table>
+
+<!-- EUROPEAN / SOVEREIGN -->
+<div class="category-header" data-category="european">
+  <div class="category-dot" style="background:#60a5fa"></div>
+  <div class="category-title">EUROPEAN / SOVEREIGN</div>
+  <div class="category-count">2 providers</div>
+  <div class="category-line"></div>
+</div>
+<table class="provider-table" data-category="european">
+  <tr><th>Provider</th><th>Enum</th><th>Env Var</th><th>Notes</th></tr>
+  <tr><td class="pname">Aleph Alpha</td><td><span class="penum">AlephAlpha</span></td><td class="penv">ALEPHALPHA_API_KEY</td><td class="pnotes">Luminous — GDPR-native German AI</td></tr>
+  <tr><td class="pname">Arcee AI</td><td><span class="penum">ArceeAI</span></td><td class="penv">ARCEE_API_KEY</td><td class="pnotes">Small, cost-efficient specialist models</td></tr>
+</table>
+
+<!-- USAGE EXAMPLE -->
+<div class="usage-section">
+  <div class="usage-title">QUICK START — USING A PROVIDER</div>
+  <pre><code><span class="hl3">// Select any provider by its enum name:</span>
+POST https://api.web6.oasisomniverse.one/v1/complete
+{
+  <span class="hl">"provider"</span>: <span class="hl2">"Groq"</span>,
+  <span class="hl">"model"</span>:    <span class="hl2">"llama-3.3-70b-versatile"</span>,
+  <span class="hl">"messages"</span>: [{ <span class="hl">"role"</span>: <span class="hl2">"user"</span>, <span class="hl">"content"</span>: <span class="hl2">"Hello!"</span> }]
+}
+
+<span class="hl3">// Let WEB6 auto-route to the fastest available provider:</span>
+{
+  <span class="hl">"provider"</span>: <span class="hl2">"Auto"</span>,
+  <span class="hl">"messages"</span>: [{ <span class="hl">"role"</span>: <span class="hl2">"user"</span>, <span class="hl">"content"</span>: <span class="hl2">"Hello!"</span> }]
+}
+
+<span class="hl3">// List all 100 providers with plan requirements and status:</span>
+GET https://api.web6.oasisomniverse.one/v1/providers</code></pre>
+</div>
+
+</div><!-- /content -->
+
+<footer>
+  <p><a href="/">OASIS WEB6</a> &nbsp;·&nbsp; <a href="/api.html">API DOCS</a> &nbsp;·&nbsp; <a href="/sdk.html">SDKS</a> &nbsp;·&nbsp; <a href="/pricing.html">PRICING</a></p>
+  <p style="margin-top:10px;color:rgba(106,128,168,.5)">© 2026 NextGenSoftware / OASIS Omniverse</p>
+</footer>
+
+<script>
+const btns = document.querySelectorAll('.filter-btn');
+const cats = document.querySelectorAll('[data-category]');
+btns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    btns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.filter;
+    cats.forEach(el => {
+      el.style.display = (f === 'all' || el.dataset.category === f) ? '' : 'none';
+    });
+  });
+});
+</script>
+</body>
+</html>
