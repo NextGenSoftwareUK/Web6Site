@@ -152,8 +152,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:13px 32px;display:fl
 
 <div class="auth-card" style="max-width:900px">
   <label>OASIS Avatar Key</label>
-  <input type="password" id="jwt" placeholder="Bearer token — leave blank for anonymous read-only calls">
-  <div class="auth-note">GET endpoints are open. POST endpoints need a key. <a href="https://web6.oasisomniverse.one" target="_blank">Get one free →</a></div>
+  <input type="password" id="jwt" autocomplete="off" placeholder="WEB4 OASIS JWT (required for live API calls)">
+  <div class="auth-note">WEB6 uses your existing WEB4 avatar identity. This page sends the token only to <code>api.web6.oasisomniverse.one</code> and never stores it. Obtain a JWT from the <a href="https://api.web4.oasisomniverse.one/swagger" target="_blank" rel="noopener">WEB4 API</a>.</div>
 </div>
 
 <div class="tabs-row">
@@ -204,7 +204,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:13px 32px;display:fl
       </div>
 
       <div class="mrow" id="b-met" style="display:none">
-        <div class="met"><div class="mv g" id="bm-cached">—</div><div class="ml">Graph Cached</div></div>
+        <div class="met"><div class="mv g" id="bm-cached">-</div><div class="ml">Response Cache</div></div>
         <div class="met"><div class="mv c" id="bm-gm">—</div><div class="ml">Generator Model</div></div>
         <div class="met"><div class="mv c" id="bm-sm">—</div><div class="ml">Solver Model</div></div>
         <div class="met"><div class="mv" id="bm-v">—</div><div class="ml">Version</div></div>
@@ -221,17 +221,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:13px 32px;display:fl
   <div class="panel" id="panel-fahrn">
     <div class="card">
       <div class="ct">FAHRN Agent Registry</div>
-      <div class="cs">Seed the network from OpenServ's live SERV catalogue, then inspect agent karma scores.</div>
+      <div class="cs">Load the OpenServ SERV model catalogue, then inspect the authenticated avatar's FAHRN agent registry.</div>
       <div class="sb hide" id="f-ssb"><span class="dot pulse"></span><span id="f-ssbt"></span></div>
       <div class="brow">
-        <button class="btn bc" onclick="seedOS()">Seed from OpenServ</button>
+        <button class="btn bc" onclick="loadOpenServCatalog()">Load OpenServ Catalog</button>
         <button class="btn bg" onclick="listAgents()">List Agents</button>
       </div>
       <div class="alist" id="alist"></div>
     </div>
 
     <div class="card">
-      <div class="ct">FAHRN Dispatch via web6.fahrn.solve()</div>
+      <div class="ct">FAHRN Dispatch via web6.fahrnSolve.solve()</div>
       <div class="cs">Hero endpoint: classifies task, picks best agents, dispatches in chosen mode, returns answer + reasoning trace.</div>
 
       <div class="fl"><label>Problem</label>
@@ -248,13 +248,15 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:13px 32px;display:fl
             <option value="decomposed">decomposed — multi-domain</option>
           </select>
         </div>
-        <div class="fl"><label>Provider Preference</label>
-          <select id="f-prov">
-            <option value="auto">auto — WEB6 picks best</option>
-            <option value="openserv">openserv</option>
-            <option value="anthropic">anthropic</option>
-            <option value="openai">openai</option>
-            <option value="gemini">gemini</option>
+        <div class="fl"><label>Task Type</label>
+          <select id="f-tt">
+            <option value="auto">auto — classify task</option>
+            <option value="architecture">architecture</option>
+            <option value="reasoning">reasoning</option>
+            <option value="mathematics">mathematics</option>
+            <option value="code">code</option>
+            <option value="writing">writing</option>
+            <option value="legal">legal</option>
           </select>
         </div>
       </div>
@@ -401,11 +403,11 @@ const { result } = await web6.completion.complete({
   Routing: { Priority: 'cost', Fallback: true },
 });
 
-console.log(result.Content);
-console.log(`$${result.CostUsd} via ${result.Provider}/${result.Model}`);</div>
+console.log(result.content);
+console.log(`$${result.estimatedCostUSD} via ${result.provider}/${result.model}`);</div>
 
       <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--gold);margin-bottom:8px">FAHRN Multi-Agent Dispatch</div>
-      <div class="snippet">const { result } = await web6.fahrn.solve({
+      <div class="snippet">const { result } = await web6.fahrnSolve.solve({
   Problem: 'Design a zero-downtime Postgres migration for a 50M-row table',
   TaskType: 'architecture',
   Mode: 'Parallel',          // Serial | Parallel | Debate | Voting | Decomposed
@@ -413,15 +415,16 @@ console.log(`$${result.CostUsd} via ${result.Provider}/${result.Model}`);</div>
   MaxCostUsd: 0.50,
 });
 
-console.log(result.Answer);
-console.log('Agents used:', result.AgentsUsed);
-console.log('BRAID graph reused:', result.BraidGraphReused);</div>
+console.log(result.answer);
+console.log('Agents used:', result.agentsUsed);
+console.log('BRAID graph reused:', result.braidGraphWasReused);</div>
 
       <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--gold);margin-bottom:8px">OpenServ Provider — one SERV key, all models</div>
-      <div class="snippet">// Seed the agent registry from OpenServ's live SERV catalogue
-await fetch('https://api.web6.oasisomniverse.one/v1/reasoning-network/agents/seed-openserv',
-  { method: 'POST', headers: { Authorization: 'Bearer &lt;key&gt;', 'Content-Type': 'application/json' }, body: '{}' }
+      <div class="snippet">// Read OpenServ's live model catalogue (authenticated)
+const response = await fetch('https://api.web6.oasisomniverse.one/v1/openserv/models',
+  { headers: { Authorization: 'Bearer &lt;your-oasis-jwt&gt;' } }
 );
+const models = await response.json();
 
 // Route a completion through OpenServ
 const { result } = await web6.completion.complete({
@@ -445,22 +448,30 @@ for await (const chunk of stream) {
 </div><!-- /panels -->
 
 <script type="module">
-import { Web6Client } from 'https://esm.sh/@oasisomniverse/web6-api';
+import { Web6Client } from 'https://esm.sh/@oasisomniverse/web6-api@2.1.1';
 
 const BASE = 'https://api.web6.oasisomniverse.one';
-let web6 = null;
-
 function client() {
   const jwt = document.getElementById('jwt').value.trim();
-  if (!web6) web6 = new Web6Client({ baseUrl: BASE });
-  if (jwt) web6.setToken(jwt.startsWith('Bearer ') ? jwt.slice(7) : jwt);
+  if (!jwt) throw new Error('Enter a WEB4 OASIS JWT first.');
+  const web6 = new Web6Client({ baseUrl: BASE });
+  web6.setToken(jwt.startsWith('Bearer ') ? jwt.slice(7) : jwt);
   return web6;
 }
-function hdrs(write = false) {
+function hdrs() {
   const jwt = document.getElementById('jwt').value.trim();
+  if (!jwt) throw new Error('Enter a WEB4 OASIS JWT first.');
   const h = { 'Content-Type': 'application/json' };
-  if (jwt) h['Authorization'] = jwt.startsWith('Bearer ') ? jwt : 'Bearer ' + jwt;
+  h['Authorization'] = jwt.startsWith('Bearer ') ? jwt : 'Bearer ' + jwt;
   return h;
+}
+async function apiJson(url, options = {}) {
+  const response = await fetch(url, options);
+  let data;
+  try { data = await response.json(); }
+  catch { throw new Error(`API returned ${response.status} without JSON.`); }
+  if (!response.ok || data?.isError) throw new Error(data?.message || `API request failed (${response.status}).`);
+  return data;
 }
 function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
 
@@ -490,9 +501,8 @@ window.braidFetch = async () => {
   document.getElementById('b-mmd').classList.remove('show');
   document.getElementById('b-out').classList.remove('show');
   try {
-    const r = await fetch(`${BASE}/v1/holonic-braid/graph/${tt}`, { headers: hdrs() });
-    const d = await r.json();
-    if (d.isError || !d.result) {
+    const d = await apiJson(`${BASE}/v1/holonic-braid/graph/${tt}`, { headers: hdrs() });
+    if (!d.result) {
       sb('b-sb','b-sbt','No graph stored for this task type yet. Run a FAHRN Solve to generate one.','err'); return;
     }
     const g = d.result;
@@ -500,14 +510,14 @@ window.braidFetch = async () => {
     document.getElementById('bm-gm').textContent = g.generatedByModel || '—';
     document.getElementById('bm-sm').textContent = 'auto-solver';
     document.getElementById('bm-v').textContent = g.version ?? '—';
-    document.getElementById('bm-runs').textContent = g.solverCount ?? '—';
-    document.getElementById('bm-acc').textContent = g.accuracyScore != null ? (g.accuracyScore*100).toFixed(1)+'%' : '—';
+    document.getElementById('bm-runs').textContent = g.timesReused ?? '-';
+    document.getElementById('bm-acc').textContent = g.avgSolverAccuracy != null ? (g.avgSolverAccuracy*100).toFixed(1)+'%' : '-';
     document.getElementById('b-met').style.display = '';
     document.getElementById('bn-gen').className = 'bn gen';
     document.getElementById('bn-sol').className = 'bn sol';
     document.getElementById('barr').className = 'barr lit';
     if (g.mermaidDiagram) showMmd('b-mmd', g.mermaidDiagram);
-    sb('b-sb','b-sbt',`Graph found — v${g.version}, ${g.solverCount??0} solver runs, accuracy ${g.accuracyScore!=null?(g.accuracyScore*100).toFixed(1)+'%':'n/a'}`,'ok');
+    sb('b-sb','b-sbt',`Graph found - v${g.version}, reused ${g.timesReused??0} times, accuracy ${g.avgSolverAccuracy!=null?(g.avgSolverAccuracy*100).toFixed(1)+'%':'n/a'}`,'ok');
   } catch(e) { sb('b-sb','b-sbt','Error: '+e.message,'err') }
 };
 
@@ -516,53 +526,51 @@ window.braidSolve = async () => {
   sb('b-sb','b-sbt','Calling web6.completion.complete() with UseHolonicBraid=true…');
   document.getElementById('b-out').classList.remove('show');
   try {
-    const { result } = await client().completion.complete({
+    const response = await client().completion.complete({
       Provider: 'auto', Model: 'auto',
       Messages: [{ Role: 'user', Content: `Solve a sample ${tt} problem using the BRAID reasoning graph.` }],
-      UseHolonicBraid: true, UseFAHRN: false,
+      UseHolonicBraid: true, UseFAHRN: false, FahrnTaskType: tt,
       Routing: { Priority: 'cost', Fallback: true },
     });
-    document.getElementById('bm-cached').textContent = 'YES';
-    document.getElementById('bm-gm').textContent = result.Model || '—';
-    document.getElementById('bm-sm').textContent = result.Model || '—';
+    if (response.isError || !response.result) throw new Error(response.message || 'Completion failed.');
+    const result = response.result;
+    document.getElementById('bm-cached').textContent = result.fromCache ? 'HIT' : 'MISS';
+    document.getElementById('bm-gm').textContent = result.model || '-';
+    document.getElementById('bm-sm').textContent = result.model || '-';
     document.getElementById('b-met').style.display = '';
-    show('b-out', result.Content || JSON.stringify(result, null, 2));
-    sb('b-sb','b-sbt',`Done · ${result.TotalTokens??'?'} tokens · $${(result.CostUsd??0).toFixed(5)} · ${result.Provider}/${result.Model}`,'ok');
+    show('b-out', result.content || JSON.stringify(result, null, 2));
+    const tokens = (result.promptTokens ?? 0) + (result.completionTokens ?? 0);
+    sb('b-sb','b-sbt',`Done - ${tokens} tokens - $${(result.estimatedCostUSD??0).toFixed(5)} - ${result.provider}/${result.model}`,'ok');
   } catch(e) { sb('b-sb','b-sbt','Error: '+e.message,'err') }
 };
 
 // ─── FAHRN ───
-window.seedOS = async () => {
-  sb('f-ssb','f-ssbt','Seeding agent registry from OpenServ SERV catalogue…');
+window.loadOpenServCatalog = async () => {
+  sb('f-ssb','f-ssbt','Loading OpenServ model catalogue…');
   try {
-    const r = await fetch(`${BASE}/v1/reasoning-network/agents/seed-openserv`,
-      { method:'POST', headers:hdrs(true), body:'{}' });
-    const d = await r.json();
-    if (d.isError) { sb('f-ssb','f-ssbt',d.message,'err'); return; }
-    sb('f-ssb','f-ssbt','OpenServ agents seeded. Fetching list…','ok');
-    window.listAgents();
+    const d = await apiJson(`${BASE}/v1/openserv/models`, { headers:hdrs() });
+    const models = Array.isArray(d.result) ? d.result : (Array.isArray(d) ? d : []);
+    sb('f-ssb','f-ssbt',`${models.length} OpenServ models available.`,'ok');
   } catch(e) { sb('f-ssb','f-ssbt','Error: '+e.message,'err') }
 };
 
 window.listAgents = async () => {
   sb('f-ssb','f-ssbt','Loading agent registry…');
   try {
-    const r = await fetch(`${BASE}/v1/reasoning-network/agents`, { headers:hdrs() });
-    const d = await r.json();
-    if (d.isError) { sb('f-ssb','f-ssbt',d.message,'err'); return; }
+    const d = await apiJson(`${BASE}/v1/reasoning-network/agents`, { headers:hdrs() });
     const agents = Array.isArray(d.result) ? d.result : [];
     const list = document.getElementById('alist');
     if (!agents.length) {
-      list.innerHTML = '<div style="font-size:12px;color:var(--text);padding:6px">No agents yet — click Seed from OpenServ.</div>';
+      list.innerHTML = '<div style="font-size:12px;color:var(--text);padding:6px">No agents are currently registered.</div>';
     } else {
       list.innerHTML = agents.slice(0,14).map(a => `
         <div class="ai">
           <div>
-            <div class="an">${esc(a.name||a.id)}</div>
+            <div class="an">${esc(a.agentName||a.id)}</div>
             <div class="am">${esc(a.model||'')}${a.taskTypes?.length?' · '+a.taskTypes.join(', '):''}</div>
           </div>
           <div style="display:flex;align-items:center;gap:9px">
-            <span class="ak">${a.karmaScore!=null?a.karmaScore.toFixed(2):'—'}</span>
+            <span class="ak">${a.tasksCompleted??0} tasks</span>
             <span class="ap ${a.provider==='openserv'?'os':''}">${esc(a.provider||'')}</span>
           </div>
         </div>`).join('');
@@ -574,41 +582,40 @@ window.listAgents = async () => {
 
 window.fEstimate = async () => {
   const mode = document.getElementById('f-mode').value.split(' ')[0];
+  const taskType = document.getElementById('f-tt').value;
   sb('f-sb','f-sbt','Fetching budget estimate (dry-run, no agents called)…');
   try {
-    const r = await fetch(`${BASE}/v1/fahrn/budget-estimate?taskType=general&mode=${mode}&agentCount=3`, { headers:hdrs() });
-    const d = await r.json();
-    if (d.isError) { sb('f-sb','f-sbt',d.message,'err'); return; }
-    const res = d.result;
-    sb('f-sb','f-sbt',`Estimate: ~${res.estimatedTokens} tokens · ~$${(res.estimatedCostUsd??0).toFixed(4)} · ${res.agentCount} agents · ${res.mode}`,'ok');
+    const res = await apiJson(`${BASE}/v1/fahrn/budget-estimate?taskType=${encodeURIComponent(taskType)}&mode=${mode}&agentCount=3`, { headers:hdrs() });
+    sb('f-sb','f-sbt',`Estimate: ~${res.estimatedTotalTokens} tokens - ~$${(res.estimatedCostUsd??0).toFixed(4)} - ${res.agentCount} agents - ${res.modeAssumed}`,'ok');
   } catch(e) { sb('f-sb','f-sbt','Error: '+e.message,'err') }
 };
 
 window.fSolve = async () => {
   const problem = document.getElementById('f-prob').value.trim();
   const mode = document.getElementById('f-mode').value.split(' ')[0];
-  const prov = document.getElementById('f-prov').value;
+  const taskType = document.getElementById('f-tt').value;
   if (!problem) { sb('f-sb','f-sbt','Enter a problem first.','err'); return; }
-  sb('f-sb','f-sbt',`Dispatching via web6.fahrn.solve() · mode=${mode}…`);
+  sb('f-sb','f-sbt',`Dispatching via web6.fahrnSolve.solve() - mode=${mode}...`);
   document.getElementById('f-met').style.display = 'none';
   document.getElementById('f-out').classList.remove('show');
   document.getElementById('f-trace').classList.remove('show');
   try {
-    const args = { Problem: problem, Mode: mode, MaxTotalTokens: 8000, MaxCostUsd: 1.0, BudgetExceededBehaviour: 'best_so_far' };
-    if (prov !== 'auto') args.Provider = prov;
-    const { result } = await client().fahrn.solve(args);
+    const args = { Problem: problem, TaskType: taskType, Mode: mode, MaxTotalTokens: 8000, MaxCostUsd: 1.0, BudgetExceededBehaviour: 'best_so_far' };
+    const response = await client().fahrnSolve.solve(args);
+    if (response.isError || !response.result) throw new Error(response.message || 'FAHRN solve failed.');
+    const result = response.result;
     liveUpdate(result);
-    document.getElementById('fm-mode').textContent = result.DispatchMode || mode;
-    document.getElementById('fm-agents').textContent = Array.isArray(result.AgentsUsed) ? result.AgentsUsed.length : '—';
-    document.getElementById('fm-tok').textContent = result.TokensUsedTotal ?? '—';
-    document.getElementById('fm-cost').textContent = result.CostUsdTotal!=null ? '$'+result.CostUsdTotal.toFixed(4) : '—';
-    document.getElementById('fm-braid').textContent = result.BraidGraphReused ? 'YES' : 'NO';
-    document.getElementById('fm-tt').textContent = result.TaskType || '—';
+    document.getElementById('fm-mode').textContent = result.modeUsed || mode;
+    document.getElementById('fm-agents').textContent = Array.isArray(result.agentsUsed) ? result.agentsUsed.length : '-';
+    document.getElementById('fm-tok').textContent = result.totalTokensUsed ?? '-';
+    document.getElementById('fm-cost').textContent = '-';
+    document.getElementById('fm-braid').textContent = result.braidGraphWasReused ? 'YES' : 'NO';
+    document.getElementById('fm-tt').textContent = result.taskTypeClassified || taskType;
     document.getElementById('f-met').style.display = '';
-    show('f-out', result.Answer || JSON.stringify(result, null, 2));
-    if (result.ReasoningTrace) { const t=document.getElementById('f-trace'); t.textContent=result.ReasoningTrace; t.classList.add('show') }
-    const ag = Array.isArray(result.AgentsUsed) ? result.AgentsUsed.join(', ') : '—';
-    sb('f-sb','f-sbt',`Done · ${result.TokensUsedTotal??'?'} tokens · $${(result.CostUsdTotal??0).toFixed(4)} · agents: ${ag}`,'ok');
+    show('f-out', result.answer || JSON.stringify(result, null, 2));
+    if (result.reasoningTrace) { const t=document.getElementById('f-trace'); t.textContent=result.reasoningTrace; t.classList.add('show') }
+    const ag = Array.isArray(result.agentsUsed) ? result.agentsUsed.join(', ') : '-';
+    sb('f-sb','f-sbt',`Done - ${result.totalTokensUsed??'?'} tokens - cost not reported - agents: ${ag}`,'ok');
   } catch(e) { sb('f-sb','f-sbt','Error: '+e.message,'err') }
 };
 
@@ -642,9 +649,7 @@ drawTree(null);
 window.loadEarth = async () => {
   sb('m-sb','m-sbt','Loading Earth holon…');
   try {
-    const r = await fetch(`${BASE}/v1/holonic-memory/earth`, { headers:hdrs() });
-    const d = await r.json();
-    if (d.isError) { sb('m-sb','m-sbt',d.message,'err'); return; }
+    const d = await apiJson(`${BASE}/v1/holonic-memory/earth`, { headers:hdrs() });
     if (d.result?.id) hids['Earth'] = d.result.id;
     drawTree('Earth');
     sb('m-sb','m-sbt',`Earth holon: ${d.result?.id||'ok'}`,'ok');
@@ -656,9 +661,7 @@ window.mkUser = async () => {
   let url = `${BASE}/v1/holonic-memory/holons?level=User&name=OpenServDemoUser`;
   if (hids['Earth']) url += `&parentHolonId=${hids['Earth']}`;
   try {
-    const r = await fetch(url, { method:'POST', headers:hdrs(true), body:'{}' });
-    const d = await r.json();
-    if (d.isError) { sb('m-sb','m-sbt',d.message,'err'); return; }
+    const d = await apiJson(url, { method:'POST', headers:hdrs(), body:'{}' });
     if (d.result?.id) { hids['User']=d.result.id; document.getElementById('m-hid').value=d.result.id }
     drawTree('User');
     sb('m-sb','m-sbt',`User holon: ${d.result?.id||'ok'}`,'ok');
@@ -670,12 +673,10 @@ window.writeMem = async () => {
   if (!hid) { sb('mw-sb','mw-sbt','Paste a Holon ID first.','err'); return; }
   sb('mw-sb','mw-sbt','Writing memory item…');
   try {
-    const r = await fetch(`${BASE}/v1/holonic-memory/holons/${hid}/memory`, {
-      method:'POST', headers:hdrs(true),
+    const d = await apiJson(`${BASE}/v1/holonic-memory/holons/${hid}/memory`, {
+      method:'POST', headers:hdrs(),
       body: JSON.stringify({ fieldName:document.getElementById('m-field').value||'topic', value:document.getElementById('m-val').value, tags:['openserv-demo','braid'], retentionPolicy:document.getElementById('m-ret').value })
     });
-    const d = await r.json();
-    if (d.isError) { sb('mw-sb','mw-sbt',d.message,'err'); return; }
     const lev = Object.entries(hids).find(([,v])=>v===hid)?.[0];
     if (lev) { hstored.add(lev); drawTree(lev) }
     show('m-out', JSON.stringify(d.result, null, 2));
@@ -689,9 +690,7 @@ window.searchMem = async () => {
   if (!hid) { sb('mw-sb','mw-sbt','Paste a Holon ID first.','err'); return; }
   sb('mw-sb','mw-sbt','Semantic search…');
   try {
-    const r = await fetch(`${BASE}/v1/holonic-memory/holons/${hid}/memory/search?q=${encodeURIComponent(q)}&topK=5`, { headers:hdrs() });
-    const d = await r.json();
-    if (d.isError) { sb('mw-sb','mw-sbt',d.message,'err'); return; }
+    const d = await apiJson(`${BASE}/v1/holonic-memory/holons/${hid}/memory/search?q=${encodeURIComponent(q)}&topK=5`, { headers:hdrs() });
     show('m-out', JSON.stringify(d.result, null, 2));
     sb('mw-sb','mw-sbt',`${Array.isArray(d.result)?d.result.length:'?'} results for "${q}"`,'ok');
   } catch(e) { sb('mw-sb','mw-sbt','Error: '+e.message,'err') }
@@ -702,9 +701,7 @@ window.propagate = async () => {
   if (!hid) { sb('mw-sb','mw-sbt','Paste a Holon ID first.','err'); return; }
   sb('mw-sb','mw-sbt','Propagating up the fractal hierarchy…');
   try {
-    const r = await fetch(`${BASE}/v1/holonic-memory/holons/${hid}/propagate-up?levels=3`, { method:'POST', headers:hdrs(true), body:'{}' });
-    const d = await r.json();
-    if (d.isError) { sb('mw-sb','mw-sbt',d.message,'err'); return; }
+    const d = await apiJson(`${BASE}/v1/holonic-memory/holons/${hid}/propagate-up?levels=3`, { method:'POST', headers:hdrs(), body:'{}' });
     sb('mw-sb','mw-sbt',`${d.result??0} items propagated up 3 holon levels.`,'ok');
   } catch(e) { sb('mw-sb','mw-sbt','Error: '+e.message,'err') }
 };
@@ -712,12 +709,12 @@ window.propagate = async () => {
 // ─── COST ───
 function liveUpdate(res) {
   if (!res) return;
-  document.getElementById('l-tok').textContent = res.TokensUsedTotal ?? '—';
-  document.getElementById('l-cost').textContent = res.CostUsdTotal!=null ? '$'+res.CostUsdTotal.toFixed(4) : '—';
-  document.getElementById('l-agents').textContent = Array.isArray(res.AgentsUsed) ? res.AgentsUsed.length : '—';
-  document.getElementById('l-mode').textContent = res.DispatchMode || '—';
-  document.getElementById('l-braid').textContent = res.BraidGraphReused ? 'YES' : 'NO';
-  document.getElementById('l-prov').textContent = Array.isArray(res.AgentsUsed) && res.AgentsUsed.length ? res.AgentsUsed[0] : '—';
+  document.getElementById('l-tok').textContent = res.totalTokensUsed ?? '-';
+  document.getElementById('l-cost').textContent = '-';
+  document.getElementById('l-agents').textContent = Array.isArray(res.agentsUsed) ? res.agentsUsed.length : '-';
+  document.getElementById('l-mode').textContent = res.modeUsed || '-';
+  document.getElementById('l-braid').textContent = res.braidGraphWasReused ? 'YES' : 'NO';
+  document.getElementById('l-prov').textContent = Array.isArray(res.providers) && res.providers.length ? res.providers.join(', ') : '-';
 }
 
 window.calcCost = () => {
@@ -743,7 +740,7 @@ window.calcCost = () => {
   document.getElementById('cgrid').style.display='';
   document.getElementById('sbanner').style.display='';
 };
-calcCost();
+window.calcCost();
 </script>
 </body>
 </html>
