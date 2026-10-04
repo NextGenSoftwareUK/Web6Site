@@ -1401,13 +1401,12 @@ Authorization: Bearer &lt;your-oasis-avatar-key&gt;
     </div>
 
     <div style="background:rgba(167,139,250,.07);border:1px solid rgba(167,139,250,.2);border-radius:12px;padding:20px 28px;max-width:720px;margin:0 auto 48px;text-align:left">
-      <div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.18em;color:#a78bfa;margin-bottom:10px">HTTP MCP TRANSPORT — CLOUD & REMOTE ACCESS</div>
-      <p style="color:#a8bfd8;font-size:.85rem;line-height:1.7;margin:0 0 12px">The MCP server also runs as an HTTP endpoint built into the WEB6 REST API — for cloud-hosted agents, <code style="color:#e2e8f0;background:rgba(255,255,255,.08);padding:1px 5px;border-radius:4px">claude.ai</code> connectors, and any client that cannot use stdio:</p>
-      <pre style="background:rgba(0,0,0,.3);border-radius:8px;padding:14px;font-size:.8rem;color:#c8ddf0;overflow-x:auto;margin:0 0 12px">GET  /mcp                     — SSE stream (HTTP MCP transport)
-POST /mcp                     — MCP JSON-RPC tool calls
+      <div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.18em;color:#a78bfa;margin-bottom:10px">HOSTED MCP — CLOUD, REMOTE & IDE ACCESS</div>
+      <p style="color:#a8bfd8;font-size:.85rem;line-height:1.7;margin:0 0 12px">All 512 MCP tools run in the WEB6 API at <code style="color:#e2e8f0;background:rgba(255,255,255,.08);padding:1px 5px;border-radius:4px">/mcp</code>, for cloud-hosted agents, <code style="color:#e2e8f0;background:rgba(255,255,255,.08);padding:1px 5px;border-radius:4px">claude.ai</code> connectors, and IDEs (the <code style="color:#e2e8f0;background:rgba(255,255,255,.08);padding:1px 5px;border-radius:4px">oasis-mcp</code> command is a proxy to it). Every tool call runs as the avatar in your bearer token and is billed to your OASIS subscription:</p>
+      <pre style="background:rgba(0,0,0,.3);border-radius:8px;padding:14px;font-size:.8rem;color:#c8ddf0;overflow-x:auto;margin:0 0 12px">POST /mcp                     — MCP JSON-RPC (Streamable HTTP, Authorization: Bearer)
 GET  /.well-known/mcp.json    — auto-discovery document
 GET  /.well-known/agent.json  — A2A agent card</pre>
-      <p style="color:#a8bfd8;font-size:.82rem;margin:0">These endpoints are <strong style="color:#e2e8f0">not shown in the Swagger UI</strong> — they use SSE/streaming transports the interactive explorer cannot represent. Point your MCP client at the discovery URL and it configures itself automatically. Full details in the <a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/WEB6/NextGenSoftware.OASIS.MCP.Server/README.md" target="_blank" rel="noopener" style="color:#a78bfa">MCP Server README</a>.</p>
+      <p style="color:#a8bfd8;font-size:.82rem;margin:0">These endpoints are <strong style="color:#e2e8f0">not shown in the Swagger UI</strong> — they use streaming transports the interactive explorer cannot represent. Send an Idempotency-Key per tool call so retries are never billed twice. Point your MCP client at the discovery URL and it configures itself automatically. Full details in the <a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/WEB6/NextGenSoftware.OASIS.MCP.Server/README.md" target="_blank" rel="noopener" style="color:#a78bfa">MCP Server README</a>.</p>
     </div>
 
     <div style="text-align:center;margin-bottom:56px">
@@ -1544,7 +1543,7 @@ GET  /.well-known/agent.json  — A2A agent card</pre>
           <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> 99 AI providers unified under one REST endpoint</div>
           <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> FAHRN — controller agent, composite scoring, Serial / Parallel / Decomposed modes, EMA continuous learning</div>
           <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> Holonic BRAID — shared reasoning graph library, fractal memory hierarchy, cross-chain persistence</div>
-          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> OASIS MCP server — 512 tools across WEB4–WEB10, in-process, zero HTTP overhead</div>
+          <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> OASIS MCP server — 512 tools across WEB4–WEB10, hosted, caller-bound and metered by your WEB4 subscription</div>
           <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> OrchestratorManager — MCP, A2A, LangChain, AutoGen, CrewAI, Semantic Kernel behind one interface</div>
           <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> OpenServ SERV gateway — one API key reaches GPT-5, Claude, Gemini, Grok, Qwen, DeepSeek</div>
           <div style="font-size:15px;color:#c8ddf0;display:flex;gap:10px"><span style="color:#00c850">✓</span> Image generation (StabilityAI + OpenAI), JWT auth, OASIS DNA config</div>
@@ -1816,4 +1815,3 @@ document.querySelectorAll('.nav-links a').forEach(function(a){
 
 </body>
 </html>
-
