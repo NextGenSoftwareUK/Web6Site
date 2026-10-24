@@ -212,6 +212,16 @@ footer a:hover,.foot-col ul li a:hover{color:#fdd835;filter:drop-shadow(0 0 8px 
 }
 a{transition:filter .3s ease,color .3s ease}
 a:hover{filter:drop-shadow(0 0 8px rgba(253,216,53,1)) drop-shadow(0 0 20px rgba(253,216,53,.8)) drop-shadow(0 0 40px rgba(253,216,53,.4))}
+.stack-mobile{display:none;list-style:none;padding:0;margin:0}
+@media(max-width:720px){
+.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+#stack-canvas{display:none!important}
+.stack-mobile{display:flex;flex-direction:column;gap:28px}
+.stack-mobile li{position:relative;border:1px solid var(--stack-color);border-radius:12px;padding:20px 14px;text-align:center;background:#0d1222;min-width:0}
+.stack-mobile li+li::before{content:'↓';position:absolute;top:-27px;left:50%;transform:translateX(-50%);font-size:22px;color:var(--stack-color)}
+.stack-mobile strong{display:block;font-family:'Orbitron',sans-serif;font-size:13px;line-height:1.6;color:var(--stack-color)}
+.stack-mobile span{display:block;margin-top:8px;font-family:'Share Tech Mono',monospace;font-size:13px;line-height:1.65;color:#c8ddf0;overflow-wrap:anywhere}
+}
 </style>
 </head>
 <body>
@@ -262,7 +272,7 @@ a:hover{filter:drop-shadow(0 0 8px rgba(253,216,53,1)) drop-shadow(0 0 20px rgba
   </div>
   <div style="font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.15em;color:#a8bfd8;text-align:center;margin-bottom:18px">AUGUST 2026</div>
   <div class="hero-tagline">ONE API. EVERY AI.</div>
-  <p class="hero-desc">The unified AI abstraction and aggregation layer — self-evolving agent skills (SkillOpt), in-process ML inference (ML.NET), DID/Verifiable Credential identity, karma-gated AI, and 22 orchestrator protocols (MCP, A2A, ACP, ANP, LangGraph, OpenAI Agents SDK, Nostr NIP-90, LangChain, AutoGen, CrewAI, SemanticKernel, BeeAgent, Temporal, Dapr, NATSJetStream, gRPC, GraphQL, Kafka, AMQP, MQTT, Webhook, and more). Built on WEB4 and WEB5, routing intelligently across 98 providers (27 billable today).</p>
+  <p class="hero-desc">The unified AI abstraction and aggregation layer — self-evolving agent skills (SkillOpt), in-process ML inference (ML.NET), DID/Verifiable Credential identity, karma-gated AI, and 22 orchestrator protocols (MCP, A2A, ACP, ANP, LangGraph, OpenAI Agents SDK, Nostr NIP-90, LangChain, AutoGen, CrewAI, SemanticKernel, BeeAgent, Temporal, Dapr, NATSJetStream, gRPC, GraphQL, Kafka, AMQP, MQTT, Webhook, and more). Built on WEB4 and WEB5, routing intelligently across 98 providers (27 billable today), including OpenServ.</p>
   <div class="hero-ctas">
     <a href="https://api.web6.oasisomniverse.one" class="btn-primary" target="_blank" rel="noopener">EXPLORE THE API →</a>
     <a href="https://api.web6.oasisomniverse.one/graphql" class="btn-primary" target="_blank" rel="noopener" style="background:linear-gradient(135deg,rgba(0,229,255,.2),rgba(0,229,255,.07));border-color:rgba(0,229,255,.4)">GRAPHQL →</a>
@@ -412,13 +422,13 @@ a:hover{filter:drop-shadow(0 0 8px rgba(253,216,53,1)) drop-shadow(0 0 20px rgba
 
 <!-- ── STATS BAND ── -->
 <section class="section" style="padding-top:0;padding-bottom:56px">
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.2);border-radius:12px;overflow:hidden;max-width:960px;margin:0 auto">
+  <div class="stats-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.2);border-radius:12px;overflow:hidden;max-width:960px;margin:0 auto">
     <div style="background:#0d0d1a;padding:28px 18px;text-align:center">
       <div style="font-family:'Orbitron',sans-serif;font-size:clamp(22px,3vw,34px);font-weight:900;color:#fdd835;margin-bottom:6px">100</div>
       <div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.18em;color:#a8bfd8">AI MODEL<br>PROVIDERS</div>
     </div>
     <div style="background:#0d0d1a;padding:28px 18px;text-align:center">
-      <div style="font-family:'Orbitron',sans-serif;font-size:clamp(22px,3vw,34px);font-weight:900;color:#00e5ff;margin-bottom:6px"507</div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:clamp(22px,3vw,34px);font-weight:900;color:#00e5ff;margin-bottom:6px">507</div>
       <div style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.18em;color:#a8bfd8">MCP<br>TOOLS</div>
     </div>
     <div style="background:#0d0d1a;padding:28px 18px;text-align:center">
@@ -545,6 +555,11 @@ a:hover{filter:drop-shadow(0 0 8px rgba(253,216,53,1)) drop-shadow(0 0 20px rgba
     <span class="section-line"></span>
     <p class="section-sub">WEB6 normalises the request and response interface for every major AI provider and open-source model runtime. Switch providers with a single config change — no refactoring required.</p>
     <div class="provider-grid">
+      <div class="provider-card" style="border-color:rgba(253,216,53,.3);background:rgba(253,216,53,.05)">
+        <span class="provider-icon">🌐</span>
+        <div class="provider-name">OPENSERV</div>
+        <div class="provider-type">One SERV key → GPT-5 · Claude · Gemini · Grok · Qwen · DeepSeek</div>
+      </div>
       <div class="provider-card">
         <span class="provider-icon">🤖</span>
         <div class="provider-name">OPENAI</div>
@@ -614,11 +629,6 @@ a:hover{filter:drop-shadow(0 0 8px rgba(253,216,53,1)) drop-shadow(0 0 20px rgba
         <span class="provider-icon">🎨</span>
         <div class="provider-name">STABILITY AI</div>
         <div class="provider-type">SDXL · Stable Diffusion · SVD</div>
-      </div>
-      <div class="provider-card" style="border-color:rgba(253,216,53,.3);background:rgba(253,216,53,.05)">
-        <span class="provider-icon">🌐</span>
-        <div class="provider-name">OPENSERV</div>
-        <div class="provider-type">One SERV key → GPT-5 · Claude · Gemini · Grok · Qwen · DeepSeek</div>
       </div>
       <div class="provider-card">
         <span class="provider-icon">🔴</span>
@@ -1237,6 +1247,24 @@ Authorization: Bearer &lt;your-oasis-avatar-key&gt;
         {label:'HOLONIC BRAID CORE',      sub:'shared graph library · fractal memory',color:'#e040fb',y:534,h:68,nW:580},
         {label:'COSMIC ORM',              sub:'MongoDB · Solana · IPFS · 222 providers',color:'#fdd835',y:626,h:76,nW:620}
       ];
+
+      var mobileStack=document.createElement('ol');
+      mobileStack.className='stack-mobile';
+      mobileStack.setAttribute('aria-label','Full system stack, from input to storage');
+      layers.forEach(function(layer){
+        var item=document.createElement('li');
+        item.style.setProperty('--stack-color',layer.color);
+        var title=document.createElement('strong');
+        title.textContent=layer.label;
+        item.appendChild(title);
+        if(layer.sub){
+          var detail=document.createElement('span');
+          detail.textContent=layer.sub;
+          item.appendChild(detail);
+        }
+        mobileStack.appendChild(item);
+      });
+      canvas.insertAdjacentElement('afterend',mobileStack);
 
       function hexRgb(h){
         return parseInt(h.slice(1,3),16)+','+parseInt(h.slice(3,5),16)+','+parseInt(h.slice(5,7),16);
