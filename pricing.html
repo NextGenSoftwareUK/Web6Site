@@ -102,13 +102,23 @@ footer a:hover{color:var(--gold)}
   .plans{grid-template-columns:1fr}
   nav{padding:16px 1rem}
 }
+.nav-toggle{display:flex;flex-direction:column;justify-content:center;gap:5px;width:32px;height:32px;background:none;border:none;cursor:pointer;z-index:1000;flex-shrink:0;margin-left:auto}
+.nav-toggle span{display:block;width:100%;height:2px;background:var(--gold);border-radius:2px;transition:transform .25s,opacity .25s}
+.nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-toggle.open span:nth-child(2){opacity:0}
+.nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+/* Hamburger slide-out menu at every width (same as oasisomniverse.one) */
+nav .nav-links{display:flex!important;flex-direction:column;gap:0;margin:0;position:fixed;top:0;right:0;height:100vh;width:min(78vw,320px);justify-content:flex-start;align-items:flex-start;background:rgba(3,7,20,.97);backdrop-filter:blur(16px);border-left:1px solid rgba(255,255,255,.12);padding:76px 32px 24px;z-index:999;overflow-y:auto;transform:translateX(100%);transition:transform .3s ease,visibility .3s;visibility:hidden}
+nav .nav-links.open{transform:translateX(0);visibility:visible}
+nav .nav-links li{width:100%}
+nav .nav-links a{display:block;width:100%;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.08)}
 </style>
 </head>
 <body>
 
 <nav>
   <a href="index.html" class="nav-brand">OASIS <span>WEB6</span></a>
-  <ul class="nav-links">
+  <ul class="nav-links" id="nav-links">
     <li><a href="index.html#providers">PROVIDERS</a></li>
     <li><a href="index.html#features">FEATURES</a></li>
     <li><a href="index.html#api">API</a></li>
@@ -116,6 +126,7 @@ footer a:hover{color:var(--gold)}
     <li><a href="holonic-braid-whitepaper.html">WHITEPAPER</a></li>
   </ul>
   <a href="https://api.web6.oasisomniverse.one" class="nav-cta" target="_blank" rel="noopener">GET STARTED →</a>
+<button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
 </nav>
 
 <div class="page">
@@ -354,5 +365,10 @@ footer a:hover{color:var(--gold)}
   <div style="margin-top:12px;opacity:.5">© 2026 NextGen Software UK · All rights reserved</div>
 </footer>
 
+<script>
+(function(){var b=document.getElementById('nav-toggle'),l=document.getElementById('nav-links');
+b.addEventListener('click',function(){b.classList.toggle('open');l.classList.toggle('open')});
+l.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){b.classList.remove('open');l.classList.remove('open')})});})();
+</script>
 </body>
 </html>
