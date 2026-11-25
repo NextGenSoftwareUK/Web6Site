@@ -645,7 +645,7 @@ window.signIn = async () => {
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({ username: user.value.trim(), password: pass.value })
     });
-    const data = await response.json();
+    const data = await response.json().catch(() => { throw new Error(`WEB4 returned HTTP ${response.status} with no details.`); });
     const authResult = data?.result;
     const avatar = authResult?.result;
     if (!response.ok || authResult?.isError || !avatar?.jwtToken) {
@@ -1076,17 +1076,28 @@ function chatBubble(cls, html) {
   return div;
 }
 
+// The memory holon belongs to one avatar, so remember one per avatar (keyed by the JWT's subject).
+function memoryKey() {
+  let who = 'anon';
+  try {
+    const jwt = document.getElementById('jwt').value.trim().replace(/^Bearer /, '');
+    const claims = JSON.parse(atob(jwt.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+    who = claims.id || claims.sub || claims.nameid || claims.unique_name || 'anon';
+  } catch {}
+  return 'web6-sandbox-memory-holon:' + who;
+}
 async function ensureMemoryHolon() {
-  if (chat.memoryHolonId) return chat.memoryHolonId;
+  if (chat.memoryHolonId && chat.memoryKey === memoryKey()) return chat.memoryHolonId;
+  chat.memoryHolonId = null; chat.memoryKey = memoryKey();
   let stored = null;
-  try { stored = localStorage.getItem('web6-sandbox-memory-holon'); } catch {}
+  try { stored = localStorage.getItem(chat.memoryKey); } catch {}
   if (stored) return (chat.memoryHolonId = stored);
   const name = 'sandbox-chat-' + crypto.randomUUID().slice(0, 8);
   const d = await apiJson(`${BASE}/v1/holonic-memory/holons?level=User&name=${encodeURIComponent(name)}&parentHolonId=00000000-0000-0000-0000-000000000000`,
     { method: 'POST', headers: hdrs() });
   chat.memoryHolonId = d.result?.id;
   if (!chat.memoryHolonId) throw new Error('WEB6 did not return a memory holon id.');
-  try { localStorage.setItem('web6-sandbox-memory-holon', chat.memoryHolonId); } catch {}
+  try { localStorage.setItem(chat.memoryKey, chat.memoryHolonId); } catch {}
   return chat.memoryHolonId;
 }
 
@@ -1124,7 +1135,16 @@ window.agentSend = async () => {
       if (eq <= 0) throw new Error('MCP server must be name=https://server/mcp');
       body.mcpServers = [{ name: mcp.slice(0, eq), url: mcp.slice(eq + 1) }];
     }
-    const d = await apiJson(`${BASE}/v1/agent/run`, { method: 'POST', headers: hdrs(), body: JSON.stringify(body) });
+    let d;
+    try { d = await apiJson(`${BASE}/v1/agent/run`, { method: 'POST', headers: hdrs(), body: JSON.stringify(body) }); }
+    catch (e) {
+      if (!body.memoryHolonId || !/MemoryHolonId/.test(e.message)) throw e;
+      // The remembered memory holon is stale (deleted, or another avatar's): make a fresh one and retry once.
+      try { localStorage.removeItem(chat.memoryKey); } catch {}
+      chat.memoryHolonId = null;
+      body.memoryHolonId = await ensureMemoryHolon();
+      d = await apiJson(`${BASE}/v1/agent/run`, { method: 'POST', headers: hdrs(), body: JSON.stringify(body) });
+    }
     const r = d.result;
     if (r.status !== 'completed') throw new Error({ step_budget_exhausted: 'The agent ran out of steps — try a more specific question.',
       context_budget_exhausted: 'The conversation outgrew the budget reserved for this turn — start a new conversation.' }[r.status] || 'Agent stopped: ' + r.status);
@@ -1200,8 +1220,9 @@ window.createGrant = async (endpoint, targetId, sbId, sbtId) => {
       body: JSON.stringify({ consumingService: 'WEB6', scope: 'web6-sandbox-demo', endpoints: [endpoint],
         monthlyBudgetUsd: monthly, maxOperationCostUsd: Math.min(1, monthly), expiresAtUtc: new Date(Date.now() + 30 * 864e5).toISOString() })
     });
-    const d = await response.json();
-    if (!response.ok || d.isError) throw new Error(d.message || `WEB4 returned ${response.status}`);
+    const d = await response.json().catch(() => ({}));
+    if (response.status === 401) throw new Error(ERROR_CODES.USER_BOUND_BEARER_REQUIRED);
+    if (!response.ok || d.isError || !d.grantId) throw new Error(d.message || `WEB4 returned HTTP ${response.status}.`);
     document.getElementById(targetId).value = d.grantId;
     sb(sbId, sbtId, `Grant ${d.grantId} — $${d.monthlyBudgetUsd}/month, revocable any time.`, 'ok');
   } catch (e) { sb(sbId, sbtId, 'Error: ' + e.message, 'err'); }
