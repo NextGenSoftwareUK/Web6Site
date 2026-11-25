@@ -612,7 +612,15 @@ for await (const chunk of stream) {
 </div><!-- /panels -->
 
 <script type="module">
-import { Web6Client } from 'https://esm.sh/@oasisomniverse/web6-api@2.0.3';
+// Loaded on first use, so the page still works if the CDN is unreachable.
+let web6ClientClass;
+async function loadWeb6Client() {
+  if (!web6ClientClass) {
+    try { ({ Web6Client: web6ClientClass } = await import('https://esm.sh/@oasisomniverse/web6-api@2.0.3')); }
+    catch { throw new Error('Could not load the WEB6 SDK from esm.sh. Check your connection or ad blocker and try again.'); }
+  }
+  return web6ClientClass;
+}
 
 const WEB4_BASE = 'https://dev.api.web4.oasisomniverse.one';
 const BASE = 'https://dev.api.web6.oasisomniverse.one';
@@ -656,9 +664,10 @@ window.signIn = async () => {
 document.getElementById('auth-pass').addEventListener('keydown', e => { if (e.key === 'Enter') signIn(); });
 document.getElementById('jwt').addEventListener('change', () => window.loadChatChoices?.());
 
-function client() {
+async function client() {
   const jwt = document.getElementById('jwt').value.trim();
-  if (!jwt) throw new Error('Enter a WEB4 OASIS JWT first.');
+  if (!jwt) throw new Error('Sign in with your OASIS avatar first (top of the page).');
+  const Web6Client = await loadWeb6Client();
   const web6 = new Web6Client({
     baseUrl: BASE,
     fetchImpl: (url, options = {}) => fetch(url, {
@@ -671,19 +680,42 @@ function client() {
 }
 function hdrs() {
   const jwt = document.getElementById('jwt').value.trim();
-  if (!jwt) throw new Error('Enter a WEB4 OASIS JWT first.');
+  if (!jwt) throw new Error('Sign in with your OASIS avatar first (top of the page).');
   const h = { 'Content-Type': 'application/json' };
   h['Authorization'] = jwt.startsWith('Bearer ') ? jwt : 'Bearer ' + jwt;
   h['Idempotency-Key'] = crypto.randomUUID();
   return h;
 }
+// Plain-English text for the error codes WEB6 returns without a message.
+const ERROR_CODES = {
+  USER_BOUND_BEARER_REQUIRED: 'Your sign-in is missing or has expired. Sign in with your OASIS avatar again (top of the page).',
+  GRANT_NOT_FOUND: 'That grant does not exist. Create a new grant and try again.',
+  GRANT_REVOKED: 'That grant has been revoked. Create a new grant.',
+  GRANT_EXPIRED: 'That grant has expired. Create a new grant.',
+  GRANT_BUDGET_EXCEEDED: 'The grant\'s monthly budget is used up. Raise the budget or create a new grant.',
+  GRANT_ENDPOINT_NOT_ALLOWED: 'The grant does not cover this endpoint. Create a grant for this feature.',
+  GRANT_SCOPE_MISMATCH: 'The grant was issued for a different scope. Create a new grant here.',
+  DELEGATED_GRANT_REQUIRED: 'This feature runs unattended, so it needs a grant. Create one first.',
+  PRICING_UNAVAILABLE: 'Pricing for this model is not available right now, so the call was not run. Try another model.',
+  RECONCILIATION_REQUIRED: 'A previous charge is still being settled. Wait a moment and try again.',
+  PROVIDER_FAILED: 'The AI provider failed to answer. Try again or pick another model.',
+  SCHEDULE_NOT_FOUND: 'That schedule no longer exists.',
+  ACCESS_VALIDATION_UNAVAILABLE: 'OASIS could not check your access just now. Try again in a moment.',
+  ACCESS_SESSION_AUTHORITY_UNAVAILABLE: 'OASIS could not check your session just now. Try again in a moment.'
+};
 async function apiJson(url, options = {}, allowedStatuses = []) {
-  const response = await fetch(url, options);
+  let response;
+  try { response = await fetch(url, options); }
+  catch { throw new Error('Could not reach the WEB6 API. Check your connection and try again.'); }
   let data;
   try { data = await response.json(); }
-  catch { throw new Error(`API returned ${response.status} without JSON.`); }
+  catch {
+    if (response.status === 401) throw new Error(ERROR_CODES.USER_BOUND_BEARER_REQUIRED);
+    throw new Error(`The WEB6 API returned HTTP ${response.status} with no details.`);
+  }
   if ((!response.ok && !allowedStatuses.includes(response.status)) || data?.isError) {
-    const detail = data?.message || data?.innerMessages?.filter(Boolean)?.join(' ') || `API request failed (${response.status}).`;
+    const detail = data?.message || data?.innerMessages?.filter(Boolean)?.join(' ')
+      || ERROR_CODES[data?.code] || (data?.code ? `${data.code} (HTTP ${response.status})` : `API request failed (HTTP ${response.status}).`);
     throw new Error(detail);
   }
   return data;
@@ -714,6 +746,14 @@ window.loadPlatformOverview = async () => {
   document.getElementById('p-met').style.display = 'none';
   document.getElementById('p-out').classList.remove('show');
 
+  if (!document.getElementById('jwt').value.trim()) {
+    try {
+      const h = await apiJson(`${BASE}/v1/health`);
+      document.getElementById('pm-version').textContent = h.version || '—';
+      sb('p-sb','p-sbt',`WEB6 ${h.version || ''} is up. Sign in with your OASIS avatar to check models, providers, agents and usage.`,'info');
+    } catch (e) { sb('p-sb','p-sbt','Error: ' + e.message,'err'); }
+    return;
+  }
   const checks = {
     health: [`${BASE}/v1/health`, {}],
     models: [`${BASE}/v1/models`, { headers:hdrs() }],
@@ -789,7 +829,7 @@ window.braidSolve = async () => {
   sb('b-sb','b-sbt','Calling web6.completion.complete() with UseHolonicBraid=true…');
   document.getElementById('b-out').classList.remove('show');
   try {
-    const response = await client().completion.complete({
+    const response = await (await client()).completion.complete({
       Provider: 'OpenServ', Model: 'gpt-5.4-mini',
       Messages: [
         { Role: 'system', Content: 'Provide a concise, auditable answer and follow the user request exactly.' },
@@ -882,7 +922,7 @@ window.fSolve = async () => {
       throw new Error('The development FAHRN registry has no agents. An administrator must configure SERV_API_KEY and seed the OpenServ agents before live solve can run.');
     }
     const args = { problem, taskType, mode, maxTotalTokens: 8000, maxCostUsd: 1.0, budgetExceededBehaviour: 'best_so_far' };
-    const response = await client().fahrn.solve(args);
+    const response = await (await client()).fahrn.solve(args);
     if (response.isError || !response.result) throw new Error(response.message || 'FAHRN solve failed.');
     const result = response.result;
     liveUpdate(result);
