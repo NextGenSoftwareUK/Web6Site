@@ -395,7 +395,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:13px 32px;display:fl
     </div>
 
     <div class="card">
-      <div class="ct">FAHRN Dispatch via web6.fahrn.solve()</div>
+      <div class="ct">FAHRN Dispatch via web6.fahrnSolve.solve()</div>
       <div class="cs">Hero endpoint: classifies task, picks best agents, dispatches in chosen mode, returns answer + reasoning trace.</div>
 
       <div class="fl"><label>Problem</label>
@@ -555,7 +555,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:13px 32px;display:fl
       <div class="snippet">import { Web6Client } from '@oasisomniverse/web6-api';
 
 const web6 = new Web6Client({ baseUrl: 'https://dev.api.web6.oasisomniverse.one' });
-web6.setToken('&lt;your-oasis-avatar-key&gt;');
+web6.setToken('&lt;your-oasis-avatar-jwt&gt;');  // from POST dev.api.web4…/api/avatar/authenticate
 
 const { result } = await web6.completion.complete({
   Provider: 'auto',
@@ -571,7 +571,7 @@ console.log(result.content);
 console.log(`$${result.estimatedCostUSD} via ${result.provider}/${result.model}`);</div>
 
       <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--gold);margin-bottom:8px">FAHRN Multi-Agent Dispatch</div>
-      <div class="snippet">const { result } = await web6.fahrn.solve({
+      <div class="snippet">const { result } = await web6.fahrnSolve.solve({
   problem: 'Design a zero-downtime Postgres migration for a 50M-row table',
   taskType: 'architecture',
   mode: 'Parallel',          // Serial | Parallel | Debate | Voting | Decomposed
@@ -598,13 +598,26 @@ const { result } = await web6.completion.complete({
 });</div>
 
       <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--gold);margin-bottom:8px">Streaming SSE</div>
-      <div class="snippet">const stream = await web6.completion.stream({
-  Provider: 'auto',
-  Messages: [{ Role: 'user', Content: 'Write a long technical document...' }],
+      <div class="snippet">// The SDK buffers SSE, so stream with fetch to see tokens as they arrive.
+const res = await fetch('https://dev.api.web6.oasisomniverse.one/v1/complete/stream', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + jwt,
+             'Idempotency-Key': crypto.randomUUID() },
+  body: JSON.stringify({ Provider: 'auto',
+    Messages: [{ Role: 'user', Content: 'Write a long technical document...' }] }),
 });
-
-for await (const chunk of stream) {
-  process.stdout.write(chunk.delta);
+const reader = res.body.pipeThrough(new TextDecoderStream()).getReader();
+let buffer = '';
+for (;;) {
+  const { value, done } = await reader.read();
+  if (done) break;
+  buffer += value;
+  const frames = buffer.split('\n\n'); buffer = frames.pop();
+  for (const f of frames) {
+    if (!f.startsWith('data: ')) continue;
+    const chunk = JSON.parse(f.slice(6));   // { Delta, Done, Provider, Model, ... }
+    if (chunk.Delta) process.stdout.write(chunk.Delta);
+  }
 }</div>
     </div>
   </div>
@@ -616,7 +629,7 @@ for await (const chunk of stream) {
 let web6ClientClass;
 async function loadWeb6Client() {
   if (!web6ClientClass) {
-    try { ({ Web6Client: web6ClientClass } = await import('https://esm.sh/@oasisomniverse/web6-api@2.0.3')); }
+    try { ({ Web6Client: web6ClientClass } = await import('https://esm.sh/@oasisomniverse/web6-api@2.1.2')); }
     catch { throw new Error('Could not load the WEB6 SDK from esm.sh. Check your connection or ad blocker and try again.'); }
   }
   return web6ClientClass;
@@ -668,13 +681,8 @@ async function client() {
   const jwt = document.getElementById('jwt').value.trim();
   if (!jwt) throw new Error('Sign in with your OASIS avatar first (top of the page).');
   const Web6Client = await loadWeb6Client();
-  const web6 = new Web6Client({
-    baseUrl: BASE,
-    fetchImpl: (url, options = {}) => fetch(url, {
-      ...options,
-      headers: { ...(options.headers || {}), 'Idempotency-Key': crypto.randomUUID() }
-    })
-  });
+  // SDK 2.1+ sends a fresh Idempotency-Key with every billable call.
+  const web6 = new Web6Client({ baseUrl: BASE });
   web6.setToken(jwt.startsWith('Bearer ') ? jwt.slice(7) : jwt);
   return web6;
 }
@@ -911,7 +919,7 @@ window.fSolve = async () => {
   const mode = document.getElementById('f-mode').value.split(' ')[0];
   const taskType = document.getElementById('f-tt').value;
   if (!problem) { sb('f-sb','f-sbt','Enter a problem first.','err'); return; }
-  sb('f-sb','f-sbt',`Dispatching via web6.fahrn.solve() - mode=${mode}...`);
+  sb('f-sb','f-sbt',`Dispatching POST /v1/fahrn/solve - mode=${mode}...`);
   document.getElementById('f-met').style.display = 'none';
   document.getElementById('f-out').classList.remove('show');
   document.getElementById('f-trace').classList.remove('show');
@@ -922,8 +930,8 @@ window.fSolve = async () => {
       throw new Error('The development FAHRN registry has no agents. An administrator must configure SERV_API_KEY and seed the OpenServ agents before live solve can run.');
     }
     const args = { problem, taskType, mode, maxTotalTokens: 8000, maxCostUsd: 1.0, budgetExceededBehaviour: 'best_so_far' };
-    const response = await (await client()).fahrn.solve(args);
-    if (response.isError || !response.result) throw new Error(response.message || 'FAHRN solve failed.');
+    const response = await apiJson(`${BASE}/v1/fahrn/solve`, { method: 'POST', headers: hdrs(), body: JSON.stringify(args) });
+    if (!response.result) throw new Error(response.message || 'FAHRN solve returned no result.');
     const result = response.result;
     liveUpdate(result);
     document.getElementById('fm-mode').textContent = result.modeUsed || mode;
