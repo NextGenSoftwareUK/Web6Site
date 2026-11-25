@@ -30,18 +30,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:13px 32px;display:fl
 
 .wrap{max-width:900px;margin:0 auto;padding:0 28px}
 
-.auth-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin:28px auto;max-width:900px;margin-left:28px;margin-right:28px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.auth-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin:28px auto;max-width:900px;width:calc(100% - 56px);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .auth-card label{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.14em;color:var(--gold);white-space:nowrap}
 .auth-card input{flex:1;min-width:220px;background:rgba(0,0,0,.45);border:1px solid rgba(253,216,53,.22);border-radius:6px;padding:8px 12px;color:var(--textb);font-family:'Share Tech Mono',monospace;font-size:11px;outline:none}
 .auth-card input:focus{border-color:rgba(253,216,53,.55)}
 .auth-note{flex-basis:100%;font-size:12px;color:var(--text)}.auth-note a{color:var(--cyan);text-decoration:none}
 
-.tabs-row{max-width:900px;margin:0 28px;border-bottom:1px solid var(--border)}
+.tabs-row{max-width:900px;width:calc(100% - 56px);margin:0 auto;border-bottom:1px solid var(--border)}
 .tabs{display:flex;gap:2px}
 .tab{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--text);background:none;border:none;border-bottom:2px solid transparent;padding:9px 17px;cursor:pointer;transition:color .2s,border-color .2s;text-transform:uppercase}
 .tab:hover{color:var(--textb)}.tab.active{color:var(--gold);border-bottom-color:var(--gold)}
 
-.panels{max-width:900px;margin:0 28px;padding:28px 0 80px}
+.panels{max-width:900px;width:calc(100% - 56px);margin:0 auto;padding:28px 0 80px}
 .panel{display:none}.panel.active{display:block}
 
 .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:18px}
@@ -132,7 +132,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:13px 32px;display:fl
   .braid-flow{grid-template-columns:1fr;gap:8px}
   .barr{transform:rotate(90deg)}
   .tabs{overflow-x:auto}
-  .panels,.tabs-row,.auth-card{margin-left:12px;margin-right:12px}
+  .panels,.tabs-row,.auth-card{width:calc(100% - 24px)}
   .hero{padding:96px 16px 28px}
 }
 /* ── Agent chat & new WEB6 surfaces ── */
@@ -189,17 +189,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:13px 32px;display:fl
 </div>
 
 <div class="tabs-row">
-  <div class="tabs">
-    <button class="tab active" onclick="sw('chat',this)">Agent Chat</button>
-    <button class="tab" onclick="sw('channels',this)">Channels</button>
-    <button class="tab" onclick="sw('schedules',this)">Schedules</button>
-    <button class="tab" onclick="sw('compare',this)">vs Router &amp; Hermes</button>
-    <button class="tab" onclick="sw('platform',this)">Platform</button>
-    <button class="tab" onclick="sw('braid',this)">BRAID</button>
-    <button class="tab" onclick="sw('fahrn',this)">FAHRN + OpenServ</button>
-    <button class="tab" onclick="sw('memory',this)">Memory Hierarchy</button>
-    <button class="tab" onclick="sw('cost',this)">Cost Comparison</button>
-    <button class="tab" onclick="sw('code',this)">npm Usage</button>
+  <div class="tabs" role="tablist">
+    <button class="tab active" role="tab" aria-selected="true" onclick="sw('chat',this)">Agent Chat</button>
+    <button class="tab" role="tab" aria-selected="false" onclick="sw('channels',this)">Channels</button>
+    <button class="tab" role="tab" aria-selected="false" onclick="sw('schedules',this)">Schedules</button>
+    <button class="tab" role="tab" aria-selected="false" onclick="sw('compare',this)">vs Router &amp; Hermes</button>
+    <button class="tab" role="tab" aria-selected="false" onclick="sw('platform',this)">Platform</button>
+    <button class="tab" role="tab" aria-selected="false" onclick="sw('braid',this)">BRAID</button>
+    <button class="tab" role="tab" aria-selected="false" onclick="sw('fahrn',this)">FAHRN + OpenServ</button>
+    <button class="tab" role="tab" aria-selected="false" onclick="sw('memory',this)">Memory Hierarchy</button>
+    <button class="tab" role="tab" aria-selected="false" onclick="sw('cost',this)">Cost Comparison</button>
+    <button class="tab" role="tab" aria-selected="false" onclick="sw('code',this)">npm Usage</button>
   </div>
 </div>
 
@@ -395,7 +395,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:13px 32px;display:fl
     </div>
 
     <div class="card">
-      <div class="ct">FAHRN Dispatch via web6.fahrn.solve()</div>
+      <div class="ct">FAHRN Dispatch via web6.fahrnSolve.solve()</div>
       <div class="cs">Hero endpoint: classifies task, picks best agents, dispatches in chosen mode, returns answer + reasoning trace.</div>
 
       <div class="fl"><label>Problem</label>
@@ -555,7 +555,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:13px 32px;display:fl
       <div class="snippet">import { Web6Client } from '@oasisomniverse/web6-api';
 
 const web6 = new Web6Client({ baseUrl: 'https://dev.api.web6.oasisomniverse.one' });
-web6.setToken('&lt;your-oasis-avatar-key&gt;');
+web6.setToken('&lt;your-oasis-avatar-jwt&gt;');  // from POST dev.api.web4…/api/avatar/authenticate
 
 const { result } = await web6.completion.complete({
   Provider: 'auto',
@@ -571,7 +571,7 @@ console.log(result.content);
 console.log(`$${result.estimatedCostUSD} via ${result.provider}/${result.model}`);</div>
 
       <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--gold);margin-bottom:8px">FAHRN Multi-Agent Dispatch</div>
-      <div class="snippet">const { result } = await web6.fahrn.solve({
+      <div class="snippet">const { result } = await web6.fahrnSolve.solve({
   problem: 'Design a zero-downtime Postgres migration for a 50M-row table',
   taskType: 'architecture',
   mode: 'Parallel',          // Serial | Parallel | Debate | Voting | Decomposed
@@ -598,13 +598,26 @@ const { result } = await web6.completion.complete({
 });</div>
 
       <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--gold);margin-bottom:8px">Streaming SSE</div>
-      <div class="snippet">const stream = await web6.completion.stream({
-  Provider: 'auto',
-  Messages: [{ Role: 'user', Content: 'Write a long technical document...' }],
+      <div class="snippet">// The SDK buffers SSE, so stream with fetch to see tokens as they arrive.
+const res = await fetch('https://dev.api.web6.oasisomniverse.one/v1/complete/stream', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + jwt,
+             'Idempotency-Key': crypto.randomUUID() },
+  body: JSON.stringify({ Provider: 'auto',
+    Messages: [{ Role: 'user', Content: 'Write a long technical document...' }] }),
 });
-
-for await (const chunk of stream) {
-  process.stdout.write(chunk.delta);
+const reader = res.body.pipeThrough(new TextDecoderStream()).getReader();
+let buffer = '';
+for (;;) {
+  const { value, done } = await reader.read();
+  if (done) break;
+  buffer += value;
+  const frames = buffer.split('\n\n'); buffer = frames.pop();
+  for (const f of frames) {
+    if (!f.startsWith('data: ')) continue;
+    const chunk = JSON.parse(f.slice(6));   // { Delta, Done, Provider, Model, ... }
+    if (chunk.Delta) process.stdout.write(chunk.Delta);
+  }
 }</div>
     </div>
   </div>
@@ -616,7 +629,7 @@ for await (const chunk of stream) {
 let web6ClientClass;
 async function loadWeb6Client() {
   if (!web6ClientClass) {
-    try { ({ Web6Client: web6ClientClass } = await import('https://esm.sh/@oasisomniverse/web6-api@2.0.3')); }
+    try { ({ Web6Client: web6ClientClass } = await import('https://esm.sh/@oasisomniverse/web6-api@2.1.2')); }
     catch { throw new Error('Could not load the WEB6 SDK from esm.sh. Check your connection or ad blocker and try again.'); }
   }
   return web6ClientClass;
@@ -668,13 +681,8 @@ async function client() {
   const jwt = document.getElementById('jwt').value.trim();
   if (!jwt) throw new Error('Sign in with your OASIS avatar first (top of the page).');
   const Web6Client = await loadWeb6Client();
-  const web6 = new Web6Client({
-    baseUrl: BASE,
-    fetchImpl: (url, options = {}) => fetch(url, {
-      ...options,
-      headers: { ...(options.headers || {}), 'Idempotency-Key': crypto.randomUUID() }
-    })
-  });
+  // SDK 2.1+ sends a fresh Idempotency-Key with every billable call.
+  const web6 = new Web6Client({ baseUrl: BASE });
   web6.setToken(jwt.startsWith('Bearer ') ? jwt.slice(7) : jwt);
   return web6;
 }
@@ -735,9 +743,9 @@ function showMmd(id, txt) { const e=document.getElementById(id); e.textContent=t
 
 window.sw = (name, btn) => {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
   document.getElementById('panel-' + name).classList.add('active');
-  btn.classList.add('active');
+  btn.classList.add('active'); btn.setAttribute('aria-selected', 'true');
 };
 
 // ─── PLATFORM READINESS ───
@@ -911,7 +919,7 @@ window.fSolve = async () => {
   const mode = document.getElementById('f-mode').value.split(' ')[0];
   const taskType = document.getElementById('f-tt').value;
   if (!problem) { sb('f-sb','f-sbt','Enter a problem first.','err'); return; }
-  sb('f-sb','f-sbt',`Dispatching via web6.fahrn.solve() - mode=${mode}...`);
+  sb('f-sb','f-sbt',`Dispatching POST /v1/fahrn/solve - mode=${mode}...`);
   document.getElementById('f-met').style.display = 'none';
   document.getElementById('f-out').classList.remove('show');
   document.getElementById('f-trace').classList.remove('show');
@@ -922,8 +930,8 @@ window.fSolve = async () => {
       throw new Error('The development FAHRN registry has no agents. An administrator must configure SERV_API_KEY and seed the OpenServ agents before live solve can run.');
     }
     const args = { problem, taskType, mode, maxTotalTokens: 8000, maxCostUsd: 1.0, budgetExceededBehaviour: 'best_so_far' };
-    const response = await (await client()).fahrn.solve(args);
-    if (response.isError || !response.result) throw new Error(response.message || 'FAHRN solve failed.');
+    const response = await apiJson(`${BASE}/v1/fahrn/solve`, { method: 'POST', headers: hdrs(), body: JSON.stringify(args) });
+    if (!response.result) throw new Error(response.message || 'FAHRN solve returned no result.');
     const result = response.result;
     liveUpdate(result);
     document.getElementById('fm-mode').textContent = result.modeUsed || mode;
