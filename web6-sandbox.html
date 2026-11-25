@@ -724,6 +724,8 @@ async function apiJson(url, options = {}, allowedStatuses = []) {
   if ((!response.ok && !allowedStatuses.includes(response.status)) || data?.isError) {
     const detail = data?.message || data?.innerMessages?.filter(Boolean)?.join(' ')
       || ERROR_CODES[data?.code] || (data?.code ? `${data.code} (HTTP ${response.status})` : `API request failed (HTTP ${response.status}).`);
+    // 402 = billing needs attention (credit, plan or overage terms); say where to fix it.
+    if (response.status === 402) throw new Error(detail + ' Check your account's billing settings in the OASIS portal (oportal.oasisomniverse.one), then try again.');
     throw new Error(detail);
   }
   return data;
